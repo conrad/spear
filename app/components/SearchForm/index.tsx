@@ -1,15 +1,17 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { IFormState } from '../../reducers/searchForm';
 
 export interface IProps extends RouteComponentProps<any> {
-  increment(): void,
-  incrementIfOdd(): void,
-  incrementAsync(): void,
-  decrement(): void,
-  counter: number
+  searchForm: IFormState
 }
 
-export class Search extends React.Component<IProps> {
+export class SearchForm extends React.Component<IProps> {
+  render() {
+    return (
+      <div>This is the SearchForm</div>
+    );
+  }
 }
 
 
