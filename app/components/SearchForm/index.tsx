@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../reducers/searchForm';
+import { FileInput } from './FileInput';
+
+let styles = require('./SearchForm.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   searchForm: IFormState
@@ -9,7 +12,14 @@ export interface IProps extends RouteComponentProps<any> {
 export class SearchForm extends React.Component<IProps> {
   render() {
     return (
-      <div>This is the SearchForm</div>
+      <div className={styles.formColumn}>
+        <div className={styles.formHeader}>
+          <FileInput filename={this.props.searchForm.filename}/>
+        </div>
+        <div className={styles.formBody}>
+          <div className={styles.formTitle}>Phrases</div>
+        </div>
+      </div>
     );
   }
 }

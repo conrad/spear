@@ -1,13 +1,18 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-import Home from '../components/Home';
+import { bindActionCreators } from 'redux';
+import { connect, Dispatch } from 'react-redux';
+import { Home, IProps } from '../components/Home';
+import * as SearchActions from '../actions/searchForm';
+import { IState } from '../reducers';
 
-export class HomePage extends React.Component<RouteComponentProps<any>, void> {
-  render() {
-    return (
-      <Home />
-    );
-  }
+function mapStateToProps(state: IState): Partial<IProps> {
+  return {
+    searchForm: state.searchForm
+  };
 }
 
-export default (HomePage as any as React.StatelessComponent<RouteComponentProps<any>>);
+function mapDispatchToProps(dispatch: Dispatch<IState>): Partial<IProps> {
+  return bindActionCreators(SearchActions as any, dispatch);
+}
+
+export default (connect(mapStateToProps, mapDispatchToProps)(Home) as any as React.StatelessComponent<IProps>);

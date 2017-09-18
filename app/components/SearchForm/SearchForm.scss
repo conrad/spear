@@ -1,0 +1,24 @@
+:local {
+  .formColumn {
+    display: inline-block;
+  }
+
+  .formHeader {
+    height: 50px;
+    color: #2D2D2D;
+    background: white;
+  }
+
+  .formBody {
+    border-right: 1px solid #22201C;
+  }
+
+  .formTitle {
+    width: 60%;
+    margin: 0px 15px;
+    padding: 15px;
+    color: #D0D0D0;
+    font-size: 14px;
+    border-bottom: 1px solid #858585;
+  }
+}

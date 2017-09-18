@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router';
 import App from './containers/App';
-import MainPage from './containers/MainPage';
+import HomePage from './containers/HomePage';
 
 export default () => (
   <App>
     <Switch>
-      <Route path="/" component={MainPage} />
+      <Route path="/" component={HomePage} />
     </Switch>
   </App>
 );

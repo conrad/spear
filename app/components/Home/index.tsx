@@ -1,25 +1,22 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../reducers/searchForm';
-import { Banner } from '../Banner';
+import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';
 
+let styles = require('./Home.scss');
+
 export interface IProps extends RouteComponentProps<any> {
-  searchForm: IFormState,
-  increment(): void,
-  incrementIfOdd(): void,
-  incrementAsync(): void,
-  decrement(): void,
-  counter: number
+  searchForm: IFormState
 }
 
-export class Search extends React.Component<IProps> {
+export class Home extends React.Component<IProps> {
   render() {
     return (
-      <div>
-        <Banner/>
-        <SearchForm searchForm={this.props.searchForm} />
+      <div className={styles.container}>
+        <Searches/>
+        <SearchForm {...this.props} />
         <Results/>
       </div>
     );
