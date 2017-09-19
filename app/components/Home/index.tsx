@@ -13,7 +13,8 @@ export interface IProps extends RouteComponentProps<any> {
   addPhrase(phrase: string): void,
   deletePhrase(index: number): void,
   addFile(filename: string): void,
-  resetFile(): void
+  resetFile(): void,
+  startAddingPhrase(): void
 }
 
 export class Home extends React.Component<IProps> {

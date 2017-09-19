@@ -10,7 +10,8 @@ export interface IProps extends RouteComponentProps<any> {
   addPhrase(phrase: string): void,
   deletePhrase(index: number): void,
   addFile(filename: string): void,
-  resetFile(): void
+  resetFile(): void,
+  startAddingPhrase(): void
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -35,6 +36,10 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   handleAddPhrase(e: Event) {
+    this.props.startAddingPhrase();
+  }
+
+  handleSavePhrase(e: Event) {
     if (this.state.entry) {
       console.log('Adding phrase: ', this.state.entry);
       let isAlreadyPhrase = false;
@@ -71,22 +76,33 @@ export class PhraseList extends React.Component<IProps, IState> {
     return (
       <div>
         <div className={styles.lastInputContainer}>
-        {this.props.searchForm.phrases.map(
-          (phrase: string, index: number) => {
-            return (
-              <div key={index}>
-                <textarea className={styles.phraseInput} readOnly value={phrase}/>
-                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
-              </div>
-            );
+          {this.props.searchForm.phrases.map(
+            (phrase: string, index: number) => {
+              return (
+                <div key={index}>
+                  <textarea className={styles.phraseInput} readOnly value={phrase}/>
+                  <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
+                </div>
+              );
+            }
+          )}
+          {this.props.searchForm.isAddingPhrase ?
+            <div>
+              <textarea id="lastInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea> 
+              <Icons.MinusCircle className={styles.minus}/>
+              <Icons.Save 
+                className={styles.plus}
+                onClick={this.handleSavePhrase.bind(this)}
+              />
+            </div>
+            :
+            <Icons.PlusCircle 
+              className={styles.plus}
+              onClick={this.handleAddPhrase.bind(this)}
+            />
           }
-        )}
-          <textarea id="lastInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
         </div>
-        <Icons.PlusCircle 
-          className={styles.plus}
-          onClick={this.handleAddPhrase.bind(this)}
-        />
+        
       </div>
     );
   }
