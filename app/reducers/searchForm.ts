@@ -1,5 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { submitSearch, appendPhrase, unsetPhrase, setFile, resetFile } from '../actions/searchForm';
+import { clone } from './helpers';
 
 
 const initialState = { 
@@ -8,7 +9,7 @@ const initialState = {
 };
 
 export interface IFormState {
-  filename: string
+  filename: string,
   phrases: Array<string>
 };
 
@@ -38,16 +39,3 @@ export default function searchForm(state: IFormState = initialState, action: IAc
 
   return newState;
 }
-
-const clone: any = (obj: any) => {
-  if (null == obj || "object" != typeof obj) return obj;
-  
-  let copy = obj.constructor();
-  
-  for (var attr in obj) {
-      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
-  }
-  
-  return copy;
-}
-

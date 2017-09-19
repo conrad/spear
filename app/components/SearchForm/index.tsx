@@ -28,8 +28,8 @@ export class SearchForm extends React.Component<IProps> {
         </div>
         <div className={styles.formBody}>
           <div className={styles.formTitle}>Phrases</div>
+          <PhraseList {...this.props}/>
         </div>
-        <PhraseList {...this.props}/>
       </div>
     );
   }
