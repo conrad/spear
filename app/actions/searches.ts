@@ -31,7 +31,7 @@ export function saveSearch(index: number, name: string, description: string, phr
 
 export function reorderSearch(move: IMove) {
   return (dispatch: Function, getState: Function) => {
-    dispatch(moveSearch(move))
+    dispatch(moveSearch(move));
   };
 }
 
