@@ -10,8 +10,28 @@
     color: #858585;
   }
 
-  .lastInput {
+  .minus {
+    display: inline-block;
+    padding: 4px;
+    cursor: pointer;
+  }
+
+  .minus:active {
+    color: #858585;
+  }
+
+  .lastInputContainer {
     padding: 15px 0px 0px 15px;
     line-height: 2em
+  }
+
+  .phraseInput {
+    height: 20px;
+    width: 80%;
+    padding: 4px;
+    outline: none;
+    border: 1px solid #858585;
+    border-radius: 3px;
+    font-size: 14px;
   }
 }

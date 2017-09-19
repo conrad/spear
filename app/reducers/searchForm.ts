@@ -15,23 +15,39 @@ export interface IFormState {
 export type TState = IFormState;
 
 export default function searchForm(state: IFormState = initialState, action: IAction) {
+  let newState: IFormState = clone(state);
+
   if (appendPhrase.test(action)) {
-    state.phrases.push(action.payload);
-    return state;
+    newState.phrases.push(action.payload);
+    console.log('appendPhrase in reducer. payload:', action.payload, 'state:', state);
+    return newState;
   } else if (unsetPhrase.test(action)) {
-    state.phrases.splice(action.payload, 1);
-    return state;
+    newState.phrases.splice(action.payload, 1);
+    return newState;
   } else if (setFile.test(action)) {
-    state.filename = action.payload;
-    return state;
+    newState.filename = action.payload;
+    return newState;
   } else if (resetFile.test(action)) {
-    state.filename = '';
-    return state;
+    newState.filename = '';
+    return newState;
   } else if (submitSearch.test(action)) {
-    console.log("filename:", state.filename);
-    console.log("first phrase:", state.phrases[0]);
-    return state;
+    console.log("filename:", newState.filename);
+    console.log("first phrase:", newState.phrases[0]);
+    return newState;
   }
 
-  return state;
+  return newState;
 }
+
+const clone: any = (obj: any) => {
+  if (null == obj || "object" != typeof obj) return obj;
+  
+  let copy = obj.constructor();
+  
+  for (var attr in obj) {
+      if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+  }
+  
+  return copy;
+}
+

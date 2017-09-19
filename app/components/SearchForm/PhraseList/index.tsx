@@ -18,34 +18,59 @@ interface IState extends RouteComponentProps<any> {
 }
 
 export class PhraseList extends React.Component<IProps, IState> {
-  handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(((event.target) as any).value);
+  componentDidMount() {
+    this.setState({value: ''});
+  }
+
+  clearTextArea() {
+    this.setState({value: ''});
+    let textarea: any = document.getElementById('lastInput');
+    if (textarea) {
+      textarea.value = '';
+    }
+  }
+
+  handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
     this.setState({value: event.target.value});
   }
 
   handleAddPhrase(e: Event) {
-    console.log('add event',e.target);
-    // const value: string = ((e.target) as any).value;
-    console.log('Adding phrase: ', this.state.value);
-    this.props.addPhrase(this.state.value);
+    if (this.state.value) {
+      console.log('Adding phrase: ', this.state.value);
+      this.props.addPhrase(this.state.value);
+      this.clearTextArea();
+    } else {
+      console.log('You have to add a new phrase in order to add more!');
+    }
+  }
+
+  handleRemovePhrase(index: number) {
+    this.props.deletePhrase(index);
+  }
+
+  textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    let textarea = document.getElementById('lastInput');
+    if (textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight+'px';
+    }
   }
 
   render() {
-    let list: Array<HTMLElement> = [];
-    this.props.searchForm.phrases.forEach((phrase: string, index: number) => {
-      // list.push(<input type="text" value={phrase}/>)
-      let input: HTMLElement = document.createElement('input');
-      input.setAttribute('value', phrase);
-      input.setAttribute('type', 'text');
-      console.log('phrase:', phrase);
-      list.push(input);
-    });
-
     return (
       <div>
-        {/* <div>{list}</div> */}
-        <div className={styles.lastInput}>
-          <input type="text" defaultValue={'one more'} onChange={e => this.handleInputChange(e)}/>
+        <div className={styles.lastInputContainer}>
+        {this.props.searchForm.phrases.map(
+          (phrase: string, index: number) => {
+            return (
+              <div key={index}>
+                <textarea className={styles.phraseInput} readOnly value={phrase}/>
+                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
+              </div>
+            );
+          }
+        )}
+          <textarea id="lastInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
         </div>
         <Icons.PlusCircle 
           className={styles.plus}
