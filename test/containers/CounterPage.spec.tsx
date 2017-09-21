@@ -52,7 +52,7 @@ describe('containers', () => {
     it('should change if odd and if odd button clicked', () => {
       const { buttons, p } = setup({ 
         counter: 1, 
-        searchForm: { filename: "dog.txt", phrases: [], isAddingPhrase: false },
+        searchForm: { filename: "dog.txt", phrases: [] },
         searches: [] 
       });
       buttons.at(2).simulate('click');

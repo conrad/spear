@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../../reducers/searchForm';
 let Icons = require('react-feather');
@@ -24,10 +25,7 @@ export class PhraseList extends React.Component<IProps, IState> {
 
   clearTextArea() {
     this.setState({entry: ''});
-    let textarea: any = document.getElementById('lastInput');
-    if (textarea) {
-      textarea.entry = '';
-    }
+    (ReactDOM.findDOMNode(this.refs.lastPhraseInput) as HTMLTextAreaElement).value = '';
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
@@ -60,7 +58,8 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    let textarea = document.getElementById('lastInput');
+    let textarea = document.getElementById('lastPhraseInput');
+    // let textarea = ReactDOM.findDOMNode(this.refs.lastPhraseInput);
     if (textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight+'px';
@@ -81,7 +80,7 @@ export class PhraseList extends React.Component<IProps, IState> {
             );
           }
         )}
-          <textarea id="lastInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
+          <textarea id="lastPhraseInput" ref="lastPhraseInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
         </div>
         <Icons.PlusCircle 
           className={styles.plus}
