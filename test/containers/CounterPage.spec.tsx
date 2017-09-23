@@ -53,7 +53,8 @@ describe('containers', () => {
       const { buttons, p } = setup({ 
         counter: 1, 
         searchForm: { filename: "dog.txt", phrases: [] },
-        searches: [] 
+        searches: [],
+        results: []
       });
       buttons.at(2).simulate('click');
       expect(p.text()).toMatch(/^2$/);

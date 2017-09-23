@@ -1,15 +1,5 @@
-import * as fs from 'fs';
-
-export interface IResult {
-  phrase: string,
-  excerpts: Array<IExcerpt>
-};
-
-interface IExcerpt {
-  location: string,
-  index: number,
-  text: string
-};
+import * as fs from "fs";
+import { IResult, IExcerpt } from "../reducers/results";
 
 export default function load(filepath: string): string  {
   if(fs.existsSync(filepath)) {

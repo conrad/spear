@@ -3,9 +3,10 @@ import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../reducers/searchForm';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
-import { search, IResult } from '../../local/fileSearcher';
-let Icons = require('react-feather');
+import { search as runSearch } from '../../local/fileSearcher';
+import { IResult } from '../../reducers/results';
 
+let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
 
 export interface IProps extends RouteComponentProps<any> {
@@ -13,7 +14,8 @@ export interface IProps extends RouteComponentProps<any> {
   addPhrase(phrase: string): void,
   deletePhrase(index: number): void,
   addFile(filename: string): void,
-  resetFile(): void
+  resetFile(): void,
+  setResults(results: Array<IResult>): void 
 }
 
 export class SearchForm extends React.Component<IProps> {
@@ -24,11 +26,13 @@ export class SearchForm extends React.Component<IProps> {
 
   handleClickSearch() {
     console.log('searching the file:', this.props.searchForm.filename);
-    let results: Array<IResult> = search(this.props.searchForm.filename, this.props.searchForm.phrases);
+    let results: Array<IResult> = runSearch(this.props.searchForm.filename, this.props.searchForm.phrases);
 
     results.map((val, i) =>{
       console.log('phrase:', val.phrase);
     });
+    
+    this.props.setResults(results);
   }
 
   render() {

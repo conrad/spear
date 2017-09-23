@@ -15,15 +15,12 @@ export function addFile(filename: string) {
 
 export function addPhrase(phrase: string) {
   return (dispatch: Function, getState: Function) => {
-    // const { searchForm } = getState();
-    console.log('addphrase in actions');
     dispatch(appendPhrase(phrase));
   }
 }
 
 export function deletePhrase(index: number) {
   return (dispatch: Function, getState: Function) => {
-    // const { searchForm } = getState();
     dispatch(unsetPhrase(index));
   }
 }
