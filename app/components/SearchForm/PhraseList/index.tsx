@@ -23,9 +23,10 @@ export class PhraseList extends React.Component<IProps, IState> {
     this.setState({entry: ''});
   }
 
-  clearTextArea() {
+  clearLastInput() {
     this.setState({entry: ''});
     (ReactDOM.findDOMNode(this.refs.lastPhraseInput) as HTMLTextAreaElement).value = '';
+    console.log('cleared last input')
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
@@ -47,7 +48,7 @@ export class PhraseList extends React.Component<IProps, IState> {
         this.props.addPhrase(this.state.entry);
       }
 
-      this.clearTextArea();
+      this.clearLastInput();
     } else {
       console.log('You have to add a new phrase in order to add more!');
     }
