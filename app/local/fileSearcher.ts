@@ -48,7 +48,7 @@ export function search(filepath: string, phrases: Array<string>): Array<IResult>
 
 function getExcerpts(file: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
   let excerpts: Array<IExcerpt> = [];
-  const padding: number = 20;
+  const padding: number = 40;
 
   indices.map((val, i) => {
     let start: number = val - padding > 0 ? val - padding : 0;

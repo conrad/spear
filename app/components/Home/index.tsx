@@ -21,10 +21,15 @@ export interface IProps extends RouteComponentProps<any> {
 export class Home extends React.Component<IProps> {
   render() {
     return (
-      <div className={styles.container}>
-        <Searches/>
-        <SearchForm {...this.props}/>
-        <Results {...this.props}/>
+      <div className={styles.columnsContainer}>
+        <div className={styles.rowsContainer}>
+          <Searches/>
+          <SearchForm {...this.props}/>
+        </div>
+        { this.props.results.length > 0 ?
+          <Results {...this.props}/> :
+          null
+        }
       </div>
     );
   }

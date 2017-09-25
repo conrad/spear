@@ -1,0 +1,16 @@
+:local {
+  .resultsHeader {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    background-color: #121C14;
+  }
+
+  .resultsFile {
+    margin: 15px;
+  }
+
+  .resultsCount {
+    margin: 15px;
+  }
+}

@@ -12,24 +12,22 @@ export interface IProps extends RouteComponentProps<any> {
 
 export class FileInput extends React.Component<IProps> {
   handleChange(selectorFiles: FileList | null) {
-    // TODO: Emit action that proper file has NOT been made available.
-    console.log(selectorFiles);
     if (selectorFiles == null) {
       console.log('nope. need to submit a file.')
       return;
     }
     console.log(selectorFiles[0]);
     if (selectorFiles.length > 1) {
-      console.log('uh. you can only search one file');
+      throw new Error('Only one file allowed at a time.')
     }
 
     if (selectorFiles[0].type === 'text/plain'
       || selectorFiles[0].type === 'application/msword'
     ) {
-      console.log('correct file type');
       this.props.addFile(selectorFiles[0].path);
     } else {
       console.log('incorrect file type');
+      //TODO: Show feedback about filetype.
       this.props.resetFile();
     }
   }
