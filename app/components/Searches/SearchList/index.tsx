@@ -25,7 +25,7 @@ export class SearchList extends React.Component<IProps, IState> {
 
   clearTextArea() {
     this.setState({searches: []}); //TODO: Not right. Fix this.
-    let textarea: any = document.getElementById('lastInput');
+    let textarea: any = document.getElementById('lastSearchNameInput');
     if (textarea) {
       textarea.value = '';
     }
@@ -80,7 +80,13 @@ export class SearchList extends React.Component<IProps, IState> {
             );
           }
         )} */}
-          <textarea id="lastInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
+          <textarea 
+            id="lastSearchNameInput" 
+            className={styles.searchInput} 
+            onKeyDown={e => this.textAreaAdjust(e)} 
+            placeholder={'Create a new search'} 
+            onChange={e => this.handleInputChange(e)}>
+          </textarea>
         </div>
         <Icons.PlusCircle 
           className={styles.plus}

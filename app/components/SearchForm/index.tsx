@@ -15,24 +15,35 @@ export interface IProps extends RouteComponentProps<any> {
   deletePhrase(index: number): void,
   addFile(filename: string): void,
   resetFile(): void,
-  setResults(results: Array<IResult>): void 
+  setResults(results: Array<IResult>): void,
+  updateNewPhrase(text: string): void
 }
 
 export class SearchForm extends React.Component<IProps> {
   handleAddPhrase(e: Event) {
-    console.log('Adding phrase: ', e.target);
     this.props.addPhrase('come on');
   }
 
   handleClickSearch() {
-    console.log('searching the file:', this.props.searchForm.filename);
-    let results: Array<IResult> = runSearch(this.props.searchForm.filename, this.props.searchForm.phrases);
+    let searchForm: IFormState = {...this.props.searchForm}; 
+    let phrases: Array<string> = this.copyArray(searchForm.phrases);
 
-    results.map((val, i) =>{
-      console.log('phrase:', val.phrase);
-    });
-    
+    if (searchForm.newPhrase && searchForm.phrases.indexOf(searchForm.newPhrase) == -1) {
+      phrases.push(searchForm.newPhrase);
+    }
+
+    const results: Array<IResult> = runSearch(searchForm.filename, phrases);
+
     this.props.setResults(results);
+  }
+
+  copyArray(arr: Array<any>): Array<any> {
+    let results: Array<any> = []; 
+    arr.map(val => {
+      results.push(val);
+    });
+
+    return results;
   }
 
   render() {
@@ -53,35 +64,3 @@ export class SearchForm extends React.Component<IProps> {
     );
   }
 }
-
-
-// class NameForm extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {value: ''};
-
-//     this.handleChange = this.handleChange.bind(this);
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//   }
-
-//   handleChange(event) {
-//     this.setState({value: event.target.value});
-//   }
-
-//   handleSubmit(event) {
-//     alert('A name was submitted: ' + this.state.value);
-//     event.preventDefault();
-//   }
-
-//   render() {
-//     return (
-//       <form onSubmit={this.handleSubmit}>
-//         <label>
-//           Name:
-//           <input type="text" value={this.state.value} onChange={this.handleChange} />
-//         </label>
-//         <input type="submit" value="Submit" />
-//       </form>
-//     );
-//   }
-// }

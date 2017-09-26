@@ -15,7 +15,8 @@ export interface IProps extends RouteComponentProps<any> {
   deletePhrase(index: number): void,
   addFile(filename: string): void,
   resetFile(): void,
-  setResults(results: Array<IResult>): void
+  setResults(results: Array<IResult>): void,
+  updateNewPhrase(text: string): void
 }
 
 export class Home extends React.Component<IProps> {

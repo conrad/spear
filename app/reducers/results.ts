@@ -1,6 +1,5 @@
 import { IAction } from '../actions/helpers';
 import { saveResults, saveResultsInFile } from '../actions/results';
-import { clone } from './helpers';
 
 const initialState: Array<IResult> = []; 
 
@@ -18,7 +17,7 @@ export interface IExcerpt {
 export type TState = Array<IResult>;
 
 export default function results(state: Array<IResult> = initialState, action: IAction) {
-  let newState: Array<IResult> = clone(state);
+  let newState: Array<IResult> = [];
 
   if (saveResults.test(action)) {
     newState = action.payload;

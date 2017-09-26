@@ -5,6 +5,13 @@ export const unsetPhrase = actionCreator<number>('DELETE_PHRASE');
 export const resetFile = actionCreatorVoid('RESET_FILE');
 export const setFile = actionCreator<string>('SET_FILE');
 export const appendPhrase = actionCreator<string>('APPEND_PHRASE');
+export const setNewPhrase = actionCreator<string>('SET_NEW_PHRASE');
+
+export function updateNewPhrase(text: string) {
+  return (dispatch: Function) => {
+    dispatch(setNewPhrase(text));
+  }
+}
 
 export function addFile(filename: string) {
   return (dispatch: Function, getState: Function) => {

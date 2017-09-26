@@ -13,7 +13,6 @@ export class ResultsBody extends React.Component<IProps> {
   createElementsFromResults(results: Array<IResult>): Array<JSX.Element> {
     let elements: Array<JSX.Element> = [];
     results.map((result, i) => {
-      console.log('Found a value to add to an element.', i);
       result.excerpts.map((excerpt, j) => {
         const element: JSX.Element = (
           <li className={styles.excerptItem} key={i + j * .1}>

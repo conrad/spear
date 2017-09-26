@@ -8,10 +8,9 @@ let styles = require('./PhraseList.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   searchForm: IFormState,
-  addPhrase(phrase: string): void,
+  addPhrase(text: string): void,
   deletePhrase(index: number): void,
-  addFile(filename: string): void,
-  resetFile(): void
+  updateNewPhrase(text: string): void
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -31,6 +30,7 @@ export class PhraseList extends React.Component<IProps, IState> {
 
   handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
     this.setState({entry: event.target.value});
+    this.props.updateNewPhrase(event.target.value)
   }
 
   handleAddPhrase(e: Event) {
@@ -68,9 +68,10 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   render() {
+    console.log('phrase length:', this.props.searchForm.phrases.length);
     return (
       <div>
-        <div className={styles.lastInputContainer}>
+        <div className={styles.phraseInputContainer}>
         {this.props.searchForm.phrases.map(
           (phrase: string, index: number) => {
             return (
@@ -81,7 +82,14 @@ export class PhraseList extends React.Component<IProps, IState> {
             );
           }
         )}
-          <textarea id="lastPhraseInput" ref="lastPhraseInput" className={styles.phraseInput} onKeyDown={e => this.textAreaAdjust(e)} placeholder={'Add a new phrase'} onChange={e => this.handleInputChange(e)}></textarea>
+          <textarea 
+            id="lastPhraseInput" 
+            ref="lastPhraseInput" 
+            className={styles.phraseInput} 
+            placeholder={'Add a new phrase'} 
+            onKeyDown={e => this.textAreaAdjust(e)} 
+            onChange={e => this.handleInputChange(e)}>
+          </textarea>
         </div>
         <Icons.PlusCircle 
           className={styles.plus}
