@@ -1,7 +1,13 @@
 import { IAction } from '../actions/helpers';
 import { saveResults, saveResultsInFile } from '../actions/results';
+import { cloneArray } from '../utils/helpers';
 
-const initialState: Array<IResult> = []; 
+const initialState: IResults = { hasRun: false, [] } ; 
+
+export interface IResults {
+  hasRun: boolean,
+  results: Array<IResult>
+}
 
 export interface IResult {
   phrase: string,
@@ -16,8 +22,11 @@ export interface IExcerpt {
 
 export type TState = Array<IResult>;
 
-export default function results(state: Array<IResult> = initialState, action: IAction) {
-  let newState: Array<IResult> = [];
+export default function results(state: IResults = initialState, action: IAction) {
+  let newState: {
+    hasRun: state.hasRun,
+    cloneArray(state.results)
+  };
 
   if (saveResults.test(action)) {
     newState = action.payload;

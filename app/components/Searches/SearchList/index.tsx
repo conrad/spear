@@ -67,19 +67,24 @@ export class SearchList extends React.Component<IProps, IState> {
   }
 
   render() {
+    let searches: Array<ISearch> = this.props.searches ? this.props.searches : [];
     return (
       <div>
-        <div className={styles.lastInputContainer}>
-        {/* {this.props.searchForm.phrases.map(
-          (phrase: string, index: number) => {
+        <div className={styles.searchListContainer}>
+        { searches.map(
+          (search: ISearch, index: number) => {
             return (
               <div key={index}>
-                <textarea className={styles.phraseInput} readOnly value={phrase}/>
+                <textarea 
+                  className={styles.phraseInput} 
+                  readOnly 
+                  value={search.name}
+                />
                 <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
               </div>
             );
           }
-        )} */}
+        )}
           <textarea 
             id="lastSearchNameInput" 
             className={styles.searchInput} 

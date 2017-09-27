@@ -5,6 +5,7 @@ import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
 import { search as runSearch } from '../../local/fileSearcher';
 import { IResult } from '../../reducers/results';
+import { copyArray } from '../../utils/helpers';
 
 let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
@@ -26,7 +27,7 @@ export class SearchForm extends React.Component<IProps> {
 
   handleClickSearch() {
     let searchForm: IFormState = {...this.props.searchForm}; 
-    let phrases: Array<string> = this.copyArray(searchForm.phrases);
+    let phrases: Array<string> = copyArray(searchForm.phrases);
 
     if (searchForm.newPhrase && searchForm.phrases.indexOf(searchForm.newPhrase) == -1) {
       phrases.push(searchForm.newPhrase);
@@ -35,15 +36,6 @@ export class SearchForm extends React.Component<IProps> {
     const results: Array<IResult> = runSearch(searchForm.filename, phrases);
 
     this.props.setResults(results);
-  }
-
-  copyArray(arr: Array<any>): Array<any> {
-    let results: Array<any> = []; 
-    arr.map(val => {
-      results.push(val);
-    });
-
-    return results;
   }
 
   render() {
