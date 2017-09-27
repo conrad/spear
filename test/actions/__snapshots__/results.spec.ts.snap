@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions should saveResults should create saveResults action 1`] = `
+Object {
+  "payload": Object {
+    "hasRun": true,
+    "items": Array [],
+  },
+  "type": "SET_RESULTS",
+}
+`;
+
+exports[`actions should saveResultsInFile should create saveResultsInFile action 1`] = `
+Object {
+  "type": "SAVE_RESULTS_IN_FILE",
+}
+`;
