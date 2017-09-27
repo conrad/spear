@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu, shell } = require('electron');
+// const { RunSearch } = require('./local/shortcuts.ts');
 
 let menu;
 let template;
@@ -72,8 +73,15 @@ app.on('ready', () =>
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Electron',
-      submenu: [{
+      label: 'Spear',
+      submenu: [
+        // RunSearch,
+        {
+          label: 'Run Search',
+          accelerator: 'Alt+Cmd+I', // : 'Ctrl+Shift+I',
+          click: () => { 'not working yet' }
+        },
+        {
         label: 'About ElectronReact',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
