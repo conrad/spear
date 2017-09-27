@@ -1,7 +1,7 @@
 :local {
   .plus {
     display: inline-block;
-    margin: 10px;
+    margin: 0px 10px;
     padding: 10px;
     cursor: pointer;
   }
@@ -33,5 +33,11 @@
     border: 1px solid #858585;
     border-radius: 3px;
     font-size: 14px;
+  }
+
+  .phraseUsedWarning {
+    margin: 0px 0px 20px 20px;
+    font-size: 16px;
+    color: #F93737;
   }
 }

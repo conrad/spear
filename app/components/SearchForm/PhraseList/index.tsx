@@ -10,7 +10,8 @@ export interface IProps extends RouteComponentProps<any> {
   searchForm: IFormState,
   addPhrase(text: string): void,
   deletePhrase(index: number): void,
-  updateNewPhrase(text: string): void
+  updateNewPhrase(text: string): void,
+  updateIsNewPhraseUsed(isUsed: boolean): void
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -25,7 +26,6 @@ export class PhraseList extends React.Component<IProps, IState> {
   clearLastInput() {
     this.setState({entry: ''});
     (ReactDOM.findDOMNode(this.refs.lastPhraseInput) as HTMLTextAreaElement).value = '';
-    console.log('cleared last input')
   }
 
   handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
@@ -35,17 +35,19 @@ export class PhraseList extends React.Component<IProps, IState> {
 
   handleAddPhrase(e: Event) {
     if (this.state.entry) {
-      console.log('Adding phrase: ', this.state.entry);
       let isAlreadyPhrase = false;
       this.props.searchForm.phrases.forEach(phrase => {
         if (this.state.entry == phrase) {
-          console.log('This phrase is already registered.');
+          console.log('The phrase is already registered in this search.');
           isAlreadyPhrase = true;
+          this.props.updateIsNewPhraseUsed(true);
           return;
         }
       });
+      
       if (!isAlreadyPhrase) {
         this.props.addPhrase(this.state.entry);
+        this.props.updateIsNewPhraseUsed(false);
       }
 
       this.clearLastInput();
@@ -95,6 +97,9 @@ export class PhraseList extends React.Component<IProps, IState> {
           className={styles.plus}
           onClick={this.handleAddPhrase.bind(this)}
         />
+        { this.props.searchForm.isNewPhraseUsed ? 
+          <div className={ styles.phraseUsedWarning }>The phrase is already used in this search.</div> : null
+        }
       </div>
     );
   }

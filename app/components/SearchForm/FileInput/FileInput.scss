@@ -1,8 +1,12 @@
 :local {
   .inputBlock {
     display: inline-block;
-    width: 350px;
+    min-width: 350px;
     margin: 18px;
     font-size: 14px;
+  }
+  
+  .fileWarning {
+    color: #F93737;
   }
 }

@@ -1,12 +1,12 @@
 import { IAction } from '../actions/helpers';
 import { saveResults, saveResultsInFile } from '../actions/results';
-import { cloneArray } from '../utils/helpers';
+import { clone } from '../utils/helpers';
 
-const initialState: IResults = { hasRun: false, [] } ; 
+const initialState: IResults = { hasRun: false, items: [] } ; 
 
 export interface IResults {
   hasRun: boolean,
-  results: Array<IResult>
+  items: Array<IResult>
 }
 
 export interface IResult {
@@ -23,10 +23,7 @@ export interface IExcerpt {
 export type TState = Array<IResult>;
 
 export default function results(state: IResults = initialState, action: IAction) {
-  let newState: {
-    hasRun: state.hasRun,
-    cloneArray(state.results)
-  };
+  let newState: IResults = clone(state);
 
   if (saveResults.test(action)) {
     newState = action.payload;

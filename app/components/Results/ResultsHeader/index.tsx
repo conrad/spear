@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IResult } from '../../../reducers/results';
+import { IResults, IResult } from '../../../reducers/results';
 import { IFormState } from '../../../reducers/searchForm';
 
 let styles = require("./ResultsHeader.scss");
 
 export interface IProps extends RouteComponentProps<any> {
-  results: Array<IResult>,
+  results: IResults,
   searchForm: IFormState
 }
  
 export interface IState extends RouteComponentProps<any> {
-  results: Array<IResult>,
+  results: IResults,
   searchInfo: IFormState
 }
 
@@ -34,16 +34,16 @@ export class ResultsHeader extends React.Component<IProps, IState> {
     }
   }
 
-  calculateResults(results: Array<IResult>): number {
+  calculateResults(resultItems: Array<IResult>): number {
     // return results.reduce((prev: IResult, cur: IResult, i: number, resArr: Array<IResult>) => {
     //   ...
     // });
 
     let number: number = 0;
-    results.forEach(result => {
-      console.log('result in results:', result);
-      if (result.excerpts) {
-        number += result.excerpts.length;
+    resultItems.forEach(item => {
+      console.log('result in results:', item);
+      if (item.excerpts) {
+        number += item.excerpts.length;
       }
     });
 
@@ -55,7 +55,7 @@ export class ResultsHeader extends React.Component<IProps, IState> {
       return <div></div>
     }
 
-    const numberOfResults = this.calculateResults(this.state.results);
+    const numberOfResults = this.calculateResults(this.state.results.items);
     const resultsText = numberOfResults === 1 ? "Result" : "Results"    
     return (
       <div className={ styles.resultsHeader }>

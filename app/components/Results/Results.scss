@@ -1,6 +1,12 @@
 :local {
   .results {
+    border-top: 1px solid #C76565;
     display: inline-block;
     width: 100%;
+  }
+
+  .exportButton {
+    margin: 20px;
+    cursor: pointer;
   }
 }

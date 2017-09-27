@@ -14,11 +14,13 @@ export class FileInput extends React.Component<IProps> {
   handleChange(selectorFiles: FileList | null) {
     if (selectorFiles == null) {
       console.log('nope. need to submit a file.')
+      this.props.resetFile();
       return;
     }
     console.log(selectorFiles[0]);
-    if (selectorFiles.length > 1) {
-      throw new Error('Only one file allowed at a time.')
+    if (selectorFiles.length > 1) {  // TODO: Enable multifile search someday.
+      this.props.resetFile();
+      return;
     }
 
     if (selectorFiles[0].type === 'text/plain'
@@ -27,7 +29,6 @@ export class FileInput extends React.Component<IProps> {
       this.props.addFile(selectorFiles[0].path);
     } else {
       console.log('incorrect file type');
-      //TODO: Show feedback about filetype.
       this.props.resetFile();
     }
   }
@@ -41,6 +42,10 @@ export class FileInput extends React.Component<IProps> {
           accept="application/msword, text/plain" 
           onChange={ (e) => this.handleChange(e.target.files) } 
         />
+        { !this.props.searchForm.isValidFile ?
+          <span className={ styles.fileWarning }>Must provide a text file</span> : 
+          null
+        }
       </div>
     );
   }

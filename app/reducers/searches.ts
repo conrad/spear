@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { storeSearch, deleteSearch } from '../actions/searches';
-import { clone } from './helpers';
+import { clone } from '../utils/helpers';
 
 const initialState: Array<ISearch> = []; 
 

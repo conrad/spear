@@ -1,18 +1,22 @@
 import { IAction } from '../actions/helpers';
-import { submitSearch, appendPhrase, setNewPhrase, unsetPhrase, setFile, resetFile } from '../actions/searchForm';
-import { clone } from './helpers';
+import { submitSearch, appendPhrase, setNewPhrase, setIsPhraseUsed, unsetPhrase, setFile, resetFile } from '../actions/searchForm';
+import { clone } from '../utils/helpers';
 
 
 const initialState = { 
   filename: "",
+  isValidFile: true,
   phrases: ['hey ma', 'whats up'],
-  newPhrase: ""
+  newPhrase: "",
+  isNewPhraseUsed: false
 };
 
 export interface IFormState {
   filename: string,
+  isValidFile: boolean,
   phrases: Array<string>,
-  newPhrase: string
+  newPhrase: string,
+  isNewPhraseUsed: boolean
 };
 
 export interface IPhrase {
@@ -30,17 +34,20 @@ export default function searchForm(state: IFormState = initialState, action: IAc
     newState.phrases.push(action.payload);
     return newState;
   } else if (setNewPhrase.test(action)) {
-    console.log('setPhrase action:', action.payload);
     newState.newPhrase = action.payload;
-    // newState.phrases[action.payload.index] = action.payload.text;
     return newState;
   } else if (unsetPhrase.test(action)) {
     newState.phrases.splice(action.payload, 1);
     return newState;
+  } else if (setIsPhraseUsed.test(action)) {
+    newState.isNewPhraseUsed = action.payload;
+    return newState;
   } else if (setFile.test(action)) {
+    newState.isValidFile = true;
     newState.filename = action.payload;
     return newState;
   } else if (resetFile.test(action)) {
+    newState.isValidFile = false;
     newState.filename = '';
     return newState;
   } else if (submitSearch.test(action)) {

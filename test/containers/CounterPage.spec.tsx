@@ -52,9 +52,9 @@ describe('containers', () => {
     it('should change if odd and if odd button clicked', () => {
       const { buttons, p } = setup({ 
         counter: 1, 
-        searchForm: { filename: "dog.txt", phrases: [], newPhrase: "" },
+        searchForm: { filename: "dog.txt", phrases: [], newPhrase: "", isNewPhraseUsed: false, isValidFile: true },
         searches: [],
-        results: []
+        results: { hasRun: false, items: [] }
       });
       buttons.at(2).simulate('click');
       expect(p.text()).toMatch(/^2$/);
