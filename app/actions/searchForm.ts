@@ -21,25 +21,25 @@ export function updateIsNewPhraseUsed(isUsed: boolean) {
 }
 
 export function addFile(filename: string) {
-  return (dispatch: Function, getState: Function) => {
+  return (dispatch: Function) => {
     // const { searchForm } = getState();
     dispatch(setFile(filename));
   }
 }
 
 export function addPhrase(phrase: string) {
-  return (dispatch: Function, getState: Function) => {
+  return (dispatch: Function) => {
     dispatch(appendPhrase(phrase));
   }
 }
 
 export function deletePhrase(index: number) {
-  return (dispatch: Function, getState: Function) => {
+  return (dispatch: Function) => {
     dispatch(unsetPhrase(index));
   }
 }
 
-export function submitValidSearch() {
+export function submitSearchIfValid() {   
   return (dispatch: Function, getState: Function) => {
     const { searchForm } = getState();
 

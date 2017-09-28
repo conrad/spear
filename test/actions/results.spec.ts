@@ -21,24 +21,4 @@ describe('actions', () => {
       payload: results
     })).toBe(true);
   });
-
-  // it('should incrementIfOdd shouldnt create increment action if counter is even', () => {
-  //   const fn = actions.incrementIfOdd();
-  //   const dispatch = spy();
-  //   const getState = () => ({ counter: 2 });
-  //   fn(dispatch, getState);
-  //   expect(dispatch.called).toBe(false);
-  // });
-
-  // // There's no nice way to test this at the moment...
-  // it('should incrementAsync', done => {
-  //   const fn = actions.incrementAsync(1);
-  //   expect(fn).toBeInstanceOf(Function);
-  //   const dispatch = spy();
-  //   fn(dispatch);
-  //   setTimeout(() => {
-  //     expect(dispatch.calledWith({ type: actions.increment.type })).toBe(true);
-  //     done();
-  //   }, 5);
-  // });
 });

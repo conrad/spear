@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions should deleteSearch should create deleteSearch action 1`] = `
+Object {
+  "payload": Object {
+    "description": null,
+    "index": 0,
+    "isEditing": false,
+    "name": "",
+    "phrases": Array [],
+  },
+  "type": "DELETE_SEARCH",
+}
+`;
+
+exports[`actions should moveSearch should create moveSearch action 1`] = `
+Object {
+  "payload": Object {
+    "initialIndex": 1,
+    "nextIndex": 2,
+  },
+  "type": "MOVE_SEARCH",
+}
+`;
+
+exports[`actions should storeSearch should create storeSearch action 1`] = `
+Object {
+  "payload": Object {
+    "description": null,
+    "index": 0,
+    "isEditing": false,
+    "name": "",
+    "phrases": Array [],
+  },
+  "type": "STORE_SEARCH",
+}
+`;
