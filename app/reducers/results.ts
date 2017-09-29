@@ -1,5 +1,5 @@
 import { IAction } from '../actions/helpers';
-import { saveResults, saveResultsInFile } from '../actions/results';
+import { saveResults, saveResultsToFile } from '../actions/results';
 import { clone } from '../utils/helpers';
 
 const initialState: IResults = { hasRun: false, items: [] } ; 
@@ -29,7 +29,7 @@ export default function results(state: IResults = initialState, action: IAction)
     newState = action.payload;
     return newState;
   } 
-  if (saveResultsInFile.test(action)) {
+  if (saveResultsToFile.test(action)) {
     console.log("saving results in reducer");
     return newState;
   } 

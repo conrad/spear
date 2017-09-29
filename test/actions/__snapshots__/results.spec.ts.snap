@@ -6,12 +6,12 @@ Object {
     "hasRun": true,
     "items": Array [],
   },
-  "type": "SET_RESULTS",
+  "type": "SAVE_RESULTS",
 }
 `;
 
 exports[`actions should saveResultsInFile should create saveResultsInFile action 1`] = `
 Object {
-  "type": "SAVE_RESULTS_IN_FILE",
+  "type": "SAVE_RESULTS_TO_FILE",
 }
 `;

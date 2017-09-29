@@ -7,7 +7,7 @@ describe('actions', () => {
   });
 
   it('should saveResultsInFile should create saveResultsInFile action', () => {
-    expect(actions.saveResultsInFile()).toMatchSnapshot();
+    expect(actions.saveResultsToFile()).toMatchSnapshot();
   });
 
   it('should setResults should create saveResults action', () => {
