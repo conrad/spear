@@ -1,10 +1,14 @@
 :local {
   .columnsContainer {
-    display:flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
+    position: relative;
+    // display: flex;
+    // flex-direction: column;
+    // flex-wrap: nowrap;
+    // justify-content: flex-start;
+    // align-items: flex-start;
+    height: 100%;
+    // overflow-x: hidden;
+    // overflow-y: hidden;
   }
 
   .rowsContainer {

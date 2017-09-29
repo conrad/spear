@@ -3,6 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { IResults, IResult } from '../../../reducers/results';
 import { IFormState } from '../../../reducers/searchForm';
 
+let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
 
 export interface IProps extends RouteComponentProps<any> {
@@ -50,6 +51,14 @@ export class ResultsHeader extends React.Component<IProps, IState> {
     return number;
   }
 
+  handleClickExport() {
+    console.log('wanna save your results?');
+  }
+
+  handleClickClose() {
+    console.log('wanna close results?');
+  }
+
   render() {
     if (!this.state) {
       return <div></div>
@@ -59,6 +68,14 @@ export class ResultsHeader extends React.Component<IProps, IState> {
     const resultsText = numberOfResults === 1 ? "Result" : "Results"    
     return (
       <div className={ styles.resultsHeader }>
+        <div>
+          <Icons.File 
+            className={ styles.exportButton }
+            onClick={ this.handleClickExport.bind(this) }/>
+          <Icons.ChevronDown
+            className={ styles.downButton }
+            onClick={ this.handleClickClose.bind(this) }/>
+        </div>
         <div className={ styles.resultsFile }>
           Search of: {this.state.searchInfo.filename}
         </div>

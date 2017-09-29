@@ -28,13 +28,13 @@ export class ResultsBody extends React.Component<IProps> {
 
   render() {
     return (
-      <div>
+      <div className={ styles.scrollingContainer }>
         <ul className={ styles.resultsList }>
           { this.props.results.hasRun && this.props.results.items.length < 1 ?
             <div className={ styles.noResults }>No results found for this search.</div> :
-            this.createElementsFromResults(this.props.results).map(val => {
-              return val;
-            }) 
+              this.createElementsFromResults(this.props.results).map(val => {
+                return val;
+              })
           }
         </ul>
       </div>
