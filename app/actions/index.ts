@@ -1,3 +1,3 @@
 export * from './searchForm';
-export * from './searches';
+export * from './searchesList';
 export * from "./results";

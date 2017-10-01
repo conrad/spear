@@ -7,6 +7,7 @@ import { IState } from '../reducers';
 
 function mapStateToProps(state: IState): Partial<IProps> {
   return {
+    searchesList: state.searchesList,
     searchForm: state.searchForm,
     results: state.results
   };

@@ -53,7 +53,11 @@ describe('containers', () => {
       const { buttons, p } = setup({ 
         counter: 1, 
         searchForm: { filename: "dog.txt", phrases: [], newPhrase: "", isNewPhraseUsed: false, isValidFile: true },
-        searches: [],
+        searchesList: {
+          searches: [],
+          newSearch: '',
+          isNewSearchUsed: false
+        },
         results: { hasRun: false, items: [] }
       });
       buttons.at(2).simulate('click');

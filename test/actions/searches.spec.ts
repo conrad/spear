@@ -1,13 +1,14 @@
 import { spy } from 'sinon';
-import * as actions from '../../app/actions/searches';
-import { ISearch, IMove } from '../../app/reducers/searches';
+import * as actions from '../../app/actions/searchesList';
+import { ISearch, IMove } from '../../app/reducers/searchesList';
 
 const mockSearch: ISearch = {
   description: null,
   index: 0,
   isEditing: false,
+  isIncluded: false,
   name: '',
-  phrases: []
+  phrases: [],
 };
 
 const mockMove: IMove = {
@@ -29,7 +30,7 @@ describe('actions', () => {
   });
 
   it('should saveSearch should create storeSearch action', () => {
-    const fn = actions.saveSearch(
+    const fn = actions.addSearch(
       mockSearch.index, 
       mockSearch.name, 
       mockSearch.description, 

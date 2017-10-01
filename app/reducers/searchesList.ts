@@ -1,32 +1,43 @@
 import { IAction } from '../actions/helpers';
-import { storeSearch, deleteSearch } from '../actions/searches';
+import { storeSearch, deleteSearch } from '../actions/searchesList';
 import { clone } from '../utils/helpers';
 
-const initialState: Array<ISearch> = []; 
+const initialState: ISearchesState = {
+  searches: [],
+  newSearch: null,
+  isNewSearchUsed: false
+}; 
+
+export interface ISearchesState {
+  searches: Array<ISearch>,
+  newSearch: string|null,
+  isNewSearchUsed: boolean,
+};
 
 export interface ISearch {
   index: number,
   name: string,
   description: string|null,
   phrases: Array<string>,
-  isEditing: boolean
+  isIncluded: boolean,
+  isEditing: boolean,
 };
 
 export interface IMove {
   initialIndex: number,
-  nextIndex: number
+  nextIndex: number,
 };
 
-export type TState = Array<ISearch>;
+export type TState = ISearchesState;
 
-export default function searchForm(state: Array<ISearch> = initialState, action: IAction) {
-  let newState: Array<ISearch> = clone(state);
+export default function searchForm(state: ISearchesState = initialState, action: IAction) {
+  let newState: ISearchesState = clone(state);
   if (storeSearch.test(action)) {
-    newState.push(action.payload);
+    newState.searches.push(action.payload);
     return newState;
   } else if (deleteSearch.test(action)) {
     // if (action.payload.name == newState[action.payload.index].name) {
-      newState.splice(action.payload.index, 1);
+      newState.searches.splice(action.payload.index, 1);
     // }
     return newState;
   }

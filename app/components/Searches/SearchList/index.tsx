@@ -1,30 +1,40 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../../reducers/searchForm';
-import { ISearch } from '../../../reducers/searches';
+import { ISearchesState, ISearch } from '../../../reducers/searchesList';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');
 
+
+
 export interface IProps extends RouteComponentProps<any> {
-  searches: Array<ISearch>,
+  searchesList: ISearchesState,
+  addSearch(
+    index: number, 
+    name: string, 
+    description: string|null, 
+    phrases: Array<string>
+  ): void,
+  removeSearch(index: number, name: string): void,
   searchForm: IFormState,
-  addSearch(phrase: string): void,
-  deleteSearch(index: number): void,
-  setPhrases(phrases: Array<string>): void,
 }
 
 interface IState extends RouteComponentProps<any> {
-  searches: Array<ISearch>
+  searchesList: ISearchesState
 }
 
 export class SearchList extends React.Component<IProps, IState> {
   componentDidMount() {
-    this.setState({searches: []});
+    this.setState({searchesList: {
+      searches: [],
+      newSearch: null,
+      isNewSearchUsed: false,
+    }});
   }
 
-  clearTextArea() {
-    this.setState({searches: []}); //TODO: Not right. Fix this.
+  clearLastSearchInput() {
+    // this.setState({searches: []}); //TODO: Not right. Fix this.
     let textarea: any = document.getElementById('lastSearchNameInput');
     if (textarea) {
       textarea.value = '';
@@ -36,8 +46,8 @@ export class SearchList extends React.Component<IProps, IState> {
   }
 
   handleAddSearch(e: Event) {
-    if (this.state.searches) {
-      console.log('Adding phrase: ', this.state.searches);
+    if (this.state.searchesList) {
+      console.log('Adding search: ', this.state.searchesList.searches);
       // let isAlreadyPhrase = false;
       // this.props.searchForm.phrases.forEach(phrase => {
         // TODO: Fix. None of this logic around state is correct yet.
@@ -48,13 +58,13 @@ export class SearchList extends React.Component<IProps, IState> {
       //   }
       // });
 
-      this.clearTextArea();
+      this.clearLastSearchInput();
     } else {
-      console.log('You have to add a new phrase in order to add more!');
+      console.log('You have to add a new search in order to add more!');
     }
   }
 
-  handleRemovePhrase(index: number) {
+  handleRemoveSearch(index: number, name: string) {
     // this.props.deletePhrase(index);
   }
 
@@ -67,11 +77,19 @@ export class SearchList extends React.Component<IProps, IState> {
   }
 
   render() {
-    let searches: Array<ISearch> = this.props.searches ? this.props.searches : [];
+    console.log('searchList props:', this.props);
+    const searchesList: ISearchesState = this.props.searchesList ? 
+      this.props.searchesList : 
+      {
+        searches: [],
+        newSearch: null,
+        isNewSearchUsed: false,
+      };
+
     return (
       <div>
         <div className={styles.searchListContainer}>
-        { searches.map(
+        { searchesList.searches.map(
           (search: ISearch, index: number) => {
             return (
               <div key={index}>
@@ -80,7 +98,7 @@ export class SearchList extends React.Component<IProps, IState> {
                   readOnly 
                   value={search.name}
                 />
-                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
+                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemoveSearch.bind(this, index, search.name)}/>
               </div>
             );
           }
