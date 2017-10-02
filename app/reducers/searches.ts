@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { clone } from '../utils/helpers';
-import { storeSearch, deleteSearch } from '../actions/searches';
+import { storeSearch, deleteSearch, unsetPhrase } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
 
 
@@ -18,7 +18,7 @@ const initialState: ISearchesState = {
   filename: "",
   isValidFile: true,
   newPhrase: "",
-  isNewPhraseUsed: false
+  isNewPhraseUsed: false,
 }; 
 
 export interface ISearchesState {
@@ -46,6 +46,12 @@ export interface IMove {
   nextIndex: number,
 };
 
+export interface IPhrase {
+  index: number,
+  text: string,
+  searchIndex: number
+};
+
 export type TState = ISearchesState;
 
 export default function searches(state: ISearchesState = initialState, action: IAction) {
@@ -53,6 +59,10 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   if (storeSearch.test(action)) {
     newState.searches[action.payload.index] = action.payload;
+    return newState;
+
+  } else if (unsetPhrase.test(action)) {
+    newState.searches[action.payload.searchIndex].phrases.splice(action.payload.index, 1);
     return newState;
 
   } else if (deleteSearch.test(action)) {
@@ -94,3 +104,65 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   return newState;
 }
+
+
+// import { IAction } from '../actions/helpers';
+// import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
+// import { clone } from '../utils/helpers';
+
+
+// const initialState = { 
+//   filename: "",
+//   isValidFile: true,
+//   phrases: ['hey ma', 'whats up'],
+//   newPhrase: "",
+//   isNewPhraseUsed: false
+// };
+
+// export interface IFormState {
+//   filename: string,
+//   isValidFile: boolean,
+//   phrases: Array<string>,
+//   newPhrase: string,
+//   isNewPhraseUsed: boolean
+// };
+
+// export interface IPhrase {
+//   index: number,
+//   text: string,
+//   searchIndex: number
+// };
+
+// export type TState = IFormState;
+
+// export default function searchForm(state: IFormState = initialState, action: IAction) {
+//   let newState: IFormState = clone(state);
+
+//   if (appendPhrase.test(action)) {
+//     newState.phrases.push(action.payload);
+//     return newState;
+//   } else if (setNewPhrase.test(action)) {
+//     newState.newPhrase = action.payload;
+//     return newState;
+//   } else if (unsetPhrase.test(action)) {
+//     newState.phrases.splice(action.payload, 1);
+//     return newState;
+//   } else if (setIsPhraseUsed.test(action)) {
+//     newState.isNewPhraseUsed = action.payload;
+//     return newState;
+//   } else if (setFile.test(action)) {
+//     newState.isValidFile = true;
+//     newState.filename = action.payload;
+//     return newState;
+//   } else if (resetFile.test(action)) {
+//     newState.isValidFile = false;
+//     newState.filename = '';
+//     return newState;
+//   } else if (submitSearch.test(action)) {
+//     console.log("filename:", newState.filename);
+//     console.log("first phrase:", newState.phrases[0]);
+//     return newState;
+//   }
+
+//   return newState;
+// }

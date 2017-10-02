@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IFormState } from '../../reducers/searchForm';
+import { ISearchesState, ISearch } from '../../reducers/searches';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
 import { search as runSearch } from '../../local/fileSearcher';
@@ -11,9 +11,9 @@ let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  searchForm: IFormState,
-  addPhrase(phrase: string): void,
-  deletePhrase(index: number): void,
+  searches: ISearchesState,
+  updateSearch(search: ISearch): void,
+  deletePhrase(phraseIndex: number, searchIndex: number): void,
   addFile(filename: string): void,
   resetFile(): void,
   setResults(results: IResults): void,
@@ -22,27 +22,25 @@ export interface IProps extends RouteComponentProps<any> {
 }
 
 export class SearchForm extends React.Component<IProps> {
-  handleAddPhrase(e: Event) {
-    this.props.addPhrase('come on');
-  }
-
   handleClickSearch() {
-    let searchForm: IFormState = {...this.props.searchForm}; 
+    let searches: ISearchesState = {...this.props.searches}; 
     
-    if (!searchForm.filename) {
+    if (!searches.filename) {
       this.props.resetFile();
       return;
     }
     
-    let phrases: Array<string> = copyArray(searchForm.phrases);
+    let phrases: Array<string> = copyArray(searches.searches[searches.currentSearchIndex].phrases);
 
-    if (searchForm.newPhrase && searchForm.phrases.indexOf(searchForm.newPhrase) == -1) {
-      phrases.push(searchForm.newPhrase);
+    if (searches.newPhrase 
+      && searches.searches[searches.currentSearchIndex].phrases.indexOf(searches.newPhrase) == -1
+    ) {
+      phrases.push(searches.newPhrase);
     }
 
     const results: IResults = { 
       hasRun: true, 
-      items: runSearch(searchForm.filename, phrases)
+      items: runSearch(searches.filename, phrases)
     };
 
     this.props.updateIsNewPhraseUsed(false);

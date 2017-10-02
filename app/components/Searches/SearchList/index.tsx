@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IFormState } from '../../../reducers/searchForm';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  searchesList: ISearchesState,
+  searches: ISearchesState,
   addSearch(
     index: number, 
     name: string, 
@@ -15,19 +14,23 @@ export interface IProps extends RouteComponentProps<any> {
     phrases: Array<string>
   ): void,
   removeSearch(index: number, name: string): void,
-  searchForm: IFormState,
 }
 
 interface IState extends RouteComponentProps<any> {
-  searchesList: ISearchesState
+  searches: ISearchesState
 }
 
 export class SearchList extends React.Component<IProps, IState> {
   componentDidMount() {
     this.setState({searches: {
+      currentSearchIndex: 0,
+      filename: '',
+      isValidFile: true,
       searches: [],
       newSearch: null,
       isNewSearchUsed: false,
+      newPhrase: '',
+      isNewPhraseUsed: false
     }});
   }
 
@@ -44,8 +47,8 @@ export class SearchList extends React.Component<IProps, IState> {
   }
 
   handleAddSearch(e: Event) {
-    if (this.state.searchesList) {
-      console.log('Adding search: ', this.state.searchesList.searches);
+    if (this.state.searches) {
+      console.log('Adding search: ', this.state.searches.searches);
       // let isAlreadyPhrase = false;
       // this.props.searchForm.phrases.forEach(phrase => {
         // TODO: Fix. None of this logic around state is correct yet.
@@ -76,9 +79,10 @@ export class SearchList extends React.Component<IProps, IState> {
 
   render() {
     console.log('searchList props:', this.props);
-    const searches: ISearchesState = this.props.searchesList ? 
-      this.props.searchesList : 
+    const searches: ISearchesState = this.props.searches ? 
+      this.props.searches : 
       {
+        currentSearchIndex: 0,
         filename: '',
         isValidFile: true,
         searches: [],

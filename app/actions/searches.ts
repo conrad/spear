@@ -1,9 +1,10 @@
 import { actionCreator } from './helpers';
-import { ISearch, IMove } from '../reducers/searches';
+import { IPhrase, ISearch, IMove } from '../reducers/searches';
 
 export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
 export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
 export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
+export const unsetPhrase = actionCreator<IPhrase>('UNSET_PHRASE');
 
 export function addSearch(search: ISearch) {
   return (dispatch: Function) => {
@@ -21,6 +22,18 @@ export function reorderSearch(move: IMove) {
   return (dispatch: Function) => {
     dispatch(moveSearch(move));
   };
+}
+
+export function deletePhrase(phraseIndex: number, searchIndex: number) {
+  return (dispatch: Function) => {
+    const phrase: IPhrase = {
+      index: phraseIndex,
+      text: '',
+      searchIndex,
+    };
+    
+    dispatch(unsetPhrase(phrase));
+  }    
 }
 
 export function removeSearch(index: number, name: string) {

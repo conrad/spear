@@ -3,13 +3,13 @@ import { RouteComponentProps } from 'react-router';
 import { IResults } from '../../reducers/results';
 import { ResultsHeader } from "./ResultsHeader";
 import { ResultsBody } from "./ResultsBody";
-import { IFormState } from '../../reducers/searchForm';
+import { ISearchesState } from '../../reducers/searches';
 
 let styles = require('./Results.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   results: IResults,
-  searchForm: IFormState
+  searches: ISearchesState
 }
   
 export class Results extends React.Component<IProps> {

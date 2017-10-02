@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IFormState } from '../../reducers/searchForm';
 import { IResults } from '../../reducers/results';
-import { ISearchesState } from '../../reducers/searches';
+import { ISearchesState, ISearch } from '../../reducers/searches';
 import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';
@@ -10,11 +9,10 @@ import { Results } from '../Results';
 let styles = require('./Home.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  searchForm: IFormState,
   results: IResults,
-  searchesList: ISearchesState,
-  addPhrase(phrase: string): void,
-  deletePhrase(index: number): void,
+  searches: ISearchesState,
+  updateSearch(search: ISearch): void,
+  deletePhrase(phraseIndex: number, searchIndex: number): void,
   addFile(filename: string): void,
   resetFile(): void,
   setResults(results: IResults): void,

@@ -9,8 +9,9 @@ let styles = require('./PhraseList.scss');
 export interface IProps extends RouteComponentProps<any> {
   searches: ISearchesState,
   updateSearch(search: ISearch): void,
+  deletePhrase(phraseIndex: number, searchIndex: number): void,
   updateNewPhrase(text: string): void,
-  updateIsNewPhraseUsed(isUsed: boolean): void
+  updateIsNewPhraseUsed(isUsed: boolean): void,
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -33,9 +34,10 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   handleAddPhrase(e: Event) {
+    const currentIndex: number = this.props.searches.currentSearchIndex;
     if (this.state.entry) {
       let isAlreadyPhrase = false;
-      this.props.searchForm.phrases.forEach(phrase => {
+      this.props.searches.searches[currentIndex].phrases.forEach(phrase => {
         if (this.state.entry == phrase) {
           console.log('The phrase is already registered in this search.');
           isAlreadyPhrase = true;
@@ -45,7 +47,6 @@ export class PhraseList extends React.Component<IProps, IState> {
       });
       
       if (!isAlreadyPhrase) {
-        const currentIndex: number = this.props.searches.currentSearchIndex;
         this.props.updateSearch({
           index: currentIndex,
           name: this.props.searches.searches[currentIndex].name,
@@ -64,7 +65,7 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   handleRemovePhrase(index: number) {
-    this.props.updateSearch(index);
+    this.props.deletePhrase(index, this.props.searches.currentSearchIndex);
   }
 
   textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -77,20 +78,25 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   render() {
-    console.log('phrase length:', this.props.searchForm.phrases.length);
+    const currentIndex: number = this.props.searches.currentSearchIndex;
+    const currentSearch: ISearch = this.props.searches.searches[currentIndex]
+    console.log('phrase length:', currentSearch.phrases.length);
+
     return (
       <div>
         <div className={styles.phraseInputContainer}>
-        {this.props.searchForm.phrases.map(
+        { currentSearch.phrases.map(
           (phrase: string, index: number) => {
             return (
               <div key={index}>
                 <textarea className={styles.phraseInput} readOnly value={phrase}/>
-                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemovePhrase.bind(this, index)}/>
+                <Icons.MinusCircle 
+                  className={ styles.minus } 
+                  onClick={ this.handleRemovePhrase.bind(this, index) }/>
               </div>
             );
           }
-        )}
+        ) }
           <textarea 
             id="lastPhraseInput" 
             ref="lastPhraseInput" 
@@ -104,7 +110,7 @@ export class PhraseList extends React.Component<IProps, IState> {
           className={styles.plus}
           onClick={this.handleAddPhrase.bind(this)}
         />
-        { this.props.searchForm.isNewPhraseUsed ? 
+        { this.props.searches.isNewPhraseUsed ? 
           <div className={ styles.phraseUsedWarning }>The phrase is already used in this search.</div> : null
         }
       </div>
