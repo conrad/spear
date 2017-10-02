@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../../reducers/searchForm';
-import { ISearchesState, ISearch } from '../../../reducers/searchesList';
+import { ISearchesState, ISearch } from '../../../reducers/searches';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');
-
-
 
 export interface IProps extends RouteComponentProps<any> {
   searchesList: ISearchesState,
@@ -26,7 +24,7 @@ interface IState extends RouteComponentProps<any> {
 
 export class SearchList extends React.Component<IProps, IState> {
   componentDidMount() {
-    this.setState({searchesList: {
+    this.setState({searches: {
       searches: [],
       newSearch: null,
       isNewSearchUsed: false,
@@ -78,18 +76,22 @@ export class SearchList extends React.Component<IProps, IState> {
 
   render() {
     console.log('searchList props:', this.props);
-    const searchesList: ISearchesState = this.props.searchesList ? 
+    const searches: ISearchesState = this.props.searchesList ? 
       this.props.searchesList : 
       {
+        filename: '',
+        isValidFile: true,
         searches: [],
         newSearch: null,
         isNewSearchUsed: false,
+        newPhrase: '',
+        isNewPhraseUsed: false,
       };
 
     return (
       <div>
         <div className={styles.searchListContainer}>
-        { searchesList.searches.map(
+        { searches.searches.map(
           (search: ISearch, index: number) => {
             return (
               <div key={index}>

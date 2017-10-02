@@ -1,21 +1,18 @@
 import { actionCreator } from './helpers';
-import { ISearch, IMove } from '../reducers/searchesList';
+import { ISearch, IMove } from '../reducers/searches';
 
 export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
 export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
 export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
 
-export function addSearch(index: number, name: string, description: string|null, phrases: Array<string>) {
+export function addSearch(search: ISearch) {
   return (dispatch: Function) => {
-    const search = {
-      index,
-      name,
-      description,
-      phrases,
-      isIncluded: false,
-      isEditing: false,
-    };
+    dispatch(storeSearch(search));
+  }
+}
 
+export function updateSearch(search: ISearch) {
+  return (dispatch: Function) => {
     dispatch(storeSearch(search));
   }
 }

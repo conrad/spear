@@ -1,10 +1,8 @@
 import { spy } from 'sinon';
-import * as actions from '../../app/actions/searchesList';
-import { ISearch, IMove } from '../../app/reducers/searchesList';
+import * as actions from '../../app/actions/searches';
+import { ISearch, IMove } from '../../app/reducers/searches';
 
 const mockSearch: ISearch = {
-  description: null,
-  index: 0,
   isEditing: false,
   isIncluded: false,
   name: '',

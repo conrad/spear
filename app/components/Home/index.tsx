@@ -2,7 +2,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IFormState } from '../../reducers/searchForm';
 import { IResults } from '../../reducers/results';
-import { ISearchesState } from '../../reducers/searchesList';
+import { ISearchesState } from '../../reducers/searches';
 import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';

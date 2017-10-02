@@ -20,7 +20,7 @@ export interface IExcerpt {
   text: string
 };
 
-export type TState = Array<IResult>;
+export type TState = IResults;
 
 export default function results(state: IResults = initialState, action: IAction) {
   let newState: IResults = clone(state);

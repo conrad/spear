@@ -1,15 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { RouteComponentProps } from 'react-router';
-import { IFormState } from '../../../reducers/searchForm';
+import { ISearchesState, ISearch } from '../../../reducers/searches';
 let Icons = require('react-feather');
 
 let styles = require('./PhraseList.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  searchForm: IFormState,
-  addPhrase(text: string): void,
-  deletePhrase(index: number): void,
+  searches: ISearchesState,
+  updateSearch(search: ISearch): void,
   updateNewPhrase(text: string): void,
   updateIsNewPhraseUsed(isUsed: boolean): void
 }
@@ -46,7 +45,15 @@ export class PhraseList extends React.Component<IProps, IState> {
       });
       
       if (!isAlreadyPhrase) {
-        this.props.addPhrase(this.state.entry);
+        const currentIndex: number = this.props.searches.currentSearchIndex;
+        this.props.updateSearch({
+          index: currentIndex,
+          name: this.props.searches.searches[currentIndex].name,
+          description: this.props.searches.searches[currentIndex].description,
+          phrases: this.props.searches.searches[currentIndex].phrases,  // ...AND... this.state.entry
+          isIncluded: this.props.searches.searches[currentIndex].isIncluded,
+          isEditing: this.props.searches.searches[currentIndex].isEditing,
+        });
         this.props.updateIsNewPhraseUsed(false);
       }
 
@@ -57,7 +64,7 @@ export class PhraseList extends React.Component<IProps, IState> {
   }
 
   handleRemovePhrase(index: number) {
-    this.props.deletePhrase(index);
+    this.props.updateSearch(index);
   }
 
   textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
