@@ -9,17 +9,9 @@ describe('actions', () => {
   it('should resetFile should create resetFile action', () => {
     expect(actions.resetFile()).toMatchSnapshot();
   });
-
-  it('should unsetPhrase should create unsetPhrase action', () => {
-    expect(actions.unsetPhrase(1)).toMatchSnapshot();
-  });
   
   it('should setFile should create setFile action', () => {
     expect(actions.setFile('name-for-a-file')).toMatchSnapshot();
-  });
-  
-  it('should appendPhrase should create appendPhrase action', () => {
-    expect(actions.appendPhrase('something to look for')).toMatchSnapshot();
   });
   
   it('should setNewPhrase should create setNewPhrase action', () => {
@@ -76,29 +68,29 @@ describe('actions', () => {
     })).toBe(true);
   });
 
-  it('should addPhrase should create appendPhrase action', () => {
-    const phrase: string = 'some particular phrase';
-    const fn = actions.addPhrase(phrase);
-    expect(fn).toBeInstanceOf(Function);
-    const dispatch = spy();
-    fn(dispatch);
-    expect(dispatch.calledWith({ 
-      type: actions.appendPhrase.type, 
-      payload: phrase
-    })).toBe(true);
-  });
+  // it('should addPhrase should create appendPhrase action', () => {
+  //   const phrase: string = 'some particular phrase';
+  //   const fn = actions.addPhrase(phrase);
+  //   expect(fn).toBeInstanceOf(Function);
+  //   const dispatch = spy();
+  //   fn(dispatch);
+  //   expect(dispatch.calledWith({ 
+  //     type: actions.appendPhrase.type, 
+  //     payload: phrase
+  //   })).toBe(true);
+  // });
 
-  it('should deletePhrase should create unsetPhrase action', () => {
-    const index: number = 3;
-    const fn = actions.deletePhrase(index);
-    expect(fn).toBeInstanceOf(Function);
-    const dispatch = spy();
-    fn(dispatch);
-    expect(dispatch.calledWith({ 
-      type: actions.unsetPhrase.type, 
-      payload: index
-    })).toBe(true);
-  });
+  // it('should deletePhrase should create unsetPhrase action', () => {
+  //   const index: number = 3;
+  //   const fn = actions.deletePhrase(index);
+  //   expect(fn).toBeInstanceOf(Function);
+  //   const dispatch = spy();
+  //   fn(dispatch);
+  //   expect(dispatch.calledWith({ 
+  //     type: actions.unsetPhrase.type, 
+  //     payload: index
+  //   })).toBe(true);
+  // });
 
   it('should submitValidSearch should create submitSearch action', () => {
     const fn = actions.submitSearchIfValid();

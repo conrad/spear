@@ -14,6 +14,7 @@ export interface IProps extends RouteComponentProps<any> {
     phrases: Array<string>
   ): void,
   removeSearch(index: number, name: string): void,
+  setSearchAsUsed(index: number): void,
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -77,6 +78,41 @@ export class SearchList extends React.Component<IProps, IState> {
     }
   }
 
+  createElementsFromSearches(searches: Array<ISearch>): Array<JSX.Element> {
+    let elements: Array<JSX.Element> = [];
+    searches.map((search, i) => {
+      const icon: JSX.Element = search.isIncluded ? 
+        <Icons.Circle 
+          className= { styles.searchCheckIcon }
+          onClick= { this.props.setSearchAsUsed.bind(this, i) }/> : 
+        <Icons.CheckCircle
+          className= { styles.searchCheckIcon }
+          onClick= { this.props.setSearchAsUsed.bind(this, i) }/>;
+
+      const element: JSX.Element = (
+        <li 
+          key={ i }>
+          { icon }
+          <span className={ styles.searchName }>
+            { searches[i].name }
+          </span>
+        </li>
+      );
+      elements.push(element);
+    });
+
+    return elements;
+  }
+
+  setSearchAsUsed(searchIndex: number) {
+    console.log('use it or lose it');
+    //onClick={ this.selectSearch(i)}
+  }
+
+  selectSearch(searchIndex: number) {
+    console.log('select this search');
+  }
+  
   render() {
     console.log('searchList props:', this.props);
     const searches: ISearchesState = this.props.searches ? 
@@ -95,33 +131,39 @@ export class SearchList extends React.Component<IProps, IState> {
     return (
       <div>
         <div className={styles.searchListContainer}>
-        { searches.searches.map(
-          (search: ISearch, index: number) => {
-            return (
-              <div key={index}>
-                <textarea 
-                  className={styles.phraseInput} 
-                  readOnly 
-                  value={search.name}
-                />
-                <Icons.MinusCircle className={styles.minus} onClick={this.handleRemoveSearch.bind(this, index, search.name)}/>
-              </div>
-            );
-          }
-        )}
-          <textarea 
-            id="lastSearchNameInput" 
-            className={styles.searchInput} 
-            onKeyDown={e => this.textAreaAdjust(e)} 
-            placeholder={'Create a new search'} 
-            onChange={e => this.handleInputChange(e)}>
-          </textarea>
+          <ul className={ styles.searchList }>
+            { this.createElementsFromSearches(searches.searches).map(val => { return val; }) }
+          </ul>
         </div>
-        <Icons.PlusCircle 
-          className={styles.plus}
-          onClick={this.handleAddSearch.bind(this)}
-        />
       </div>
     );
   }
 }
+
+      //   { searches.searches.map(
+      //     (search: ISearch, index: number) => {
+      //       return (
+      //         <div key={index}>
+      //           <textarea 
+      //             className={styles.phraseInput} 
+      //             readOnly 
+      //             value={search.name}
+      //           />
+      //           <Icons.MinusCircle className={styles.minus} onClick={this.handleRemoveSearch.bind(this, index, search.name)}/>
+      //         </div>
+      //       );
+      //     }
+      //   )}
+      //     <textarea 
+      //       id="lastSearchNameInput" 
+      //       className={styles.searchInput} 
+      //       onKeyDown={e => this.textAreaAdjust(e)} 
+      //       placeholder={'Create a new search'} 
+      //       onChange={e => this.handleInputChange(e)}>
+      //     </textarea>
+      //   </div>
+      //   <Icons.PlusCircle 
+      //     className={styles.plus}
+      //     onClick={this.handleAddSearch.bind(this)}
+      //   />
+      // </div>

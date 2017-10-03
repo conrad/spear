@@ -40,13 +40,6 @@ Object {
 }
 `;
 
-exports[`actions should unsetPhrase should create unsetPhrase action 1`] = `
-Object {
-  "payload": 1,
-  "type": "DELETE_PHRASE",
-}
-`;
-
 exports[`searchForm actions should appendPhrase should create appendPhrase action 1`] = `
 Object {
   "payload": "something to look for",

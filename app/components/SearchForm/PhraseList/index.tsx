@@ -2,8 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
+import { copyArray } from '../../../utils/helpers';
 let Icons = require('react-feather');
-
 let styles = require('./PhraseList.scss');
 
 export interface IProps extends RouteComponentProps<any> {
@@ -47,11 +47,15 @@ export class PhraseList extends React.Component<IProps, IState> {
       });
       
       if (!isAlreadyPhrase) {
+        let phrases: Array<string> = copyArray(this.props.searches.searches[currentIndex].phrases);
+
+        phrases.push(this.state.entry);
+
         this.props.updateSearch({
           index: currentIndex,
           name: this.props.searches.searches[currentIndex].name,
           description: this.props.searches.searches[currentIndex].description,
-          phrases: this.props.searches.searches[currentIndex].phrases,  // ...AND... this.state.entry
+          phrases: phrases,
           isIncluded: this.props.searches.searches[currentIndex].isIncluded,
           isEditing: this.props.searches.searches[currentIndex].isEditing,
         });

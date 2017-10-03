@@ -3,6 +3,11 @@
     margin: 15px 0px;
   }
 
+  .searchList {
+    margin: 0px 15px;
+    padding: 0px;
+  }
+
   .searchInput {
     height: 20px;
     width: 80%;
@@ -11,5 +16,17 @@
     border: 1px solid #858585;
     border-radius: 3px;
     font-size: 14px;
+  }
+
+  // .searchListItem {
+  //   vertical-align: middle;
+  // }
+
+  .searchCheckIcon {
+    cursor: pointer;
+  }
+
+  .searchName {
+    margin: 0px 10px;
   }
 }

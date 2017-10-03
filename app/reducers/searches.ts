@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { clone } from '../utils/helpers';
-import { storeSearch, deleteSearch, unsetPhrase } from '../actions/searches';
+import { storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
 
 
@@ -63,6 +63,10 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   } else if (unsetPhrase.test(action)) {
     newState.searches[action.payload.searchIndex].phrases.splice(action.payload.index, 1);
+    return newState;
+
+  } else if (flipSearchAsUsed.test(action)) {
+    newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded;
     return newState;
 
   } else if (deleteSearch.test(action)) {

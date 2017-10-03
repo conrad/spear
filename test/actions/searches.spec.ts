@@ -3,6 +3,7 @@ import * as actions from '../../app/actions/searches';
 import { ISearch, IMove } from '../../app/reducers/searches';
 
 const mockSearch: ISearch = {
+  index: 0,
   isEditing: false,
   isIncluded: false,
   name: '',
@@ -19,6 +20,14 @@ describe('actions', () => {
     expect(actions.storeSearch(mockSearch)).toMatchSnapshot();
   });
 
+  it('should unsetPhrase should create unsetPhrase action', () => {
+    expect(actions.unsetPhrase({
+      index: 0,
+      searchIndex: 0,
+      text: ''
+    })).toMatchSnapshot();
+  });
+
   it('should deleteSearch should create deleteSearch action', () => {
     expect(actions.deleteSearch(mockSearch)).toMatchSnapshot();
   });
@@ -28,12 +37,7 @@ describe('actions', () => {
   });
 
   it('should saveSearch should create storeSearch action', () => {
-    const fn = actions.addSearch(
-      mockSearch.index, 
-      mockSearch.name, 
-      mockSearch.description, 
-      mockSearch.phrases
-    );
+    const fn = actions.addSearch(mockSearch);
     expect(fn).toBeInstanceOf(Function);
     const dispatch = spy();
     fn(dispatch);
@@ -56,7 +60,7 @@ describe('actions', () => {
       payload: {
         index: mockSearch.index,
         name: mockSearch.name,
-        description: '',
+        isIncluded: false,
         phrases: [],
         isEditing: false
       }
