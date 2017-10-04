@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { clone } from '../utils/helpers';
-import { storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
+import { setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
 
 
@@ -13,7 +13,7 @@ const initialState: ISearchesState = {
     isEditing: false,
   }],
   currentSearchIndex: 0,
-  newSearch: null,
+  newSearchName: "",
   isNewSearchUsed: false,
   filename: "",
   isValidFile: true,
@@ -24,7 +24,7 @@ const initialState: ISearchesState = {
 export interface ISearchesState {
   searches: Array<ISearch>,
   currentSearchIndex: number,
-  newSearch: string|null,
+  newSearchName: string,
   isNewSearchUsed: boolean,
   filename: string,
   isValidFile: boolean,
@@ -67,6 +67,27 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   } else if (flipSearchAsUsed.test(action)) {
     newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded;
+    return newState;
+
+  } else if (setNewSearchName.test(action)) {
+    newState.newSearchName = action.payload;
+    return newState;
+  
+  } else if (storeNewSearch.test(action)) {
+    if (newState.newSearchName) {
+      const search: ISearch = {
+        index: newState.searches.length,
+        name: newState.newSearchName,
+        phrases: [],
+        isIncluded: false,
+        isEditing: false,
+      };
+      
+      newState.searches.push(search);
+      newState.newSearchName = "";
+    } else {
+      console.log("You must name a new search to add it.")
+    }
     return newState;
 
   } else if (deleteSearch.test(action)) {

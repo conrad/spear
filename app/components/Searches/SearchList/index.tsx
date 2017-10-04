@@ -15,6 +15,7 @@ export interface IProps extends RouteComponentProps<any> {
   ): void,
   removeSearch(index: number, name: string): void,
   setSearchAsUsed(index: number): void,
+  updateNewSearchName(name: string): void,
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -28,7 +29,7 @@ export class SearchList extends React.Component<IProps, IState> {
       filename: '',
       isValidFile: true,
       searches: [],
-      newSearch: null,
+      newSearchName: '',
       isNewSearchUsed: false,
       newPhrase: '',
       isNewPhraseUsed: false
@@ -91,7 +92,8 @@ export class SearchList extends React.Component<IProps, IState> {
 
       const element: JSX.Element = (
         <li 
-          key={ i }>
+          key={ i }
+          className={ styles.searchListItem }>
           { icon }
           <span className={ styles.searchName }>
             { searches[i].name }
@@ -112,7 +114,7 @@ export class SearchList extends React.Component<IProps, IState> {
   selectSearch(searchIndex: number) {
     console.log('select this search');
   }
-  
+
   render() {
     console.log('searchList props:', this.props);
     const searches: ISearchesState = this.props.searches ? 
@@ -122,7 +124,7 @@ export class SearchList extends React.Component<IProps, IState> {
         filename: '',
         isValidFile: true,
         searches: [],
-        newSearch: null,
+        newSearchName: '',
         isNewSearchUsed: false,
         newPhrase: '',
         isNewPhraseUsed: false,
@@ -133,6 +135,11 @@ export class SearchList extends React.Component<IProps, IState> {
         <div className={styles.searchListContainer}>
           <ul className={ styles.searchList }>
             { this.createElementsFromSearches(searches.searches).map(val => { return val; }) }
+            <textarea 
+              className={ styles.searchInput }
+              onChange={ e => this.props.updateNewSearchName(e.target.value) }
+            />
+            <Icons.FileText/>
           </ul>
         </div>
       </div>

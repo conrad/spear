@@ -8,6 +8,13 @@
     padding: 0px;
   }
 
+  .searchListItem {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #555;
+    vertical-align: middle;
+  }
+
   .searchInput {
     height: 20px;
     width: 80%;
@@ -18,12 +25,13 @@
     font-size: 14px;
   }
 
-  // .searchListItem {
-  //   vertical-align: middle;
-  // }
-
   .searchCheckIcon {
+    display: inline-block;
     cursor: pointer;
+  }
+
+  .searchCheckIcon:active {
+    color: #858585;
   }
 
   .searchName {

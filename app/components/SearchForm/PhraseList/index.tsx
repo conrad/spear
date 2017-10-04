@@ -84,7 +84,6 @@ export class PhraseList extends React.Component<IProps, IState> {
   render() {
     const currentIndex: number = this.props.searches.currentSearchIndex;
     const currentSearch: ISearch = this.props.searches.searches[currentIndex]
-    console.log('phrase length:', currentSearch.phrases.length);
 
     return (
       <div>

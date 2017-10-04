@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
-// import { ISearches } from '../../reducers/searches';
+// import { RouteComponentProps } from 'react-router';
 import { MenuBanner } from './MenuBanner';
 import { SearchList } from './SearchList';
 
 let styles = require('./Searches.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+// export interface IProps extends RouteComponentProps<any> {
   // searches: IFormState
-}
+// }
 
 export class Searches extends React.Component<any> {
   render() {

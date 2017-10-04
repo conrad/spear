@@ -58,7 +58,7 @@ describe('containers', () => {
           newPhrase: "", 
           isNewPhraseUsed: false, 
           isNewSearchUsed: false,
-          newSearch: '',
+          newSearchName: '',
           isValidFile: true 
         },
         results: { hasRun: false, items: [] }
