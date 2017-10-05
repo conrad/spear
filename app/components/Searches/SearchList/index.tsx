@@ -7,12 +7,8 @@ let styles = require('./SearchList.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   searches: ISearchesState,
-  addSearch(
-    index: number, 
-    name: string, 
-    description: string|null, 
-    phrases: Array<string>
-  ): void,
+  addSearch(search: ISearch): void,
+  selectSearch(index: number): void,
   removeSearch(index: number, name: string): void,
   setSearchAsUsed(index: number): void,
   updateNewSearchName(name: string): void,
@@ -23,45 +19,30 @@ interface IState extends RouteComponentProps<any> {
 }
 
 export class SearchList extends React.Component<IProps, IState> {
-  componentDidMount() {
-    this.setState({searches: {
-      currentSearchIndex: 0,
-      filename: '',
-      isValidFile: true,
-      searches: [],
-      newSearchName: '',
-      isNewSearchUsed: false,
-      newPhrase: '',
-      isNewPhraseUsed: false
-    }});
-  }
+  // componentDidMount() {
+  //   this.setState({searches: {
+  //     currentSearchIndex: 0,
+  //     filename: '',
+  //     isValidFile: true,
+  //     searches: [],
+  //     newSearchName: '',
+  //     isNewSearchUsed: false,
+  //     newPhrase: '',
+  //     isNewPhraseUsed: false
+  //   }});
+  // }
 
-  clearLastSearchInput() {
-    // this.setState({searches: []}); //TODO: Not right. Fix this.
-    let textarea: any = document.getElementById('lastSearchNameInput');
-    if (textarea) {
-      textarea.value = '';
-    }
-  }
-
-  handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
-    // this.setState({value: event.target.value});
-  }
-
-  handleAddSearch(e: Event) {
-    if (this.state.searches) {
-      console.log('Adding search: ', this.state.searches.searches);
-      // let isAlreadyPhrase = false;
-      // this.props.searchForm.phrases.forEach(phrase => {
-        // TODO: Fix. None of this logic around state is correct yet.
-      //   if (this.state.searches[0].name == phrase) {    
-      //     console.log('This phrase is already registered.');
-      //     isAlreadyPhrase = true;
-      //     return;
-      //   }
-      // });
-
-      this.clearLastSearchInput();
+  handleAddSearch() {
+    if (this.props.searches.newSearchName) {
+      this.props.addSearch({
+        name: this.props.searches.newSearchName,
+        index: this.props.searches.searches.length,
+        phrases: [],
+        isIncluded: false,
+        isEditing: false,
+      });
+      this.props.updateNewSearchName('');
+      // this.clearLastSearchInput();
     } else {
       console.log('You have to add a new search in order to add more!');
     }
@@ -71,29 +52,22 @@ export class SearchList extends React.Component<IProps, IState> {
     // this.props.deletePhrase(index);
   }
 
-  textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    let textarea = document.getElementById('lastInput');
-    if (textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = textarea.scrollHeight+'px';
-    }
-  }
-
   createElementsFromSearches(searches: Array<ISearch>): Array<JSX.Element> {
     let elements: Array<JSX.Element> = [];
     searches.map((search, i) => {
       const icon: JSX.Element = search.isIncluded ? 
-        <Icons.Circle 
+        <Icons.CheckCircle 
           className= { styles.searchCheckIcon }
           onClick= { this.props.setSearchAsUsed.bind(this, i) }/> : 
-        <Icons.CheckCircle
+        <Icons.Circle
           className= { styles.searchCheckIcon }
           onClick= { this.props.setSearchAsUsed.bind(this, i) }/>;
 
       const element: JSX.Element = (
         <li 
           key={ i }
-          className={ styles.searchListItem }>
+          className={ styles.searchListItem }
+          onClick={ e => this.handleClickSearch(i) }>
           { icon }
           <span className={ styles.searchName }>
             { searches[i].name }
@@ -106,9 +80,8 @@ export class SearchList extends React.Component<IProps, IState> {
     return elements;
   }
 
-  setSearchAsUsed(searchIndex: number) {
-    console.log('use it or lose it');
-    //onClick={ this.selectSearch(i)}
+  handleClickSearch(index: number) {
+    this.props.selectSearch(index);
   }
 
   selectSearch(searchIndex: number) {
@@ -138,8 +111,10 @@ export class SearchList extends React.Component<IProps, IState> {
             <textarea 
               className={ styles.searchInput }
               onChange={ e => this.props.updateNewSearchName(e.target.value) }
-            />
-            <Icons.FileText/>
+              value={ this.props.searches.newSearchName }/>
+            <Icons.PlusCircle
+              className={ styles.addSearchIcon }
+              onClick={ this.handleAddSearch.bind(this) }/>
           </ul>
         </div>
       </div>

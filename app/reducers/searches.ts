@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
 import { clone } from '../utils/helpers';
-import { setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
+import { setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
 
 
@@ -58,6 +58,7 @@ export default function searches(state: ISearchesState = initialState, action: I
   let newState: ISearchesState = clone(state);
 
   if (storeSearch.test(action)) {
+    console.log('search being stored:', action.payload);
     newState.searches[action.payload.index] = action.payload;
     return newState;
 
@@ -71,6 +72,10 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   } else if (setNewSearchName.test(action)) {
     newState.newSearchName = action.payload;
+    return newState;
+
+  } else if (setActiveSearch.test(action)) {
+    newState.currentSearchIndex = action.payload;
     return newState;
   
   } else if (storeNewSearch.test(action)) {
