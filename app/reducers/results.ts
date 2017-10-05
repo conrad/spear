@@ -6,18 +6,19 @@ const initialState: IResults = { hasRun: false, items: [] } ;
 
 export interface IResults {
   hasRun: boolean,
-  items: Array<IResult>
+  items: Array<IResult>,
 }
 
 export interface IResult {
+  search: string,
   phrase: string,
-  excerpts: Array<IExcerpt>
+  excerpts: Array<IExcerpt>,
 };
 
 export interface IExcerpt {
   location: string,
   index: number,
-  text: string
+  text: string,
 };
 
 export type TState = IResults;

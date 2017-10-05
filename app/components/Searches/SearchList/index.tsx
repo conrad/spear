@@ -19,19 +19,6 @@ interface IState extends RouteComponentProps<any> {
 }
 
 export class SearchList extends React.Component<IProps, IState> {
-  // componentDidMount() {
-  //   this.setState({searches: {
-  //     currentSearchIndex: 0,
-  //     filename: '',
-  //     isValidFile: true,
-  //     searches: [],
-  //     newSearchName: '',
-  //     isNewSearchUsed: false,
-  //     newPhrase: '',
-  //     isNewPhraseUsed: false
-  //   }});
-  // }
-
   handleAddSearch() {
     if (this.props.searches.newSearchName) {
       this.props.addSearch({
@@ -42,9 +29,8 @@ export class SearchList extends React.Component<IProps, IState> {
         isEditing: false,
       });
       this.props.updateNewSearchName('');
-      // this.clearLastSearchInput();
     } else {
-      console.log('You have to add a new search in order to add more!');
+      console.log('You have to name a new search in order to add it.');
     }
   }
 
@@ -121,31 +107,3 @@ export class SearchList extends React.Component<IProps, IState> {
     );
   }
 }
-
-      //   { searches.searches.map(
-      //     (search: ISearch, index: number) => {
-      //       return (
-      //         <div key={index}>
-      //           <textarea 
-      //             className={styles.phraseInput} 
-      //             readOnly 
-      //             value={search.name}
-      //           />
-      //           <Icons.MinusCircle className={styles.minus} onClick={this.handleRemoveSearch.bind(this, index, search.name)}/>
-      //         </div>
-      //       );
-      //     }
-      //   )}
-      //     <textarea 
-      //       id="lastSearchNameInput" 
-      //       className={styles.searchInput} 
-      //       onKeyDown={e => this.textAreaAdjust(e)} 
-      //       placeholder={'Create a new search'} 
-      //       onChange={e => this.handleInputChange(e)}>
-      //     </textarea>
-      //   </div>
-      //   <Icons.PlusCircle 
-      //     className={styles.plus}
-      //     onClick={this.handleAddSearch.bind(this)}
-      //   />
-      // </div>

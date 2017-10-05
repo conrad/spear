@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import { IResult, IExcerpt } from "../reducers/results";
+import { ISearch } from "../reducers/searches";
 
 export default function load(filepath: string): string  {
   if(fs.existsSync(filepath)) {
@@ -9,7 +10,7 @@ export default function load(filepath: string): string  {
   }
 }
 
-export function search(filepath: string, phrases: Array<string>): Array<IResult> {
+export function search(filepath: string, searches: Array<ISearch>): Array<IResult> { //phrases: Array<string>): Array<IResult> {
   let file: string = load(filepath);
 
   if (!file) {
@@ -18,28 +19,33 @@ export function search(filepath: string, phrases: Array<string>): Array<IResult>
 
   let results: Array<IResult> = [];
 
-  phrases.map((phrase, i) => {
-    let resultIndices: Array<number> = [];
-    let resIndex: number = 0;
-  
-    while(resIndex !== -1) {
-      resIndex = file.toLowerCase().indexOf(phrase.toLowerCase(), resIndex+1);
-
-      if (resIndex !== -1) {
-        resultIndices.push(resIndex);
-      }      
+  searches.map((search, i) => {
+    if (search.isIncluded) {
+      search.phrases.map((phrase, i) => {
+        let resultIndices: Array<number> = [];
+        let resIndex: number = 0;
+      
+        while(resIndex !== -1) {
+          resIndex = file.toLowerCase().indexOf(phrase.toLowerCase(), resIndex+1);
+    
+          if (resIndex !== -1) {
+            resultIndices.push(resIndex);
+          }      
+        }
+    
+        if (resultIndices.length > 0) {
+          let result: IResult = {
+            search: search.name,
+            phrase: phrase,
+            excerpts: getExcerpts(file, phrase, resultIndices)
+          };
+    
+          results.push(result);
+        }
+              // let re: string = '/' + phrase.toLowerCase() + '/';
+              // let matches: Array<any> = file.toLowerCase().match(re);
+      });
     }
-
-    if (resultIndices.length > 0) {
-      let result: IResult = {
-        phrase: phrase,
-        excerpts: getExcerpts(file, phrase, resultIndices)
-      };
-
-      results.push(result);
-    }
-          // let re: string = '/' + phrase.toLowerCase() + '/';
-          // let matches: Array<any> = file.toLowerCase().match(re);
   });
 
   console.log('results:', results);

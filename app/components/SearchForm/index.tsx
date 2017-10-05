@@ -38,9 +38,18 @@ export class SearchForm extends React.Component<IProps> {
       phrases.push(searches.newPhrase);
     }
 
+    const i: number = this.props.searches.currentSearchIndex;
+    this.props.updateSearch({
+      index: i,
+      name: this.props.searches.searches[i].name,
+      phrases: phrases,
+      isIncluded: this.props.searches.searches[i].isIncluded,
+      isEditing: false,
+    });
+
     const results: IResults = { 
       hasRun: true, 
-      items: runSearch(searches.filename, phrases)
+      items: runSearch(searches.filename, this.props.searches.searches)
     };
 
     this.props.updateIsNewPhraseUsed(false);

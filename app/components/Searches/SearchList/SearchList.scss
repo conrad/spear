@@ -17,7 +17,6 @@
 
   .searchInput {
     height: 20px;
-    width: 80%;
     padding: 4px;
     outline: none;
     border: 1px solid #858585;
@@ -36,5 +35,11 @@
 
   .searchName {
     margin: 0px 10px;
+  }
+
+  .addSearchIcon {
+    display: inline-block;
+    padding: 4px;
+    cursor: pointer;
   }
 }

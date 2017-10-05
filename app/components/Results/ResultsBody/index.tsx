@@ -16,6 +16,7 @@ export class ResultsBody extends React.Component<IProps> {
       item.excerpts.map((excerpt, j) => {
         const element: JSX.Element = (
           <li className={styles.excerptItem} key={i + j * .1}>
+            <span>{ item.search }</span>
             <span>{excerpt.text}</span>
             <span>{excerpt.index}</span>
           </li>
