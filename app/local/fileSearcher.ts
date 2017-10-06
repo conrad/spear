@@ -3,7 +3,7 @@ import { IResult, IExcerpt } from "../reducers/results";
 import { ISearch } from "../reducers/searches";
 
 export default function load(filepath: string): string  {
-  if(fs.existsSync(filepath)) {
+  if (fs.existsSync(filepath)) {
     return fs.readFileSync(filepath, 'utf8');
   } else {
     throw new Error('File doesn\'t exist.');
