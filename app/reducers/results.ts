@@ -2,7 +2,7 @@ import { IAction } from '../actions/helpers';
 import { saveResults, saveResultsToFile } from '../actions/results';
 import { clone } from '../utils/helpers';
 
-const initialState: IResults = { hasRun: false, items: [] } ; 
+const initialState: IResults = { hasRun: false, items: [] }; 
 
 export interface IResults {
   hasRun: boolean,

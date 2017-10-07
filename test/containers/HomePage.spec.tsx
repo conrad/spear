@@ -51,6 +51,7 @@ describe('containers', () => {
 
     it('should change if odd and if odd button clicked', () => {
       const { buttons, p } = setup({ 
+        menu: { show: false },
         searches: { 
           currentSearchIndex: 0,
           filename: "dog.txt", 
