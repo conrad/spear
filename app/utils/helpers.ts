@@ -18,3 +18,17 @@ export const clone: any = (obj: any) => {
   
   return copy;
 }
+
+export const isObjectInArray = (
+  arr: Array<any>, 
+  objIdentifier: any, 
+  identifierField: string
+) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i][identifierField] === objIdentifier) {
+      return true;
+    }
+  }
+
+  return false;
+}

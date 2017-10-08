@@ -9,10 +9,14 @@
   }
 
   .searchListItem {
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0px;
     border-bottom: 1px solid #555;
     vertical-align: middle;
+  }
+
+  .searchListItemSelected {
+    // color: #858585;
+    background-color: rgb(80, 75, 64);
   }
 
   .searchInput {

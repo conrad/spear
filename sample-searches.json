@@ -1,0 +1,12 @@
+{
+  "searches": [
+    {
+      "name": "dog",
+      "phrases": ["woof", "bark", "bite", "bill"]
+    },
+    {
+      "name": "cat",
+      "phrases": ["jump", "clas", "lick"]
+    }
+  ]
+}

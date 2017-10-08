@@ -1,9 +1,48 @@
 :local {
   .banner {
+    display: flex;
+    justify-content: space-between;
     margin:0px auto;
-    padding: 18px 0px 11px 30px;
+    padding: 16px 0px 0px 30px;
     background:rgb(85, 28, 255);
     color: white;
     font-size: 18px;
+    cursor: default;
+  }
+
+  .menuChevronIconContainer {
+    display: inline;
+  }
+
+  .menuChevronIcon {
+    display: inline-block;
+    float: right;
+    padding: 5px;
+  }
+
+  .menuDropDown {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    width: 180px;
+    border-radius: 2px;
+    background-color: #d5d0d0;
+    color: #000000;
+    font-size: 1rem;
+    cursor: default; 
+  }
+
+  .menuItem {
+    padding: 8px 8px 0px 8px; 
+    border-radius: 2px;
+  }
+  .menuItem:hover {
+    background-color: #1e1eff;
+    color: #dedede;
+  }
+
+  .menuItem:active {
+    background-color: #939191;
+    color: #000000;
   }
 }

@@ -52,7 +52,7 @@ export class SearchList extends React.Component<IProps, IState> {
       const element: JSX.Element = (
         <li 
           key={ i }
-          className={ styles.searchListItem }
+          className={ this.getItemClassNames(i, this.props.searches.currentSearchIndex) }
           onClick={ e => this.handleClickSearch(i) }>
           { icon }
           <span className={ styles.searchName }>
@@ -64,6 +64,14 @@ export class SearchList extends React.Component<IProps, IState> {
     });
 
     return elements;
+  }
+
+  getItemClassNames(index: number, selectedIndex: number): string {
+    if (index === selectedIndex) {
+      return styles.searchListItem + ' ' + styles.searchListItemSelected;
+    }
+
+    return styles.searchListItem
   }
 
   handleClickSearch(index: number) {

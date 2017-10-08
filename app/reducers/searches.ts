@@ -1,6 +1,6 @@
 import { IAction } from '../actions/helpers';
-import { clone } from '../utils/helpers';
-import { setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
+import { clone, isObjectInArray } from '../utils/helpers';
+import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
 
 
@@ -112,6 +112,21 @@ export default function searches(state: ISearchesState = initialState, action: I
     newState.newPhrase = action.payload;
     return newState;
 
+  } else if (storeSearchesFromProfile.test(action)) {
+    action.payload.map((search, i) => {
+      if (!isObjectInArray(newState.searches, search.name, 'name')) {
+        newState.searches.push({
+          index: newState.searches.length,
+          name: search.name,
+          phrases: search.phrases,
+          isEditing: false,
+          isIncluded: false,
+        });
+      } else {
+        console.log('The search ' + search.name + ' already exists.');
+      }
+    });
+
   } else if (setIsPhraseUsed.test(action)) {
     newState.isNewPhraseUsed = action.payload;
     return newState;
@@ -135,64 +150,3 @@ export default function searches(state: ISearchesState = initialState, action: I
   return newState;
 }
 
-
-// import { IAction } from '../actions/helpers';
-// import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
-// import { clone } from '../utils/helpers';
-
-
-// const initialState = { 
-//   filename: "",
-//   isValidFile: true,
-//   phrases: ['hey ma', 'whats up'],
-//   newPhrase: "",
-//   isNewPhraseUsed: false
-// };
-
-// export interface IFormState {
-//   filename: string,
-//   isValidFile: boolean,
-//   phrases: Array<string>,
-//   newPhrase: string,
-//   isNewPhraseUsed: boolean
-// };
-
-// export interface IPhrase {
-//   index: number,
-//   text: string,
-//   searchIndex: number
-// };
-
-// export type TState = IFormState;
-
-// export default function searchForm(state: IFormState = initialState, action: IAction) {
-//   let newState: IFormState = clone(state);
-
-//   if (appendPhrase.test(action)) {
-//     newState.phrases.push(action.payload);
-//     return newState;
-//   } else if (setNewPhrase.test(action)) {
-//     newState.newPhrase = action.payload;
-//     return newState;
-//   } else if (unsetPhrase.test(action)) {
-//     newState.phrases.splice(action.payload, 1);
-//     return newState;
-//   } else if (setIsPhraseUsed.test(action)) {
-//     newState.isNewPhraseUsed = action.payload;
-//     return newState;
-//   } else if (setFile.test(action)) {
-//     newState.isValidFile = true;
-//     newState.filename = action.payload;
-//     return newState;
-//   } else if (resetFile.test(action)) {
-//     newState.isValidFile = false;
-//     newState.filename = '';
-//     return newState;
-//   } else if (submitSearch.test(action)) {
-//     console.log("filename:", newState.filename);
-//     console.log("first phrase:", newState.phrases[0]);
-//     return newState;
-//   }
-
-//   return newState;
-// }

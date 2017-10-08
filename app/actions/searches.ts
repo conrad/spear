@@ -9,6 +9,7 @@ export const flipSearchAsUsed = actionCreator<number>('FLIP_SEARCH_AS_USED');
 export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
 export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
 export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
+export const storeSearchesFromProfile = actionCreator<Array<ISearch>>('STORE_SEARCHES_FROM_PROFILE');
 
 export function addSearch(search: ISearch) {
   return (dispatch: Function) => {
@@ -49,6 +50,12 @@ export function setSearchAsUsed(index: number) {
 export function updateNewSearchName(name: string) {
   return (dispatch: Function) => {
     dispatch(setNewSearchName(name));
+  };    
+}
+
+export function addSearchesFromProfile(searches: Array<ISearch>) {
+  return (dispatch: Function) => {
+    dispatch(storeSearchesFromProfile(searches));
   };    
 }
 

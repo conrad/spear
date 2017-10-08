@@ -36,7 +36,7 @@ export class FileInput extends React.Component<IProps> {
   render() {
     return (
       <div className={styles.inputBlock}>
-        <span>File: </span>
+        <span>File to Search: </span>
         <input 
           type="file" 
           accept="application/msword, text/plain" 
