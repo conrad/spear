@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
+import { isObjectInArray } from '../../../utils/helpers';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');
@@ -21,13 +22,20 @@ interface IState extends RouteComponentProps<any> {
 export class SearchList extends React.Component<IProps, IState> {
   handleAddSearch() {
     if (this.props.searches.newSearchName) {
-      this.props.addSearch({
-        name: this.props.searches.newSearchName,
-        index: this.props.searches.searches.length,
-        phrases: [],
-        isIncluded: false,
-        isEditing: false,
-      });
+      if (!isObjectInArray(
+        this.props.searches.searches, 
+        this.props.searches.newSearchName, 
+        "name")
+      ) {
+        this.props.addSearch({
+          name: this.props.searches.newSearchName,
+          index: this.props.searches.searches.length,
+          phrases: [],
+          isIncluded: false,
+          isEditing: false,
+        });
+      }
+
       this.props.updateNewSearchName('');
     } else {
       console.log('You have to name a new search in order to add it.');
