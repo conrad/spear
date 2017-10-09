@@ -1,5 +1,7 @@
-import { actionCreator } from './helpers';
+import { actionCreator, actionCreatorVoid } from './helpers';
 import { IPhrase, ISearch, IMove } from '../reducers/searches';
+import JsonReader from '../local/searchLoader';
+import JsonWriter from '../local/searchExporter';
 
 export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
 export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
@@ -10,6 +12,7 @@ export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
 export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
 export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
 export const storeSearchesFromProfile = actionCreator<Array<ISearch>>('STORE_SEARCHES_FROM_PROFILE');
+export const exportSearchesToFile = actionCreatorVoid('EXPORT_SEARCHES_TO_FILE') 
 
 export function addSearch(search: ISearch) {
   return (dispatch: Function) => {
@@ -53,7 +56,23 @@ export function updateNewSearchName(name: string) {
   };    
 }
 
-export function addSearchesFromProfile(searches: Array<ISearch>) {
+export function exportSearches() {
+  return (dispatch: Function, getState: Function) => {
+    const { searches } = getState();
+    const jsonWriter = new JsonWriter();
+    try {
+      jsonWriter.saveProfile('searches_profile.json', searches);
+    } catch (e) {
+      console.log('Error saving searches:', e);
+    }
+    // dispatch(exportSearchesToFile());
+  }
+}
+
+export function addSearchesFromProfile(file: File) {
+  const jsonReader: JsonReader = new JsonReader();
+  const searches: Array<ISearch> = jsonReader.retrieveSearchesFromFile(file.path);
+
   return (dispatch: Function) => {
     dispatch(storeSearchesFromProfile(searches));
   };    

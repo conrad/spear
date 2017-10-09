@@ -20,7 +20,8 @@ export interface IProps extends RouteComponentProps<any> {
   setResults(results: IResults): void,
   updateNewPhrase(text: string): void,
   updateIsNewPhraseUsed(isUsed: boolean): void,
-  addSearchesFromProfile(searches: Array<ISearch>): void,  
+  exportSearches(): void, 
+  addSearchesFromProfile(file: File): void,  
 };
 
 export class Home extends React.Component<IProps> {

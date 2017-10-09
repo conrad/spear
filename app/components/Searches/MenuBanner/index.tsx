@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { IMenu } from '../../../reducers/menu';
-import { ISearch } from '../../../reducers/searches';
 import { ProfileInput } from './ProfileInput';
 
 let Icons = require('react-feather');
@@ -9,7 +8,8 @@ let styles = require('./MenuBanner.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   toggleMenuDropDown(): void,
-  addSearchesFromProfile(searches: Array<ISearch>): void,
+  addSearchesFromProfile(file: File): void,
+  exportSearches(): void,
   menu: IMenu,
 };
 
@@ -35,12 +35,21 @@ export class MenuBanner extends React.Component<IProps> {
             <span>Import searches from file</span>
             <ProfileInput { ...this.props }/>
           </div>
-          <div className={ styles.menuItem }>item 2 a little longer</div>
+          <div 
+            className={ styles.menuItem }
+            onClick={ this.handleClickExportSearches.bind(this) }>
+            Export Searches to File
+          </div>
           <div className={ styles.menuItem }>and one more for now</div>
         </div>
       </span>
     );
   };
+
+  handleClickExportSearches() {
+    this.props.exportSearches();
+    this.props.toggleMenuDropDown()
+  }
 
   handleClickMenuToggle() {
     this.props.toggleMenuDropDown()

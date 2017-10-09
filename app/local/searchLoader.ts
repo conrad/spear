@@ -6,8 +6,6 @@ interface ISearchesProfile {
 };
 
 export default class JsonReader {
-  constructor() {}
-  
   load(filepath: string): string {
     if (fs.existsSync(filepath)) {
       return fs.readFileSync(filepath, 'utf8');

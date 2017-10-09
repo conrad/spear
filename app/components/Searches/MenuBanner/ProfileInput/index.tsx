@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { ISearch } from '../../../../reducers/searches';
-import JsonReader from '../../../../local/searchLoader';
 
 let styles = require('./ProfileInput.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  addSearchesFromProfile(searches: Array<ISearch>): void,
+  addSearchesFromProfile(file: File): void,
   toggleMenuDropDown(): void,
 }
 
@@ -22,17 +20,10 @@ export class ProfileInput extends React.Component<IProps> {
     }
 
     if (selectorFiles[0].type === 'application/json') {
-      const searches: Array<ISearch> = this.getSearches(selectorFiles[0]);
-      this.props.addSearchesFromProfile(searches);
-      console.log('adding these searches:', searches);
+      this.props.addSearchesFromProfile(selectorFiles[0]);
     } else {
       console.log('incorrect file type');
     }
-  }
-
-  getSearches(file: File): Array<ISearch> {
-    const jsonReader: JsonReader = new JsonReader();
-    return jsonReader.retrieveSearchesFromFile(file.path);
   }
 
   render() {

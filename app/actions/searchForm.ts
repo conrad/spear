@@ -20,7 +20,6 @@ export function updateIsNewPhraseUsed(isUsed: boolean) {
 
 export function addFile(filename: string) {
   return (dispatch: Function) => {
-    // const { searchForm } = getState();
     dispatch(setFile(filename));
   }
 }

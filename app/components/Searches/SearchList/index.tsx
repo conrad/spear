@@ -37,6 +37,7 @@ export class SearchList extends React.Component<IProps, IState> {
       }
 
       this.props.updateNewSearchName('');
+      this.props.selectSearch(this.props.searches.searches.length - 1)
     } else {
       console.log('You have to name a new search in order to add it.');
     }

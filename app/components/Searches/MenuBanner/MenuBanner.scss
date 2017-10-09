@@ -16,24 +16,24 @@
 
   .menuChevronIcon {
     display: inline-block;
-    float: right;
-    padding: 5px;
+    padding: 0px 10px 5px 0px;
+    cursor: pointer;
   }
 
   .menuDropDown {
     position: absolute;
-    top: 35px;
-    left: 35px;
-    width: 180px;
-    border-radius: 2px;
+    top: 50px;
+    left: 45px;
+    width: 215px;
+    border-radius: 3px;
     background-color: #d5d0d0;
     color: #000000;
-    font-size: 1rem;
+    font-size: .8rem;
     cursor: default; 
   }
 
   .menuItem {
-    padding: 8px 8px 0px 8px; 
+    padding: 8px; 
     border-radius: 2px;
   }
   .menuItem:hover {
