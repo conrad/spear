@@ -1,5 +1,5 @@
 import { IAction } from '../actions/helpers';
-import { saveResults, saveResultsToFile } from '../actions/results';
+import { saveResults, saveResultsToFile, toggleShowResult } from '../actions/results';
 import { clone } from '../utils/helpers';
 
 const initialState: IResults = { hasRun: false, items: [] }; 
@@ -13,6 +13,7 @@ export interface IResult {
   search: string,
   phrase: string,
   excerpts: Array<IExcerpt>,
+  show: boolean
 };
 
 export interface IExcerpt {
@@ -30,8 +31,13 @@ export default function results(state: IResults = initialState, action: IAction)
     newState = action.payload;
     return newState;
   } 
+
+  if (toggleShowResult.test(action)) {
+    newState.items[action.payload].show = !newState.items[action.payload].show;
+    return newState;
+  }
+
   if (saveResultsToFile.test(action)) {
-    console.log("saving results in reducer");
     return newState;
   } 
 

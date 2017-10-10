@@ -4,6 +4,7 @@
     overflow-y: auto;
     overflow-x: hidden;
   }
+
   .resultsList {
     margin: 0px;
     padding: 0px;
@@ -22,7 +23,24 @@
     border-bottom: 1px solid #575757;
   }
 
+  .searchTitleRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #575757;
+    cursor: pointer;
+  }
+
+  .searchItem { 
+    display: inline-block;
+  }
+
   .excerptItem:hover {
     background-color: #575757;
+  }
+
+  .expandResult {
+    padding: 10px;
+    cursor: pointer;
   }
 }

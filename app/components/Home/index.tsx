@@ -22,6 +22,7 @@ export interface IProps extends RouteComponentProps<any> {
   updateIsNewPhraseUsed(isUsed: boolean): void,
   exportSearches(): void, 
   addSearchesFromProfile(file: File): void,  
+  toggleShowSearchResult(index: number): void,
 };
 
 export class Home extends React.Component<IProps> {

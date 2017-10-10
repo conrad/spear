@@ -142,8 +142,6 @@ export default function searches(state: ISearchesState = initialState, action: I
     return newState;
 
   } else if (submitSearch.test(action)) {
-    console.log("filename:", newState.filename);
-    // console.log("first phrase:", newState.search.phrases[0]);
     return newState;
   }
 

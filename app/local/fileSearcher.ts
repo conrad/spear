@@ -10,7 +10,7 @@ export default function load(filepath: string): string  {
   }
 }
 
-export function search(filepath: string, searches: Array<ISearch>): Array<IResult> { //phrases: Array<string>): Array<IResult> {
+export function search(filepath: string, searches: Array<ISearch>): Array<IResult> {
   let file: string = load(filepath);
 
   if (!file) {
@@ -37,7 +37,8 @@ export function search(filepath: string, searches: Array<ISearch>): Array<IResul
           let result: IResult = {
             search: search.name,
             phrase: phrase,
-            excerpts: getExcerpts(file, phrase, resultIndices)
+            excerpts: getExcerpts(file, phrase, resultIndices),
+            show: false,
           };
     
           results.push(result);

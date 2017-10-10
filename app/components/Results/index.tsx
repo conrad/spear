@@ -9,7 +9,8 @@ let styles = require('./Results.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   results: IResults,
-  searches: ISearchesState
+  searches: ISearchesState,
+  toggleShowSearchResult(index: number): void,
 }
   
 export class Results extends React.Component<IProps> {
