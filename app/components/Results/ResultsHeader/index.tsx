@@ -42,7 +42,6 @@ export class ResultsHeader extends React.Component<IProps, IState> {
 
     let number: number = 0;
     resultItems.forEach(item => {
-      console.log('result in results:', item);
       if (item.excerpts) {
         number += item.excerpts.length;
       }

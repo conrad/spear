@@ -87,12 +87,18 @@ export class SearchList extends React.Component<IProps, IState> {
     this.props.selectSearch(index);
   }
 
+  handleTextAreaKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) { 
+    if (e.keyCode == 13) {
+      this.handleAddSearch();
+      e.preventDefault();
+    }
+  }
+
   selectSearch(searchIndex: number) {
     console.log('select this search');
   }
 
   render() {
-    console.log('searchList props:', this.props);
     const searches: ISearchesState = this.props.searches ? 
       this.props.searches : 
       {
@@ -113,6 +119,7 @@ export class SearchList extends React.Component<IProps, IState> {
             { this.createElementsFromSearches(searches.searches).map(val => { return val; }) }
             <textarea 
               className={ styles.searchInput }
+              onKeyDown={ e => this.handleTextAreaKeyDown(e) }
               onChange={ e => this.props.updateNewSearchName(e.target.value) }
               value={ this.props.searches.newSearchName }/>
             <Icons.PlusCircle

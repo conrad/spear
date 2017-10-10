@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import * as ReactDOM from 'react-dom';
 import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
 import { copyArray } from '../../../utils/helpers';
@@ -23,17 +23,12 @@ export class PhraseList extends React.Component<IProps, IState> {
     this.setState({entry: ''});
   }
 
-  clearLastInput() {
-    this.setState({entry: ''});
-    (ReactDOM.findDOMNode(this.refs.lastPhraseInput) as HTMLTextAreaElement).value = '';
-  }
-
   handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
     this.setState({entry: event.target.value});
-    this.props.updateNewPhrase(event.target.value)
+    this.props.updateNewPhrase(event.target.value);
   }
 
-  handleAddPhrase(e: Event) {
+  handleAddPhrase() {
     const currentIndex: number = this.props.searches.currentSearchIndex;
     if (this.state.entry) {
       let isAlreadyPhrase = false;
@@ -62,7 +57,6 @@ export class PhraseList extends React.Component<IProps, IState> {
         this.props.updateIsNewPhraseUsed(false);
       }
 
-      this.clearLastInput();
     } else {
       console.log('You have to add a new phrase in order to add more!');
     }
@@ -72,9 +66,17 @@ export class PhraseList extends React.Component<IProps, IState> {
     this.props.deletePhrase(index, this.props.searches.currentSearchIndex);
   }
 
-  textAreaAdjust(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  handleTextAreaKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) { 
+    if (e.keyCode == 13) {
+      this.handleAddPhrase();
+      e.preventDefault();
+    }
+
+    this.textAreaAdjust();
+  }
+
+  textAreaAdjust() {
     let textarea = document.getElementById('lastPhraseInput');
-    // let textarea = ReactDOM.findDOMNode(this.refs.lastPhraseInput);
     if (textarea) {
       textarea.style.height = 'auto';
       textarea.style.height = textarea.scrollHeight+'px';
@@ -102,11 +104,11 @@ export class PhraseList extends React.Component<IProps, IState> {
         ) }
           <textarea 
             id="lastPhraseInput" 
-            ref="lastPhraseInput" 
-            className={styles.phraseInput} 
-            placeholder={'Add a new phrase'} 
-            onKeyDown={e => this.textAreaAdjust(e)} 
-            onChange={e => this.handleInputChange(e)}>
+            className={ styles.phraseInput } 
+            placeholder={ 'Add a new phrase' } 
+            value={ this.props.searches.newPhrase } 
+            onKeyDown={ e => this.handleTextAreaKeyDown(e) } 
+            onChange={ e => this.handleInputChange(e) }>
           </textarea>
         </div>
         <Icons.PlusCircle 

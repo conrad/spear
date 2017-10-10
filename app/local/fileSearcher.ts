@@ -43,28 +43,29 @@ export function search(filepath: string, searches: Array<ISearch>): Array<IResul
     
           results.push(result);
         }
-              // let re: string = '/' + phrase.toLowerCase() + '/';
-              // let matches: Array<any> = file.toLowerCase().match(re);
       });
     }
   });
 
-  console.log('results:', results);
   return results;
 }
 
 function getExcerpts(file: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
   let excerpts: Array<IExcerpt> = [];
   const padding: number = 40;
+  const pagePadding: number = 2000;
 
   indices.map((val, i) => {
     let start: number = val - padding > 0 ? val - padding : 0;
     let end: number = val + phrase.length + padding < file.length ? val + phrase.length + padding : file.length;
+    let pageStart: number = val - pagePadding > 0 ? val - pagePadding : 0;
+    let pageEnd: number = val + phrase.length + pagePadding < file.length ? val + phrase.length + pagePadding : file.length;
 
     let excerpt: IExcerpt = {
       location: 'TODO: determine how to calc page from index',
       index: indices[i],
-      text: file.substring(start, end)
+      text: file.substring(start, end),
+      pageText: file.substring(pageStart, pageEnd),
     };
 
     excerpts.push(excerpt);

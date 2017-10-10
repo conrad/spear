@@ -18,7 +18,8 @@ export class ResultsBody extends React.Component<IProps> {
       if (!item.show) {
         const element: JSX.Element = (
           <li 
-            className={ styles.searchTitleRow } key={i}
+            className={ styles.searchTitleRow } 
+            key={ i }
             onClick={ this.handleClickSearchResult.bind(this, i) }>
             <Icons.ChevronDown className={ styles.expandResult }/>
             <div className={ styles.searchItem }>
@@ -32,6 +33,7 @@ export class ResultsBody extends React.Component<IProps> {
         const searchElement: JSX.Element = (
           <li 
             className={ styles.searchTitleRow }
+            key={ i }
             onClick={ this.handleClickSearchResult.bind(this, i) }>
             <Icons.ChevronUp className={ styles.expandResult }/>
             <div className={ styles.searchItem }>
@@ -43,7 +45,7 @@ export class ResultsBody extends React.Component<IProps> {
         
         item.excerpts.map((excerpt, j) => {
           const resultElement: JSX.Element = (
-            <li className={styles.excerptItem} key={i + j * .1}>
+            <li className={styles.excerptItem} key={ i + j * .1 + .1 }>
               <span>{excerpt.text}</span>
               <span>{excerpt.index}</span>
             </li>

@@ -58,7 +58,6 @@ export default function searches(state: ISearchesState = initialState, action: I
   let newState: ISearchesState = clone(state);
 
   if (storeSearch.test(action)) {
-    console.log('search being stored:', action.payload);
     newState.searches[action.payload.index] = action.payload;
     return newState;
 
@@ -129,6 +128,11 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   } else if (setIsPhraseUsed.test(action)) {
     newState.isNewPhraseUsed = action.payload;
+    
+    // Clear textarea if phrase no longer being used (or has been added to list of phrases)
+    if (!action.payload) {
+      newState.newPhrase = '';
+    }
     return newState;
 
   } else if (setFile.test(action)) {

@@ -14,7 +14,6 @@ export interface IProps extends RouteComponentProps<any> {
 
 export class Searches extends React.Component<any> {
   render() {
-    console.log('props in searches', this.props);
     return (
       <div className={styles.searchesColumn}>
         <MenuBanner {...this.props}/>
