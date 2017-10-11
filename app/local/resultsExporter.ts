@@ -19,7 +19,7 @@ export default class TextDocWriter {
           result.excerpts.map(excerpt => {
 
             // TODO: Get this to work to remove all newlines from the excerpt text.
-            const excerptLine: string = excerpt.text.replace("/\\n/g", "  ");  
+            const excerptLine: string = excerpt.text.replace(/\r?\n|\r/g, "  ");  
 
             content += "        - at the location " + excerpt.index + ": " + excerptLine + "\n";
           });
