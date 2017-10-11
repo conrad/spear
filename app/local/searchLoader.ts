@@ -1,7 +1,8 @@
 import * as fs from "fs";
 import { ISearch } from "../reducers/searches";
+import { initialSearchesJson } from "../searchProfiles/basic_searches"
 
-interface ISearchesProfile {
+export interface ISearchesProfile {
   searches: Array<ISearch>,
 };
 
@@ -18,7 +19,19 @@ export default class JsonReader {
     let searches: Array<ISearch> = [];
     const contents: string = this.load(filepath);
     try {
+      
       const jsonContents: ISearchesProfile = JSON.parse(contents);
+      searches = this.parseSearchesFromProfileJson(jsonContents);
+    } catch(e) {
+      console.log('Program had trouble reading contents of file.');
+    }
+
+    return searches;
+  }
+
+  parseSearchesFromProfileJson(jsonContents: ISearchesProfile): Array<ISearch> {
+    let searches: Array<ISearch> = [];
+    try {
       if (!Array.isArray(jsonContents.searches)) {
         new Error('Searches file is missing searches array.');
       }
@@ -44,5 +57,9 @@ export default class JsonReader {
     }
 
     return searches;
+  }
+
+  getInitialSearches(): Array<ISearch> {
+    return this.parseSearchesFromProfileJson(initialSearchesJson);
   }
 };

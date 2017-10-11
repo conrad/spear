@@ -2,16 +2,10 @@ import { IAction } from '../actions/helpers';
 import { clone, isObjectInArray } from '../utils/helpers';
 import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
-
+import JsonReader from '../local/searchLoader';
 
 const initialState: ISearchesState = {
-  searches: [{
-    index: 0,
-    name: "Commerce Clause",
-    phrases: ['hey ma', 'whats up'],
-    isIncluded: true,
-    isEditing: false,
-  }],
+  searches: getInitialSearches(),
   currentSearchIndex: 0,
   newSearchName: "",
   isNewSearchUsed: false,
@@ -20,6 +14,11 @@ const initialState: ISearchesState = {
   newPhrase: "",
   isNewPhraseUsed: false,
 }; 
+
+function getInitialSearches(): Array<ISearch> {
+  const jsonReader: JsonReader = new JsonReader();
+  return jsonReader.getInitialSearches();
+};
 
 export interface ISearchesState {
   searches: Array<ISearch>,
@@ -151,4 +150,3 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   return newState;
 }
-

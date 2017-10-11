@@ -43,4 +43,4 @@ export default function results(state: IResults = initialState, action: IAction)
   } 
 
   return newState;
-}  
+}

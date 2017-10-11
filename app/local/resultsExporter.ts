@@ -15,10 +15,9 @@ export default class TextDocWriter {
       content += "\nFor the search " + search.name + ",\n";
       results.map(result => {
         if (search.name === result.search) {
-          content += "    the phrase " + result.phrase + " found the following results:\n";
+          content += "    the phrase \"" + result.phrase + "\" found the following results:\n";
           result.excerpts.map(excerpt => {
 
-            // TODO: Get this to work to remove all newlines from the excerpt text.
             const excerptLine: string = excerpt.text.replace(/\r?\n|\r/g, "  ");  
 
             content += "        - at the location " + excerpt.index + ": " + excerptLine + "\n";
