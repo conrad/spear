@@ -1,5 +1,5 @@
 import { IAction } from '../actions/helpers';
-import { saveResults, saveResultsToFile, toggleShowResult } from '../actions/results';
+import { saveResults, exportResults, toggleShowResult } from '../actions/results';
 import { clone } from '../utils/helpers';
 
 const initialState: IResults = { hasRun: false, items: [] }; 
@@ -38,7 +38,7 @@ export default function results(state: IResults = initialState, action: IAction)
     return newState;
   }
 
-  if (saveResultsToFile.test(action)) {
+  if (exportResults.test(action)) {
     return newState;
   } 
 

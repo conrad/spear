@@ -8,7 +8,8 @@ let styles = require("./ResultsHeader.scss");
 
 export interface IProps extends RouteComponentProps<any> {
   results: IResults,
-  searches: ISearchesState
+  searches: ISearchesState,
+  saveResultsToFile(): void,
 }
  
 export interface IState extends RouteComponentProps<any> {
@@ -52,6 +53,7 @@ export class ResultsHeader extends React.Component<IProps, IState> {
 
   handleClickExport() {
     console.log('wanna save your results?');
+    this.props.saveResultsToFile();
   }
 
   handleClickClose() {

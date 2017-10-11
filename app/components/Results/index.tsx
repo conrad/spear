@@ -11,6 +11,7 @@ export interface IProps extends RouteComponentProps<any> {
   results: IResults,
   searches: ISearchesState,
   toggleShowSearchResult(index: number): void,
+  saveResultsToFile(): void,
 }
   
 export class Results extends React.Component<IProps> {

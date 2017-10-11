@@ -1,5 +1,5 @@
 import results from '../../app/reducers/results';
-import { saveResults, saveResultsToFile } from '../../app/actions/results';
+import { saveResults, exportResults } from '../../app/actions/results';
 
 describe('reducers', () => {
   describe('results', () => {
@@ -14,10 +14,10 @@ describe('reducers', () => {
       ).toEqual({ hasRun: true, items: [] });
     });
 
-    it('should handle SAVE_RESULTS_TO_FILE', () => {
+    it('should handle EXPORT_RESULTS', () => {
       expect(results(
         { hasRun: true, items: [] }, 
-        saveResultsToFile())
+        exportResults())
       ).toEqual({ hasRun: true, items: [] });
     });
 

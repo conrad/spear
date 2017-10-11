@@ -23,6 +23,7 @@ export interface IProps extends RouteComponentProps<any> {
   exportSearches(): void, 
   addSearchesFromProfile(file: File): void,  
   toggleShowSearchResult(index: number): void,
+  saveResultsToFile(): void,
 };
 
 export class Home extends React.Component<IProps> {
