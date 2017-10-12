@@ -2,8 +2,15 @@ import { actionCreator, actionCreatorVoid } from './helpers';
 import { IResults } from "../reducers/results";
 import TextDocWriter from "../local/resultsExporter"; 
 
+export interface IExcerptIndices {
+  resultIndex: number,
+  excerptIndex: number,
+}
+
 export const saveResults = actionCreator<IResults>('SAVE_RESULTS');
 export const toggleShowResult = actionCreator<number>('TOGGLE_SHOW_RESULT');
+export const showOverlay = actionCreator<IExcerptIndices>('TOGGLE_SHOW_RESULT_OVERLAY');
+export const hideOverlay = actionCreatorVoid('HIDE_RESULT_OVERLAY');
 export const exportResults = actionCreatorVoid('EXPORT_RESULTS');
 
 export function setResults(results: IResults) {
@@ -12,9 +19,21 @@ export function setResults(results: IResults) {
   };
 }
 
-export function toggleShowSearchResult(index: number) {
+export function toggleShowSearchResultRows(index: number) {
   return (dispatch: Function) => {
     dispatch(toggleShowResult(index));
+  };
+}
+
+export function showResultOverlay(resultIndex: number, excerptIndex: number) {
+  return (dispatch: Function) => {
+    dispatch(showOverlay({ resultIndex, excerptIndex }));
+  };
+}
+
+export function hideResultOverlay() {
+  return (dispatch: Function) => {
+    dispatch(hideOverlay());
   };
 }
 

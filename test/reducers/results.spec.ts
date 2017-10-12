@@ -1,5 +1,16 @@
-import results from '../../app/reducers/results';
+import results, { IResults } from '../../app/reducers/results';
 import { saveResults, exportResults } from '../../app/actions/results';
+
+const emptyResultsSet: IResults = {
+  hasRun: true, 
+  items: [], 
+  overlay: {
+    show: false,
+    search: '',
+    phrase: '',
+    body: '',
+  }
+};
 
 describe('reducers', () => {
   describe('results', () => {
@@ -8,24 +19,18 @@ describe('reducers', () => {
     });
 
     it('should handle SAVE_RESULTS', () => {
-      expect(results(
-        { hasRun: false, items: [] }, 
-        saveResults({ hasRun: true, items: [] }))
-      ).toEqual({ hasRun: true, items: [] });
+      expect(results(emptyResultsSet, saveResults(emptyResultsSet))).toEqual(emptyResultsSet);
     });
 
     it('should handle EXPORT_RESULTS', () => {
-      expect(results(
-        { hasRun: true, items: [] }, 
-        exportResults())
-      ).toEqual({ hasRun: true, items: [] });
+      expect(results(emptyResultsSet, exportResults())).toEqual(emptyResultsSet);
     });
 
     it('should handle unknown action type', () => {
       expect(results(
-        { hasRun: true, items: [] }, 
+        emptyResultsSet, 
         { type: 'unknown' })
-      ).toEqual({ hasRun: true, items: [] });
+      ).toEqual(emptyResultsSet);
     });
   });
 });

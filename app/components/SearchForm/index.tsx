@@ -51,7 +51,13 @@ export class SearchForm extends React.Component<IProps> {
 
     const results: IResults = { 
       hasRun: true, 
-      items: fileSearcher.search(searches.file, this.props.searches.searches)
+      items: fileSearcher.search(searches.file, this.props.searches.searches),
+      overlay: {
+        show: false,
+        search: '',
+        phrase: '',
+        body: '',
+      }
     };
 
     this.props.updateIsNewPhraseUsed(false);

@@ -6,6 +6,7 @@ import { IMenu } from '../../reducers/menu';
 import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';
+import { ResultOverlay } from '../Results/ResultOverlay';
 
 let styles = require('./Home.scss');
 
@@ -22,7 +23,9 @@ export interface IProps extends RouteComponentProps<any> {
   updateIsNewPhraseUsed(isUsed: boolean): void,
   exportSearches(): void, 
   addSearchesFromProfile(file: File): void,  
-  toggleShowSearchResult(index: number): void,
+  toggleShowSearchResultRows(index: number): void,
+  showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
+  hideResultOverlay(): void,
   saveResultsToFile(): void,
 };
 
@@ -30,6 +33,7 @@ export class Home extends React.Component<IProps> {
   render() {
     return (
       <div className={styles.columnsContainer}>
+        <ResultOverlay {...this.props}/>
         <div className={styles.rowsContainer}>
           <Searches {...this.props}/>
           <SearchForm {...this.props}/>

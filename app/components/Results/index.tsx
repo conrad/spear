@@ -10,7 +10,8 @@ let styles = require('./Results.scss');
 export interface IProps extends RouteComponentProps<any> {
   results: IResults,
   searches: ISearchesState,
-  toggleShowSearchResult(index: number): void,
+  toggleShowSearchResultRows(index: number): void,
+  showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
   saveResultsToFile(): void,
 }
   
