@@ -2,7 +2,7 @@ import { actionCreatorVoid, actionCreator } from './helpers';
 
 export const submitSearch = actionCreatorVoid('SUBMIT_SEARCH');
 export const resetFile = actionCreatorVoid('RESET_FILE');
-export const setFile = actionCreator<string>('SET_FILE');
+export const setFile = actionCreator<File>('SET_FILE');
 export const setNewPhrase = actionCreator<string>('SET_NEW_PHRASE');
 export const setIsPhraseUsed = actionCreator<boolean>('SET_IS_PHRASE_USED');
 
@@ -18,9 +18,9 @@ export function updateIsNewPhraseUsed(isUsed: boolean) {
   }
 }
 
-export function addFile(filename: string) {
+export function addFile(file: File) {
   return (dispatch: Function) => {
-    dispatch(setFile(filename));
+    dispatch(setFile(file));
   }
 }
 

@@ -1,6 +1,18 @@
 import { spy } from 'sinon';
 import * as actions from '../../app/actions/searchForm';
 
+const mockFile: File = {
+  name: 'thenameofthefile.txt',
+  lastModifiedDate: 0,
+  webkitRelativePath: '',
+  path: "/all/the/way.txt",
+  size: 10,
+  type: "gorillaz/clintEastwood",
+  msClose() {},
+  msDetachStream() {},
+  slice() { return new Blob(["hey"]); },
+};
+
 describe('actions', () => {
   it('should submitSearch should create submitSearch action', () => {
     expect(actions.submitSearch()).toMatchSnapshot();
@@ -11,7 +23,7 @@ describe('actions', () => {
   });
   
   it('should setFile should create setFile action', () => {
-    expect(actions.setFile('name-for-a-file')).toMatchSnapshot();
+    expect(actions.setFile(mockFile)).toMatchSnapshot();
   });
   
   it('should setNewPhrase should create setNewPhrase action', () => {
@@ -57,14 +69,13 @@ describe('actions', () => {
   });
   
   it('should addFile should create setFile action', () => {
-    const filename: string = 'thenameofthefile.txt';
-    const fn = actions.addFile(filename);
+    const fn = actions.addFile(mockFile);
     expect(fn).toBeInstanceOf(Function);
     const dispatch = spy();
     fn(dispatch);
     expect(dispatch.calledWith({ 
       type: actions.setFile.type, 
-      payload: filename
+      payload: mockFile
     })).toBe(true);
   });
 

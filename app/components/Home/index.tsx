@@ -15,7 +15,7 @@ export interface IProps extends RouteComponentProps<any> {
   menu: IMenu,
   updateSearch(search: ISearch): void,
   deletePhrase(phraseIndex: number, searchIndex: number): void,
-  addFile(filename: string): void,
+  addFile(file: File): void,
   resetFile(): void,
   setResults(results: IResults): void,
   updateNewPhrase(text: string): void,

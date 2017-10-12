@@ -9,7 +9,6 @@ const initialState: ISearchesState = {
   currentSearchIndex: 0,
   newSearchName: "",
   isNewSearchUsed: false,
-  filename: "",
   isValidFile: true,
   newPhrase: "",
   isNewPhraseUsed: false,
@@ -25,7 +24,7 @@ export interface ISearchesState {
   currentSearchIndex: number,
   newSearchName: string,
   isNewSearchUsed: boolean,
-  filename: string,
+  file?: File,
   isValidFile: boolean,
   newPhrase: string,
   isNewPhraseUsed: boolean,
@@ -136,12 +135,12 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   } else if (setFile.test(action)) {
     newState.isValidFile = true;
-    newState.filename = action.payload;
+    newState.file = action.payload;
     return newState;
 
   } else if (resetFile.test(action)) {
     newState.isValidFile = false;
-    newState.filename = '';
+    delete(newState.file);
     return newState;
 
   } else if (submitSearch.test(action)) {

@@ -103,7 +103,6 @@ export class SearchList extends React.Component<IProps, IState> {
       this.props.searches : 
       {
         currentSearchIndex: 0,
-        filename: '',
         isValidFile: true,
         searches: [],
         newSearchName: '',

@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../reducers/searches';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
-import { search as runSearch } from '../../local/fileSearcher';
+import FileSearcher from '../../local/fileSearcher';
 import { IResults } from '../../reducers/results';
 import { copyArray } from '../../utils/helpers';
 
@@ -14,7 +14,7 @@ export interface IProps extends RouteComponentProps<any> {
   searches: ISearchesState,
   updateSearch(search: ISearch): void,
   deletePhrase(phraseIndex: number, searchIndex: number): void,
-  addFile(filename: string): void,
+  addFile(file: File): void,
   resetFile(): void,
   setResults(results: IResults): void,
   updateNewPhrase(text: string): void,
@@ -25,7 +25,7 @@ export class SearchForm extends React.Component<IProps> {
   handleClickSearch() {
     let searches: ISearchesState = {...this.props.searches}; 
     
-    if (!searches.filename) {
+    if (!searches.file) {
       this.props.resetFile();
       return;
     }
@@ -47,9 +47,11 @@ export class SearchForm extends React.Component<IProps> {
       isEditing: false,
     });
 
+    const fileSearcher = new FileSearcher();
+
     const results: IResults = { 
       hasRun: true, 
-      items: runSearch(searches.filename, this.props.searches.searches)
+      items: fileSearcher.search(searches.file, this.props.searches.searches)
     };
 
     this.props.updateIsNewPhraseUsed(false);

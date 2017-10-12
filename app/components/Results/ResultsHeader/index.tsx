@@ -64,7 +64,9 @@ export class ResultsHeader extends React.Component<IProps, IState> {
     if (!this.state) {
       return <div></div>
     }
-
+    const filepath: string = this.state.searchInfo.file ?
+      this.state.searchInfo.file.path : 
+      "undefined";
     const numberOfResults = this.calculateResults(this.state.results.items);
     const resultsText = numberOfResults === 1 ? "Result" : "Results"    
     return (
@@ -78,7 +80,7 @@ export class ResultsHeader extends React.Component<IProps, IState> {
             onClick={ this.handleClickClose.bind(this) }/>
         </div>
         <div className={ styles.resultsFile }>
-          Search of: {this.state.searchInfo.filename}
+          Search of: { filepath }
         </div>
         <div className={ styles.resultsCount }>
           { numberOfResults + " " + resultsText }

@@ -6,7 +6,7 @@ let styles = require('./FileInput.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   searches: ISearchesState,
-  addFile(phrase: string): void,
+  addFile(file: File): void,
   resetFile(): void
 }
 
@@ -25,8 +25,9 @@ export class FileInput extends React.Component<IProps> {
 
     if (selectorFiles[0].type === 'text/plain'
       || selectorFiles[0].type === 'application/msword'
+      || selectorFiles[0].type === 'application/pdf'
     ) {
-      this.props.addFile(selectorFiles[0].path);
+      this.props.addFile(selectorFiles[0]);
     } else {
       console.log('incorrect file type');
       this.props.resetFile();
@@ -39,7 +40,7 @@ export class FileInput extends React.Component<IProps> {
         <span>File to Search: </span>
         <input 
           type="file" 
-          accept="application/msword, text/plain" 
+          accept="application/msword, text/plain, application/pdf" 
           onChange={ (e) => this.handleChange(e.target.files) } 
         />
         { !this.props.searches.isValidFile ?
