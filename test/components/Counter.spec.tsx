@@ -27,6 +27,7 @@ describe('Counter component', () => {
   it('should have a test', () => {
     expect(true).toBeTruthy;
   });
+});
 
 // describe('Counter component', () => {
 //   it('should should display count', () => {

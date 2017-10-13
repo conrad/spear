@@ -5,6 +5,7 @@ export const resetFile = actionCreatorVoid('RESET_FILE');
 export const setFile = actionCreator<File>('SET_FILE');
 export const setNewPhrase = actionCreator<string>('SET_NEW_PHRASE');
 export const setIsPhraseUsed = actionCreator<boolean>('SET_IS_PHRASE_USED');
+export const setCategory = actionCreator<string>('SET_CATEGORY');
 
 export function updateNewPhrase(text: string) {
   return (dispatch: Function) => {
@@ -21,6 +22,12 @@ export function updateIsNewPhraseUsed(isUsed: boolean) {
 export function addFile(file: File) {
   return (dispatch: Function) => {
     dispatch(setFile(file));
+  }
+}
+
+export function updateCategory(category: string) {
+  return (dispatch: Function) => {
+    dispatch(setCategory(category));
   }
 }
 

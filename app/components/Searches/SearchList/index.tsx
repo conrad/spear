@@ -94,10 +94,6 @@ export class SearchList extends React.Component<IProps, IState> {
     }
   }
 
-  selectSearch(searchIndex: number) {
-    console.log('select this search');
-  }
-
   render() {
     const searches: ISearchesState = this.props.searches ? 
       this.props.searches : 

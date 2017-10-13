@@ -1,7 +1,7 @@
 import { IAction } from '../actions/helpers';
 import { clone, isObjectInArray } from '../utils/helpers';
-import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
-import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
+import * as searchesActions from '../actions/searches';
+import * as searchFormActions from '../actions/searchForm';
 import JsonReader from '../local/searchLoader';
 
 const initialState: ISearchesState = {
@@ -32,6 +32,7 @@ export interface ISearchesState {
 
 export interface ISearch {
   index: number,
+  category?: string,
   name: string,
   description?: string,
   phrases: Array<string>,
@@ -55,27 +56,27 @@ export type TState = ISearchesState;
 export default function searches(state: ISearchesState = initialState, action: IAction) {
   let newState: ISearchesState = clone(state);
 
-  if (storeSearch.test(action)) {
+  if (searchesActions.storeSearch.test(action)) {
     newState.searches[action.payload.index] = action.payload;
     return newState;
 
-  } else if (unsetPhrase.test(action)) {
+  } else if (searchesActions.unsetPhrase.test(action)) {
     newState.searches[action.payload.searchIndex].phrases.splice(action.payload.index, 1);
     return newState;
 
-  } else if (flipSearchAsUsed.test(action)) {
+  } else if (searchesActions.flipSearchAsUsed.test(action)) {
     newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded;
     return newState;
 
-  } else if (setNewSearchName.test(action)) {
+  } else if (searchesActions.setNewSearchName.test(action)) {
     newState.newSearchName = action.payload;
     return newState;
 
-  } else if (setActiveSearch.test(action)) {
+  } else if (searchesActions.setActiveSearch.test(action)) {
     newState.currentSearchIndex = action.payload;
     return newState;
   
-  } else if (storeNewSearch.test(action)) {
+  } else if (searchesActions.storeNewSearch.test(action)) {
     if (newState.newSearchName) {
       const search: ISearch = {
         index: newState.searches.length,
@@ -92,7 +93,7 @@ export default function searches(state: ISearchesState = initialState, action: I
     }
     return newState;
 
-  } else if (deleteSearch.test(action)) {
+  } else if (searchesActions.deleteSearch.test(action)) {
     let index: number|null = null;
     newState.searches.map((search, i) => {
       if (search.name === action.payload.name)
@@ -105,11 +106,15 @@ export default function searches(state: ISearchesState = initialState, action: I
     newState.searches.splice(index, 1);
     return newState;    
 
-  } else if (setNewPhrase.test(action)) {
+  } else if (searchFormActions.setNewPhrase.test(action)) {
     newState.newPhrase = action.payload;
     return newState;
 
-  } else if (storeSearchesFromProfile.test(action)) {
+  } else if (searchFormActions.setCategory.test(action)) {
+    newState.searches[newState.currentSearchIndex].category = action.payload;
+    return newState;
+
+  } else if (searchesActions.storeSearchesFromProfile.test(action)) {
     action.payload.map((search, i) => {
       if (!isObjectInArray(newState.searches, search.name, 'name')) {
         newState.searches.push({
@@ -124,7 +129,7 @@ export default function searches(state: ISearchesState = initialState, action: I
       }
     });
 
-  } else if (setIsPhraseUsed.test(action)) {
+  } else if (searchFormActions.setIsPhraseUsed.test(action)) {
     newState.isNewPhraseUsed = action.payload;
     
     // Clear textarea if phrase no longer being used (or has been added to list of phrases)
@@ -133,17 +138,17 @@ export default function searches(state: ISearchesState = initialState, action: I
     }
     return newState;
 
-  } else if (setFile.test(action)) {
+  } else if (searchFormActions.setFile.test(action)) {
     newState.isValidFile = true;
     newState.file = action.payload;
     return newState;
 
-  } else if (resetFile.test(action)) {
+  } else if (searchFormActions.resetFile.test(action)) {
     newState.isValidFile = false;
     delete(newState.file);
     return newState;
 
-  } else if (submitSearch.test(action)) {
+  } else if (searchFormActions.submitSearch.test(action)) {
     return newState;
   }
 
