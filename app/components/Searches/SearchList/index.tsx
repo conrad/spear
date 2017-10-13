@@ -11,7 +11,7 @@ export interface IProps extends RouteComponentProps<any> {
   addSearch(search: ISearch): void,
   selectSearch(index: number): void,
   removeSearch(index: number, name: string): void,
-  setSearchAsUsed(index: number): void,
+  setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
   updateNewSearchName(name: string): void,
 }
 

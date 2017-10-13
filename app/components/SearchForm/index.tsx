@@ -19,6 +19,7 @@ export interface IProps extends RouteComponentProps<any> {
   setResults(results: IResults): void,
   updateNewPhrase(text: string): void,
   updateIsNewPhraseUsed(isUsed: boolean): void
+  setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
 }
 
 export class SearchForm extends React.Component<IProps> {

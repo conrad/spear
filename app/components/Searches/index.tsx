@@ -7,9 +7,6 @@ let styles = require('./Searches.scss');
 
 export interface IProps extends RouteComponentProps<any> {
   menu: IMenu,
-  toggleMenuDropDown(): void,
-  exportSearches(): void, 
-  addSearchesFromProfile(file: File): void,  
 };
 
 export class Searches extends React.Component<any> {

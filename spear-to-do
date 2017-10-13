@@ -2,7 +2,8 @@ SPEAR TODO
 
 - Improve search algorithm - allow near matches, anything else?
 - Start using the native menu bar
-- Closing results
+- Closing results?
+- Move results to right side/column arrangement 
 - Start building library of useful searches
 - Fix styling on sizing of textarea
 

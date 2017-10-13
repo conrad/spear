@@ -27,6 +27,7 @@ export interface IProps extends RouteComponentProps<any> {
   showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
   hideResultOverlay(): void,
   saveResultsToFile(): void,
+  setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,    
 };
 
 export class Home extends React.Component<IProps> {

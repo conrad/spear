@@ -44,7 +44,7 @@ export function deletePhrase(phraseIndex: number, searchIndex: number) {
   }    
 }
 
-export function setSearchAsUsed(index: number) {
+export function setSearchAsUsed(index: number, isUsed: boolean|null) {
   return (dispatch: Function) => {
     dispatch(flipSearchAsUsed(index));
   };

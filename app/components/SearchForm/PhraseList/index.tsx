@@ -11,6 +11,7 @@ export interface IProps extends RouteComponentProps<any> {
   deletePhrase(phraseIndex: number, searchIndex: number): void,
   updateNewPhrase(text: string): void,
   updateIsNewPhraseUsed(isUsed: boolean): void,
+  setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
 }
 
 interface IState extends RouteComponentProps<any> {
@@ -29,9 +30,10 @@ export class PhraseList extends React.Component<IProps, IState> {
 
   handleAddPhrase() {
     const currentIndex: number = this.props.searches.currentSearchIndex;
+    const { searches }  = this.props.searches;
     if (this.state.entry) {
       let isAlreadyPhrase = false;
-      this.props.searches.searches[currentIndex].phrases.forEach(phrase => {
+      searches[currentIndex].phrases.forEach(phrase => {
         if (this.state.entry == phrase) {
           console.log('The phrase is already registered in this search.');
           isAlreadyPhrase = true;
@@ -41,19 +43,20 @@ export class PhraseList extends React.Component<IProps, IState> {
       });
       
       if (!isAlreadyPhrase) {
-        let phrases: Array<string> = copyArray(this.props.searches.searches[currentIndex].phrases);
+        let phrases: Array<string> = copyArray(searches[currentIndex].phrases);
 
         phrases.push(this.state.entry);
 
         this.props.updateSearch({
           index: currentIndex,
-          name: this.props.searches.searches[currentIndex].name,
-          description: this.props.searches.searches[currentIndex].description,
+          name: searches[currentIndex].name,
+          description: searches[currentIndex].description,
           phrases: phrases,
-          isIncluded: this.props.searches.searches[currentIndex].isIncluded,
-          isEditing: this.props.searches.searches[currentIndex].isEditing,
+          isIncluded: searches[currentIndex].isIncluded,
+          isEditing: searches[currentIndex].isEditing,
         });
         this.props.updateIsNewPhraseUsed(false);
+        this.props.setSearchAsUsed(currentIndex, true);
         this.focusOnPhraseInput();
       }
 
