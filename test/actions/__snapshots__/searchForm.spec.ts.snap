@@ -15,7 +15,17 @@ Object {
 
 exports[`actions should setFile should create setFile action 1`] = `
 Object {
-  "payload": "name-for-a-file",
+  "payload": Object {
+    "lastModifiedDate": 0,
+    "msClose": [Function],
+    "msDetachStream": [Function],
+    "name": "thenameofthefile.txt",
+    "path": "/all/the/way.txt",
+    "size": 10,
+    "slice": [Function],
+    "type": "gorillaz/clintEastwood",
+    "webkitRelativePath": "",
+  },
   "type": "SET_FILE",
 }
 `;
@@ -55,7 +65,17 @@ Object {
 
 exports[`searchForm actions should setFile should create setFile action 1`] = `
 Object {
-  "payload": "name-for-a-file",
+  "payload": Object {
+    "lastModifiedDate": 0,
+    "msClose": [Function],
+    "msDetachStream": [Function],
+    "name": "thenameofthefile.txt",
+    "path": "/all/the/way.txt",
+    "size": 10,
+    "slice": [Function],
+    "type": "gorillaz/clintEastwood",
+    "webkitRelativePath": "",
+  },
   "type": "SET_FILE",
 }
 `;

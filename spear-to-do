@@ -1,11 +1,11 @@
 SPEAR TODO
 
+- Start using the native menu bar & shortcuts
 - Improve search algorithm - allow near matches, anything else?
-- Start using the native menu bar
-- Closing results?
-- Move results to right side/column arrangement 
 - Start building library of useful searches
-- Fix styling on sizing of textarea
+- Move results to right side/column arrangement 
+    - Closing results?
+- Fix styling on sizing of textarea   => npm install react-input-autosize --save
 
 IN PROGRESS
 - Search PDFs

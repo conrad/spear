@@ -1,17 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`actions should exportResults should create exportResults action 1`] = `
+Object {
+  "type": "EXPORT_RESULTS",
+}
+`;
+
 exports[`actions should saveResults should create saveResults action 1`] = `
 Object {
   "payload": Object {
     "hasRun": true,
     "items": Array [],
+    "overlay": Object {
+      "body": "",
+      "phrase": "",
+      "search": "",
+      "show": false,
+    },
   },
   "type": "SAVE_RESULTS",
 }
 `;
 
-exports[`actions should saveResultsInFile should create saveResultsInFile action 1`] = `
+exports[`actions should toggleShowResult should create toggleShowResult action 1`] = `
 Object {
-  "type": "SAVE_RESULTS_TO_FILE",
+  "payload": 1,
+  "type": "TOGGLE_SHOW_RESULT",
 }
 `;
