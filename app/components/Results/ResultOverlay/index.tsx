@@ -15,16 +15,30 @@ export class ResultOverlay extends React.Component<IProps> {
     this.props.hideResultOverlay();
   }
 
+  getPageWithHighlightTag(pageText: string, phrase: string): string {
+    const re: RegExp = new RegExp(phrase, 'g');
+    const replacement: string = "<span class='" + styles.highlightedPhrase + "'>" + phrase + "</span>";
+    return pageText.replace(re, replacement);
+  }
+
   render() {
+    const { results } = this.props;
+    const highlightedPage: string = this.getPageWithHighlightTag(
+      results.overlay.body, 
+      results.overlay.phrase
+    );
+
     return (
       this.props.results.overlay.show ?
         <div 
           className={ styles.overlayMask}
           onClick={ this.handleBackgroundClick.bind(this)}> 
           <div className={ styles.overlay}>
-            <div>{ this.props.results.overlay.search }</div>
-            <div>{ this.props.results.overlay.phrase }</div>
-            <div>{ this.props.results.overlay.body }</div>
+            <div className={ styles.header }>
+              <div className={ styles.headerSearch }>{ results.overlay.search }</div>
+              <div className={ styles.headerPhrase }>{ results.overlay.phrase }</div>
+            </div>
+            <div dangerouslySetInnerHTML={{__html: highlightedPage}}></div>
           </div> 
         </div> : null
     );

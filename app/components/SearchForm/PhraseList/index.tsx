@@ -54,10 +54,18 @@ export class PhraseList extends React.Component<IProps, IState> {
           isEditing: this.props.searches.searches[currentIndex].isEditing,
         });
         this.props.updateIsNewPhraseUsed(false);
+        this.focusOnPhraseInput();
       }
 
     } else {
       console.log('You have to add a new phrase in order to add more!');
+    }
+  }
+
+  focusOnPhraseInput() {
+    let element = document.getElementById('lastPhraseInput')
+    if (element) {
+      element.focus();
     }
   }
 
@@ -103,6 +111,7 @@ export class PhraseList extends React.Component<IProps, IState> {
         ) }
           <textarea 
             id="lastPhraseInput" 
+            ref="lastPhraseInput"  
             className={ styles.phraseInput } 
             placeholder={ 'Add a new phrase' } 
             value={ this.props.searches.newPhrase } 

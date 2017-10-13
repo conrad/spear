@@ -1,9 +1,15 @@
 SPEAR TODO
 
-- Create search categories (expandable)
-- Be able to view original with highlighting on phrase found.
 - Improve search algorithm - allow near matches, anything else?
 - Start using the native menu bar
 - Closing results
+- Start building library of useful searches
+- Fix styling on sizing of textarea
 
+IN PROGRESS
 - Search PDFs
+  - Not getting the content from the PDFs, just empty strings
+- Create search categories (expandable)
+  - Need work on rendering the searches grouped by category
+
+- Be able to view original with highlighting on phrase found.
