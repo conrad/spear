@@ -37,16 +37,21 @@ export class FileInput extends React.Component<IProps> {
   render() {
     return (
       <div className={styles.inputBlock}>
-        <span>File to Search: </span>
         <input 
           type="file" 
+          name="file" 
+          id="file" 
           accept="application/msword, text/plain, application/pdf" 
           onChange={ (e) => this.handleChange(e.target.files) } 
-        />
+          className={ styles.input }/>
+        <label htmlFor="file">Choose a File to Search</label>
+        { this.props.searches.file ? 
+          <span className={ styles.filename }>
+            { this.props.searches.file.name }
+          </span> : null }
         { !this.props.searches.isValidFile ?
           <span className={ styles.fileWarning }>Must provide a text file</span> : 
-          null
-        }
+          null }
       </div>
     );
   }

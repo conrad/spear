@@ -1,5 +1,7 @@
 SPEAR TODO
 
+- Toasts for files being saved/exported
+  - or other feedback, just more feedback
 - Start using the native menu bar & shortcuts
 - Improve search algorithm - allow near matches, anything else?
 - Start building library of useful searches
