@@ -1,7 +1,8 @@
 SPEAR TODO
 
-- Toasts for files being saved/exported
+- Toasts for files being saved/exported   ==>> Help from Andy?
   - or other feedback, just more feedback
+- Create switch for each phrase indicating whether near or exact match is required.
 - Start using the native menu bar & shortcuts
 - Improve search algorithm - allow near matches, anything else?
 - Start building library of useful searches
