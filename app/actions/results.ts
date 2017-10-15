@@ -1,11 +1,47 @@
 import { actionCreator, actionCreatorVoid } from './helpers';
-import { IResult } from "../reducers/results";
+import { IResults } from "../reducers/results";
+import TextDocWriter from "../local/resultsExporter"; 
 
-export const saveResults = actionCreator<Array<IResult>>('SET_RESULTS');
-export const saveResultsInFile = actionCreatorVoid('SAVE_RESULTS_IN_FILE');
+export interface IExcerptIndices {
+  resultIndex: number,
+  excerptIndex: number,
+}
 
-export function setResults(results: Array<IResult>) {
+export const saveResults = actionCreator<IResults>('SAVE_RESULTS');
+export const toggleShowResult = actionCreator<number>('TOGGLE_SHOW_RESULT');
+export const showOverlay = actionCreator<IExcerptIndices>('TOGGLE_SHOW_RESULT_OVERLAY');
+export const hideOverlay = actionCreatorVoid('HIDE_RESULT_OVERLAY');
+export const exportResults = actionCreatorVoid('EXPORT_RESULTS');
+
+export function setResults(results: IResults) {
   return (dispatch: Function) => {
     dispatch(saveResults(results));
+  };
+}
+
+export function toggleShowSearchResultRows(index: number) {
+  return (dispatch: Function) => {
+    dispatch(toggleShowResult(index));
+  };
+}
+
+export function showResultOverlay(resultIndex: number, excerptIndex: number) {
+  return (dispatch: Function) => {
+    dispatch(showOverlay({ resultIndex, excerptIndex }));
+  };
+}
+
+export function hideResultOverlay() {
+  return (dispatch: Function) => {
+    dispatch(hideOverlay());
+  };
+}
+
+export function saveResultsToFile() {
+  return (dispatch: Function, getState: Function) => {
+    const { searches, results } = getState();
+    const textDocWriter = new TextDocWriter();
+    textDocWriter.saveResults("Spear_Search_Results.txt", searches.searches, results.items);
+    dispatch(exportResults());
   };
 }

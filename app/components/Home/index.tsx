@@ -1,33 +1,45 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IFormState } from '../../reducers/searchForm';
-import { IResult } from '../../reducers/results';
+import { IResults } from '../../reducers/results';
+import { ISearchesState, ISearch } from '../../reducers/searches';
+import { IMenu } from '../../reducers/menu';
 import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';
+import { ResultOverlay } from '../Results/ResultOverlay';
 
 let styles = require('./Home.scss');
 
 export interface IProps extends RouteComponentProps<any> {
-  searchForm: IFormState,
-  results: Array<IResult>,
-  addPhrase(phrase: string): void,
-  deletePhrase(index: number): void,
-  addFile(filename: string): void,
+  results: IResults,
+  searches: ISearchesState,
+  menu: IMenu,
+  updateSearch(search: ISearch): void,
+  deletePhrase(phraseIndex: number, searchIndex: number): void,
+  addFile(file: File): void,
   resetFile(): void,
-  setResults(results: Array<IResult>): void,
-  updateNewPhrase(text: string): void
-}
+  setResults(results: IResults): void,
+  updateNewPhrase(text: string): void,
+  updateIsNewPhraseUsed(isUsed: boolean): void,
+  exportSearches(): void, 
+  addSearchesFromProfile(file: File): void,  
+  toggleShowSearchResultRows(index: number): void,
+  showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
+  hideResultOverlay(): void,
+  saveResultsToFile(): void,
+  setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,    
+};
 
 export class Home extends React.Component<IProps> {
   render() {
     return (
       <div className={styles.columnsContainer}>
+        <ResultOverlay {...this.props}/>
         <div className={styles.rowsContainer}>
-          <Searches/>
+          <Searches {...this.props}/>
           <SearchForm {...this.props}/>
         </div>
-        { this.props.results.length > 0 ?
+        { this.props.results.hasRun ?
           <Results {...this.props}/> :
           null
         }

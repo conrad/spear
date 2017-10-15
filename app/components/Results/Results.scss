@@ -1,6 +1,11 @@
 :local {
   .results {
-    display: inline-block;
+    border-top: 1px solid #C76565;
+    // display: inline-block;
     width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
   }
 }

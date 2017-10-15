@@ -1,42 +1,15 @@
-# electron-react-typescript-boilerplate
-
-[![Build Status][travis-image]][travis-url]
-[![Greenkeeper badge](https://badges.greenkeeper.io/iRath96/electron-react-typescript-boilerplate.svg)](https://greenkeeper.io/)
-
-This is a slight modificiation of the great [electron-react-boilerplate](https://github.com/chentsulin/electron-react-boilerplate) by chentsulin.
-Instead of [Babel](https://babeljs.io) and [flow](https://flowtype.org) this version uses [TypeScript](https://www.typescriptlang.org). Support for [Sass](http://sass-lang.com) has also been added.
-
-# electron-react-boilerplate
-
-![](./erb-logo.png)
-
-> Live editing development on desktop app
-
-[Electron](http://electron.atom.io/) application boilerplate based on [React](https://facebook.github.io/react/), [Redux](https://github.com/reactjs/redux), [React Router](https://github.com/reactjs/react-router), [Webpack](http://webpack.github.io/docs/), [React Transform HMR](https://github.com/gaearon/react-transform-hmr) for rapid application development
-
-## Screenshot
-
-![Electron Boilerplate Demo](https://cloud.githubusercontent.com/assets/3382565/10557547/b1f07a4e-74e3-11e5-8d27-79ab6947d429.gif)
+# SPEAR
 
 ## Install
 
 * **Note: requires a node version >= 6 and an npm version >= 3.**
-* **If you have installation or compilation issues with this project, please see [our debugging guide](https://github.com/chentsulin/electron-react-boilerplate/issues/400)**
-
-First, clone the repo via git:
 
 ```bash
-git clone https://github.com/iRath96/electron-react-typescript-boilerplate.git your-project-name
+$ cd <local_spear_repo> && npm install
 ```
 
-And then install dependencies.
-**ProTip**: Install with [yarn](https://github.com/yarnpkg/yarn) for faster and safer installation
-
-```bash
-$ cd your-project-name && npm install
-```
-
-:bulb: *In order to remove boilerplate sample code, simply run `npm run cleanup`. After this is run, the initial sample boilerplate code will be removed in order for a clean project for starting custom dev*
+###Dependencies for searching PDFs:
+https://github.com/nisaacson/pdf-extract#osx
 
 ## Run
 
@@ -80,9 +53,7 @@ apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter l
 
 *See [electron-debug](https://github.com/sindresorhus/electron-debug) for more information.*
 
-#### DevTools extension
-
-This boilerplate is included following DevTools extensions:
+#### DevTools extensions
 
 * [Devtron](https://github.com/electron/devtron) - Install via [electron-debug](https://github.com/sindresorhus/electron-debug).
 * [React Developer Tools](https://github.com/facebook/react-devtools) - Install via [electron-devtools-installer](https://github.com/GPMDP/electron-devtools-installer).
@@ -103,7 +74,7 @@ $ set UPGRADE_EXTENSIONS=1 && npm run dev
 
 ## CSS Modules
 
-This boilerplate out of the box is configured to use [css-modules](https://github.com/css-modules/css-modules).
+Configured to use [css-modules](https://github.com/css-modules/css-modules).
 
 All `.css` file extensions will use css-modules unless it has `.global.css`.
 
@@ -192,22 +163,3 @@ Then, use git to merge some latest commits:
 ```sh
 git pull upstream master
 ```
-
-## Maintainers
-
-- [C. T. Lin](https://github.com/chentsulin)
-- [Jhen-Jie Hong](https://github.com/jhen0409)
-- [Amila Welihinda](https://github.com/amilajack)
-
-
-## License
-MIT © [C. T. Lin](https://github.com/chentsulin)
-
-[npm-image]: https://img.shields.io/npm/v/electron-react-boilerplate.svg?style=flat-square
-[npm-url]: https://npmjs.org/package/electron-react-boilerplate
-[travis-image]: https://travis-ci.org/iRath96/electron-react-typescript-boilerplate.svg?branch=master
-[travis-url]: https://travis-ci.org/iRath96/electron-react-typescript-boilerplate
-[appveyor-image]: https://ci.appveyor.com/api/projects/status/github/chentsulin/electron-react-boilerplate?svg=true
-[appveyor-url]: https://ci.appveyor.com/project/chentsulin/electron-react-boilerplate/branch/master
-[david_img]: https://img.shields.io/david/chentsulin/electron-react-boilerplate.svg
-[david_site]: https://david-dm.org/chentsulin/electron-react-boilerplate

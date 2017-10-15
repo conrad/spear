@@ -1,17 +1,47 @@
 :local {
+  .scrollingContainer {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .resultsList {
     margin: 0px;
     padding: 0px;
   }
 
+  .noResults {
+    margin: 20px;
+    font-size: 16px;
+    color: #F93737;
+  }
+
   .excerptItem {
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 15px 30px;
     border-bottom: 1px solid #575757;
+    cursor: pointer;
+  }
+
+  .searchTitleRow {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid #575757;
+    cursor: pointer;
+  }
+
+  .searchItem { 
+    display: inline-block;
   }
 
   .excerptItem:hover {
     background-color: #575757;
+  }
+
+  .expandResult {
+    padding: 10px;
+    cursor: pointer;
   }
 }

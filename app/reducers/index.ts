@@ -1,24 +1,20 @@
 import { combineReducers, Reducer } from 'redux';
 import { routerReducer as routing } from 'react-router-redux';
-import counter, { TState as TCounterState } from './counter';
-import searchForm, { TState as TSearchFormState } from './searchForm';
 import searches, { TState as TSearchesState } from './searches';
-import results, { IResult } from "./results";
+import results, { TState as TResultsState } from "./results";
+import menu, { TState as TMenuState } from "./menu";
 
 const rootReducer = combineReducers({
-  counter,
-  searchForm,
+  menu,
   searches,
   results,
   routing: routing as Reducer<any>
 });
 
 export interface IState {
-  counter: TCounterState;
-  searchForm: TSearchFormState;
+  menu: TMenuState,
   searches: TSearchesState,
-  results: Array<IResult>
-  
+  results: TResultsState,
 }
 
 export default rootReducer;

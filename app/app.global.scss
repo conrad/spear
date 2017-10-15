@@ -12,6 +12,14 @@ body {
   color: white;
 }
 
+#root {
+  height: 100%;
+}
+
+[data-reactroot] { 
+  height: 100% 
+}
+
 h2 {
   margin: 0;
   font-size: 2.25rem;

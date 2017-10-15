@@ -1,0 +1,49 @@
+:local {
+  .highlightedPhrase {
+    color: #551cff;
+    text-decoration: underline;
+  }
+  
+  .overlayMask {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+  }
+
+  .overlay {
+    position: absolute;
+    width: 60%;
+    height: 60%;
+    top: 15%;
+    left: 15%;
+    // z-index: 110;
+    background-color: rgb(215, 210, 210);
+    color: rgb(45, 29, 29);
+    padding: 40px;
+    border: 2px solid rgb(84, 27, 27);
+    border-radius: 5px;
+    box-shadow: 26px 32px 68px 0px rgba(0,0,0,0.75);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .headerSearch {
+    font-weight: bold;
+    font-size: large;
+    color: rgb(16, 82, 97);
+  }
+
+  .headerPhrase {
+    font-weight: bold;
+    font-size: medium;
+  }
+}

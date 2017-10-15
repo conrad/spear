@@ -1,25 +1,27 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import { IResult } from '../../../reducers/results';
-import { IFormState } from '../../../reducers/searchForm';
+import { IResults, IResult } from '../../../reducers/results';
+import { ISearchesState } from '../../../reducers/searches';
 
+let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
 
 export interface IProps extends RouteComponentProps<any> {
-  results: Array<IResult>,
-  searchForm: IFormState
+  results: IResults,
+  searches: ISearchesState,
+  saveResultsToFile(): void,
 }
  
 export interface IState extends RouteComponentProps<any> {
-  results: Array<IResult>,
-  searchInfo: IFormState
+  results: IResults,
+  searchInfo: ISearchesState
 }
 
 export class ResultsHeader extends React.Component<IProps, IState> {
   componentDidMount() {
     this.setState({
       results: this.props.results,
-      searchInfo: this.props.searchForm 
+      searchInfo: this.props.searches
     });  
   }
 
@@ -29,38 +31,56 @@ export class ResultsHeader extends React.Component<IProps, IState> {
       // Does this need to be set separately for the initial render as well?
       this.setState({
         results: nextProps.results,
-        searchInfo: nextProps.searchForm 
+        searchInfo: nextProps.searches
       });
     }
   }
 
-  calculateResults(results: Array<IResult>): number {
+  calculateResults(resultItems: Array<IResult>): number {
     // return results.reduce((prev: IResult, cur: IResult, i: number, resArr: Array<IResult>) => {
     //   ...
     // });
 
     let number: number = 0;
-    results.forEach(result => {
-      console.log('result in results:', result);
-      if (result.excerpts) {
-        number += result.excerpts.length;
+    resultItems.forEach(item => {
+      if (item.excerpts) {
+        number += item.excerpts.length;
       }
     });
 
     return number;
   }
 
+  handleClickExport() {
+    console.log('wanna save your results?');
+    this.props.saveResultsToFile();
+  }
+
+  handleClickClose() {
+    console.log('wanna close results?');
+  }
+
   render() {
     if (!this.state) {
       return <div></div>
     }
-
-    const numberOfResults = this.calculateResults(this.state.results);
+    const filepath: string = this.state.searchInfo.file ?
+      this.state.searchInfo.file.path : 
+      "undefined";
+    const numberOfResults = this.calculateResults(this.state.results.items);
     const resultsText = numberOfResults === 1 ? "Result" : "Results"    
     return (
       <div className={ styles.resultsHeader }>
+        <div>
+          <Icons.File 
+            className={ styles.exportButton }
+            onClick={ this.handleClickExport.bind(this) }/>
+          <Icons.ChevronDown
+            className={ styles.downButton }
+            onClick={ this.handleClickClose.bind(this) }/>
+        </div>
         <div className={ styles.resultsFile }>
-          Search of: {this.state.searchInfo.filename}
+          Search of: { filepath }
         </div>
         <div className={ styles.resultsCount }>
           { numberOfResults + " " + resultsText }
