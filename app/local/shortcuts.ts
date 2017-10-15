@@ -1,10 +1,34 @@
-// import { MenuItem } from 'electron';
-import { search } from './fileSearcher';
+import FileSearcher from './fileSearcher';
 import { setResults } from '../actions/results';
-import { IResult } from '../reducers/results';
-import { copyArray } from '../utils/helpers';
+import { IResults } from '../reducers/results';
 import * as store from '../store/configureStore';
 const state = store.getState();
+
+export const RunSearch = {
+  label: 'Run Search',
+  accelerator: process.platform === 'darwin' ? 'Alt+Command+S' : 'Ctrl+Shift+S',
+  click: () => { 
+    if (!state.searches.file) {
+      throw new Error('Must provide a file to search');
+    }
+
+    const fileSearcher = new FileSearcher();
+    const results: IResults = { 
+      hasRun: true, 
+      items: fileSearcher.search(state.searches.file, state.searches.searches),
+      overlay: {
+        show: false,
+        search: '',
+        phrase: '',
+        body: '',
+      }
+    };
+
+    setResults(results);
+    console.log('Ran search!');
+  }
+};  
+
 
 // // import { Menu, MenuItem } from 'electron';
 // const { search } = require('./fileSearcher.ts');
@@ -20,21 +44,3 @@ const state = store.getState();
 //   accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
 //   click: () => { console.log('time to print stuff') }
 // }));
-
-export const RunSearch = {   // new MenuItem({
-  label: 'Run Search',
-  accelerator: process.platform === 'darwin' ? 'Alt+Cmd+I' : 'Ctrl+Shift+I',
-  click: () => { 
-    // let searchForm: IFormState = {...this.props.searchForm}; 
-    let phrases: Array<string> = copyArray(state.searchForm.phrases);
-
-    if (state.searchForm.newPhrase && state.searchForm.phrases.indexOf(state.searchForm.newPhrase) == -1) {
-      phrases.push(state.searchForm.newPhrase);
-    }
-
-    const results: Array<IResult> = search(state.searchForm.filename, phrases);
-
-    setResults(results);
-    console.log('ran search!');
-  }
-};  //);

@@ -1,5 +1,5 @@
 const { app, BrowserWindow, Menu, shell } = require('electron');
-// const { RunSearch } = require('./local/shortcuts.ts');
+const { RunSearch } = require('./local/shortcuts');
 
 let menu;
 let template;
@@ -75,14 +75,14 @@ app.on('ready', () =>
     template = [{
       label: 'Spear',
       submenu: [
-        // RunSearch,
+        RunSearch,
+        // {
+        //   label: 'Run Search',
+        //   accelerator: 'Alt+Command+S', // : 'Ctrl+Shift+I',
+        //   click: () => { console.log('not working yet') }
+        // },
         {
-          label: 'Run Search',
-          accelerator: 'Alt+Cmd+I', // : 'Ctrl+Shift+I',
-          click: () => { 'not working yet' }
-        },
-        {
-        label: 'About ElectronReact',
+        label: 'About Spear ElectronReact',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
