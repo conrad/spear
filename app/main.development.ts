@@ -1,9 +1,9 @@
 const { app, BrowserWindow, Menu, shell } = require('electron');
-const { RunSearch } = require('./local/shortcuts');
+const { RunSearch } = require('./precompiled/shortcuts');
 
 let menu;
 let template;
-let mainWindow = null;
+let mainWindow: Electron.BrowserWindow;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support'); // eslint-disable-line
@@ -49,23 +49,26 @@ app.on('ready', () =>
   mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on('did-finish-load', () => {
-    mainWindow.show();
-    mainWindow.focus();
+    if (mainWindow) {
+      mainWindow.show();
+      mainWindow.focus();
+    }
   });
 
   mainWindow.on('closed', () => {
-    mainWindow = null;
+    // mainWindow = null;
   });
 
   if (process.env.NODE_ENV === 'development') {
-    mainWindow.openDevTools();
+    // mainWindow.openDevTools();
     mainWindow.webContents.on('context-menu', (e, props) => {
-      const { x, y } = props;
+      // const { x, y } = props;
 
       Menu.buildFromTemplate([{
         label: 'Inspect element',
         click() {
-          mainWindow.inspectElement(x, y);
+          console.log('Disabled inspect element from here.')
+          // mainWindow.inspectElement(x, y);
         }
       }]).popup(mainWindow);
     });
@@ -158,7 +161,8 @@ app.on('ready', () =>
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
         click() {
-          mainWindow.toggleDevTools();
+          console.log('Disabled this command in main.')
+          // mainWindow.toggleDevTools();
         }
       }] : [{
         label: 'Toggle Full Screen',
@@ -241,7 +245,8 @@ app.on('ready', () =>
         label: 'Toggle &Developer Tools',
         accelerator: 'Alt+Ctrl+I',
         click() {
-          mainWindow.toggleDevTools();
+          console.log('Disabled this command in main.')
+          // mainWindow.toggleDevTools();
         }
       }] : [{
         label: 'Toggle &Full Screen',
