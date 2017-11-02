@@ -19,3 +19,10 @@ IN PROGRESS
   - Need work on rendering the searches grouped by category
 
 - Be able to view original with highlighting on phrase found.
+
+
+https://www.npmjs.com/package/react-toastify
+https://medium.com/@alexanderv/tries-javascript-simple-implementation-e2a4e54e4330
+http://blog.benoitvallon.com/data-structures-in-javascript/the-trie-data-structure/
+fuzzy search: http://fusejs.io/
+https://www.toptal.com/algorithms/needle-in-a-haystack-a-nifty-large-scale-text-search-algorithm
