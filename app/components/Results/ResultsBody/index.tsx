@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IResults } from '../../../reducers/results';
 let Icons = require('react-feather');
 
 let styles = require("./ResultsBody.scss");
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   results: IResults,
   toggleShowSearchResultRows(index: number): void,
   showResultOverlay(resultItemIndex: number, excerptIndex: number): void,  

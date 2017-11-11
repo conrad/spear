@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IResults } from '../../reducers/results';
 import { ISearchesState, ISearch } from '../../reducers/searches';
 import { IMenu } from '../../reducers/menu';
@@ -10,7 +9,7 @@ import { ResultOverlay } from '../Results/ResultOverlay';
 
 let styles = require('./Home.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   results: IResults,
   searches: ISearchesState,
   menu: IMenu,

@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
 import { copyArray } from '../../../utils/helpers';
 let Icons = require('react-feather');
 let styles = require('./PhraseList.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   searches: ISearchesState,
   updateSearch(search: ISearch): void,
   deletePhrase(phraseIndex: number, searchIndex: number): void,
@@ -14,7 +13,7 @@ export interface IProps extends RouteComponentProps<any> {
   setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
 }
 
-interface IState extends RouteComponentProps<any> {
+interface IState {
   entry: string
 }
 

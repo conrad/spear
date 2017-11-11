@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { ISearchesState } from '../../../reducers/searches';
 
 let styles = require('./FileInput.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   searches: ISearchesState,
   addFile(file: File): void,
   resetFile(): void

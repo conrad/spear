@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 
 let styles = require('./ProfileInput.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   addSearchesFromProfile(file: File): void,
   toggleMenuDropDown(): void,
 }

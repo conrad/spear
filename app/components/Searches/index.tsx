@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { MenuBanner } from './MenuBanner';
 import { SearchList } from './SearchList';
 import { IMenu } from '../../reducers/menu';
 import { ISearchesState, ISearch } from '../../reducers/searches';
 let styles = require('./Searches.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   menu: IMenu,
   searches: ISearchesState,
   addSearchesFromProfile(file: File): void,

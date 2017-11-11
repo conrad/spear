@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IResults } from '../../../reducers/results';
 
 let styles = require("./ResultOverlay.scss");
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   results: IResults,
   hideResultOverlay(): void,
   // toggleShowResultOverlay(resultItemIndex: number, excerptIndex: number): void,

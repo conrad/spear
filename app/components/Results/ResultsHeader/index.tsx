@@ -1,18 +1,17 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IResults, IResult } from '../../../reducers/results';
 import { ISearchesState } from '../../../reducers/searches';
 
 let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   results: IResults,
   searches: ISearchesState,
   saveResultsToFile(): void,
 }
  
-export interface IState extends RouteComponentProps<any> {
+export interface IState {
   results: IResults,
   searchInfo: ISearchesState
 }
