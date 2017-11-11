@@ -1,6 +1,6 @@
 import * as fs from "fs";
-import { ISearch } from "../reducers/searches";
-import { initialSearchesJson } from "../searchProfiles/basic_searches"
+import { ISearch } from "../../reducers/searches";
+import { initialSearchesJson } from "../../searchProfiles/basic_searches"
 
 export interface ISearchesProfile {
   searches: Array<ISearch>,

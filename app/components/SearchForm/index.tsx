@@ -3,7 +3,7 @@ import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../reducers/searches';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
-import FileSearcher from '../../local/fileSearcher';
+import FileSearcher from '../../local/search/fileSearcher';
 import { IResults } from '../../reducers/results';
 import { copyArray } from '../../utils/helpers';
 

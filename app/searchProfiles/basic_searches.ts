@@ -1,4 +1,4 @@
-import { ISearchesProfile } from "../local/searchLoader"
+import { ISearchesProfile } from "../local/import/searchLoader"
 
 export const initialSearchesJson: ISearchesProfile = {
   "searches": [

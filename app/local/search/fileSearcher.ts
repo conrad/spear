@@ -1,8 +1,7 @@
 import * as fs from "fs";
-import { IResult, IExcerpt } from "../reducers/results";
-import { ISearch } from "../reducers/searches";
+import { IResult, IExcerpt } from "../../reducers/results";
+import { ISearch } from "../../reducers/searches";
 const extract = require('pdf-text-extract');
-
 
 export default class FileSearcher {
   load(file: File): string  {

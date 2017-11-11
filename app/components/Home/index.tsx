@@ -14,21 +14,28 @@ export interface IProps extends RouteComponentProps<any> {
   results: IResults,
   searches: ISearchesState,
   menu: IMenu,
-  updateSearch(search: ISearch): void,
-  deletePhrase(phraseIndex: number, searchIndex: number): void,
   addFile(file: File): void,
-  resetFile(): void,
-  setResults(results: IResults): void,
-  updateNewPhrase(text: string): void,
-  updateIsNewPhraseUsed(isUsed: boolean): void,
-  exportSearches(): void, 
+  addSearch(search: ISearch): void,
   addSearchesFromProfile(file: File): void,  
-  toggleShowSearchResultRows(index: number): void,
-  showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
+  deletePhrase(phraseIndex: number, searchIndex: number): void,
+  exportSearches(): void, 
   hideResultOverlay(): void,
+  removeSearch(index: number, name: string): void,
+  resetFile(): void,
   saveResultsToFile(): void,
+  showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
+  selectSearch(index: number): void,
+  setResults(results: IResults): void,
   setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,    
+  toggleMenuDropDown(): void,
+  toggleShowSearchResultRows(index: number): void,
+  updateIsNewPhraseUsed(isUsed: boolean): void,
+  updateNewPhrase(text: string): void,
+  updateSearch(search: ISearch): void,
+  updateNewSearchName(name: string): void,
 };
+
+
 
 export class Home extends React.Component<IProps> {
   render() {

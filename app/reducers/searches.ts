@@ -2,7 +2,7 @@ import { IAction } from '../actions/helpers';
 import { clone, isObjectInArray } from '../utils/helpers';
 import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
 import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
-import JsonReader from '../local/searchLoader';
+import JsonReader from '../local/import/searchLoader';
 
 const initialState: ISearchesState = {
   searches: getInitialSearches(),

@@ -1,6 +1,6 @@
-import { spy } from 'sinon';
-import * as actions from '../../app/actions/searches';
-import { ISearch, IMove } from '../../app/reducers/searches';
+import { spy } from 'sinon'
+import * as actions from '../../app/actions/searches'
+import { ISearch, IMove } from '../../app/reducers/searches'
 
 const mockSearch: ISearch = {
   index: 0,
@@ -8,17 +8,17 @@ const mockSearch: ISearch = {
   isIncluded: false,
   name: '',
   phrases: [],
-};
+}
 
 const mockMove: IMove = {
   initialIndex: 1,
   nextIndex: 2
-};
+}
 
 describe('actions', () => {
   it('should storeSearch should create storeSearch action', () => {
     expect(actions.storeSearch(mockSearch)).toMatchSnapshot();
-  });
+  })
 
   it('should unsetPhrase should create unsetPhrase action', () => {
     expect(actions.unsetPhrase({
@@ -26,7 +26,7 @@ describe('actions', () => {
       searchIndex: 0,
       text: ''
     })).toMatchSnapshot();
-  });
+  })
 
   it('should deleteSearch should create deleteSearch action', () => {
     expect(actions.deleteSearch(mockSearch)).toMatchSnapshot();
