@@ -15,8 +15,7 @@ const initialState: ISearchesState = {
 }; 
 
 function getInitialSearches(): Array<ISearch> {
-  const jsonReader: JsonReader = new JsonReader();
-  return jsonReader.getInitialSearches();
+  return JsonReader.getInitialSearches();
 };
 
 export interface ISearchesState {

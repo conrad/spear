@@ -70,8 +70,7 @@ export function exportSearches() {
 }
 
 export function addSearchesFromProfile(file: File) {
-  const jsonReader: JsonReader = new JsonReader();
-  const searches: Array<ISearch> = jsonReader.retrieveSearchesFromFile(file.path);
+  const searches: Array<ISearch> = JsonReader.retrieveSearchesFromFile(file.path);
 
   return (dispatch: Function) => {
     dispatch(storeSearchesFromProfile(searches));

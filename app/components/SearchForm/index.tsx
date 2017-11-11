@@ -47,11 +47,9 @@ export class SearchForm extends React.Component<IProps> {
       isEditing: false,
     });
 
-    const fileSearcher = new FileSearcher();
-
     const results: IResults = { 
       hasRun: true, 
-      items: fileSearcher.search(searches.file, this.props.searches.searches),
+      items: FileSearcher.search(searches.file, this.props.searches.searches),
       overlay: {
         show: false,
         search: '',

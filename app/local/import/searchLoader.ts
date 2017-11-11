@@ -6,14 +6,14 @@ export interface ISearchesProfile {
   searches: Array<ISearch>,
 };
 
-export default class JsonReader {
+const JsonReader = {
   load(filepath: string): string {
     if (fs.existsSync(filepath)) {
       return fs.readFileSync(filepath, 'utf8');
     } else {
       throw new Error('File doesn\'t exist.');
     }
-  }
+  },
 
   retrieveSearchesFromFile(filepath: string): Array<ISearch> {
     let searches: Array<ISearch> = [];
@@ -27,7 +27,7 @@ export default class JsonReader {
     }
 
     return searches;
-  }
+  },
 
   parseSearchesFromProfileJson(jsonContents: ISearchesProfile): Array<ISearch> {
     let searches: Array<ISearch> = [];
@@ -57,9 +57,11 @@ export default class JsonReader {
     }
 
     return searches;
-  }
+  },
 
   getInitialSearches(): Array<ISearch> {
     return this.parseSearchesFromProfileJson(initialSearchesJson);
   }
-};
+}
+
+export default JsonReader
