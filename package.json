@@ -44,8 +44,8 @@
     ]
   },
   "build": {
-    "productName": "ElectronReactTypescript",
-    "appId": "io.github.irath96.ElectronReactTypescript",
+    "productName": "Spear",
+    "appId": "io.github.conrad.Spear",
     "dmg": {
       "contents": [
         {
@@ -88,27 +88,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/irath96/electron-react-typescript-boilerplate.git"
+    "url": "git+https://github.com/conrad/spear.git"
   },
   "author": {
-    "name": "Alexander Rath",
-    "email": "irath96@gmail.com",
-    "url": "https://github.com/irath96"
+    "name": "Matt Conrad",
+    "email": "mmconrad@gmail.com",
+    "url": "https://github.com/conrad"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/irath96/electron-react-typescript-boilerplate/issues"
-  },
-  "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "react-router",
-    "flux",
-    "webpack",
-    "react-hot"
-  ],
-  "homepage": "https://github.com/irath96/electron-react-typescript-boilerplate#readme",
   "devDependencies": {
     "@types/enzyme": "^2.8.7",
     "@types/history": "^4.5.2",
@@ -134,7 +120,7 @@
     "electron-builder": "^19.8.0",
     "electron-builder-http": "^19.15.0",
     "electron-devtools-installer": "^2.0.1",
-    "enzyme": "^2.9.1",
+    "enzyme": "^3.2.0",
     "express": "^4.14.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
@@ -142,6 +128,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
     "json-loader": "^0.5.4",
+    "mock-fs": "^4.4.2",
     "node-sass": "^4.1.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "react-test-renderer": "^16.1.0",
@@ -167,7 +154,8 @@
     "history": "^4.6.1",
     "pdf-extract": "^1.0.11",
     "pdf-text-extract": "^1.5.0",
-    "react": "^15.6.1",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
     "react-feather": "^1.0.7",
     "react-pdf": "^2.1.6",
     "react-redux": "^5.0.1",
