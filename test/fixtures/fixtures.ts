@@ -1,4 +1,5 @@
 import { IResults } from '../../app/reducers/results'
+import { ISearchesState, ISearch, IPhrase } from '../../app/reducers/searches'
 
 export const emptyResultsSet: IResults = {
   hasRun: false,
@@ -34,4 +35,29 @@ export const sampleResults: IResults = {
     search: '',
     show: false,
   }
+}
+
+export const emptySearchesState: ISearchesState = {
+  searches: [],
+  currentSearchIndex: 0,
+  newSearchName: "",
+  isNewSearchUsed: false,
+  isValidFile: true,
+  newPhrase: "",
+  isNewPhraseUsed: false,
+}
+
+export const sampleSearch: ISearch = {
+  index: 10,
+  name: 'a sample search',
+  description: 'this is a sample search for testing',
+  phrases: ['this one?', 'how bout this one, kid', 'there\'s more...'],
+  isIncluded: true,
+  isEditing: false,
+}
+
+export const samplePhrase: IPhrase = {
+  index: 2,
+  text: 'just a phrase within the search',
+  searchIndex: 0
 }

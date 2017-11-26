@@ -1,7 +1,22 @@
 import { IAction } from '../actions/helpers';
 import { clone, isObjectInArray } from '../utils/helpers';
-import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
-import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
+import { 
+  storeSearchesFromProfile, 
+  setActiveSearch, 
+  setNewSearchName, 
+  storeNewSearch, 
+  storeSearch, 
+  deleteSearch, 
+  unsetPhrase, 
+  toggleSearchAsUsed 
+} from '../actions/searches';
+import {
+  submitSearch,
+  setNewPhrase,
+  setIsPhraseUsed,
+  setFile,
+  resetFile,
+} from '../actions/searchForm';
 import JsonReader from '../local/import/searchLoader';
 
 const initialState: ISearchesState = {
@@ -59,10 +74,23 @@ export default function searches(state: ISearchesState = initialState, action: I
     return newState;
 
   } else if (unsetPhrase.test(action)) {
-    newState.searches[action.payload.searchIndex].phrases.splice(action.payload.index, 1);
+    if (!newState.searches[action.payload.searchIndex]) {
+      throw new Error('Attempted to unset phrase on search, but the search doesn\'t exist.')
+    }
+
+    const phrases: string[] = newState.searches[action.payload.searchIndex].phrases
+    if (!phrases[action.payload.index]) {
+      throw new Error('Attempted to unset phrase on search, but the phrase index doesn\'t exist on search.')
+    }
+
+    if (phrases[action.payload.index] !== action.payload.text) {
+      throw new Error(`Attempted to unset phrase, but the text doesn\'t match between the phrases: ${phrases[action.payload.index]}, ${action.payload.text}`)
+    }
+
+    phrases.splice(action.payload.index, 1);
     return newState;
 
-  } else if (flipSearchAsUsed.test(action)) {
+  } else if (toggleSearchAsUsed.test(action)) {
     newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded;
     return newState;
 

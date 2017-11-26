@@ -7,7 +7,7 @@ export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
 export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
 export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
 export const unsetPhrase = actionCreator<IPhrase>('UNSET_PHRASE');
-export const flipSearchAsUsed = actionCreator<number>('FLIP_SEARCH_AS_USED');
+export const toggleSearchAsUsed = actionCreator<number>('TOGGLE_SEARCH_AS_USED');
 export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
 export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
 export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
@@ -46,7 +46,7 @@ export function deletePhrase(phraseIndex: number, searchIndex: number) {
 
 export function setSearchAsUsed(index: number, isUsed: boolean|null) {
   return (dispatch: Function) => {
-    dispatch(flipSearchAsUsed(index));
+    dispatch(toggleSearchAsUsed(index));
   };
 }
 
