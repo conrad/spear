@@ -4,6 +4,7 @@ import searches, {
   ISearchesState,
 } from '../../app/reducers/searches'
 import { 
+  storeNewSearch,
   storeSearch,
   unsetPhrase,
   toggleSearchAsUsed,
@@ -109,5 +110,26 @@ describe('searches reducer', () => {
     
     const actual = searches(searchesState, setNewSearchName(newName))
     expect(actual.newSearchName).toEqual(newName)
+  })
+
+  it('should handle STORE_NEW_SEARCH', () => {
+    const newName: string = 'any new name'
+    const searchesState: ISearchesState = getCopy(emptySearchesState)
+    searchesState.newSearchName = newName
+    const search: ISearch = {
+      index: searchesState.searches.length,
+      name: searchesState.newSearchName,
+      phrases: [],
+      isIncluded: false,
+      isEditing: false,
+    }
+    const expected: ISearchesState = getCopy(searchesState)
+    expected.searches.push(search)
+    expected.newSearchName = ''
+    const actual = searches(searchesState, storeNewSearch(''))
+
+    expect(actual.newSearchName).toEqual('')
+    expect(actual.searches.length).toBeGreaterThan(emptySearchesState.searches.length)
+    expect(actual.searches[actual.searches.length-1]).toEqual(expected.searches[actual.searches.length-1])
   })
 })
