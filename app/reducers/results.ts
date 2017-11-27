@@ -1,5 +1,12 @@
 import { IAction } from '../actions/helpers';
-import { hideOverlay, saveResults, showOverlay, exportResults, toggleShowResult } from '../actions/results';
+import { 
+  hideOverlay, 
+  saveResults, 
+  showOverlay, 
+  exportResults, 
+  toggleShowResultsWindow, 
+  toggleShowResult 
+} from '../actions/results';
 import { clone } from '../utils/helpers';
 
 const initialState: IResults = { 
@@ -10,7 +17,8 @@ const initialState: IResults = {
     search: '',
     phrase: '',
     body: '',
-  }
+  },
+  showWindow: true,
 }
 
 export interface IResults {
@@ -21,7 +29,8 @@ export interface IResults {
     search: string,
     phrase: string,
     body: string,
-  }
+  },
+  showWindow: boolean
 }
 
 export interface IResult {
@@ -67,6 +76,12 @@ export default function results(state: IResults = initialState, action: IAction)
     }
 
     throw new Error('Attempted to toggle result item to show that doesn\'t exist.')
+  }
+
+  if (toggleShowResultsWindow.test(action)) {
+    console.log('toggling!:', newState.showWindow)
+    newState.showWindow = !newState.showWindow
+    return newState
   }
 
   if (hideOverlay.test(action)) {

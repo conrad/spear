@@ -9,7 +9,8 @@ export const emptyResultsSet: IResults = {
     phrase: '',
     search: '',
     show: false,
-  }
+  },
+  showWindow: true,
 }
 
 export const sampleResults: IResults = {
@@ -34,7 +35,8 @@ export const sampleResults: IResults = {
     phrase: '',
     search: '',
     show: false,
-  }
+  },
+  showWindow: true,
 }
 
 export const emptySearchesState: ISearchesState = {

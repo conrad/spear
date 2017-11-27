@@ -1,16 +1,7 @@
 import { spy } from 'sinon';
+import { emptyResultsSet } from '../fixtures/fixtures'
 import * as actions from '../../app/actions/results';
 
-const emptyResultsSet = { 
-  hasRun: true, 
-  items: [], 
-  overlay: {
-    show: false,
-    search: '',
-    phrase: '',
-    body: '',
-  }  
-};
 
 describe('actions', () => {
   // it('should saveResults should create saveResults action', () => {

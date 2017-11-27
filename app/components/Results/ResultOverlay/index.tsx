@@ -6,7 +6,6 @@ let styles = require("./ResultOverlay.scss");
 export interface IProps {
   results: IResults,
   hideResultOverlay(): void,
-  // toggleShowResultOverlay(resultItemIndex: number, excerptIndex: number): void,
 };
   
 export class ResultOverlay extends React.Component<IProps> {

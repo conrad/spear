@@ -9,6 +9,7 @@ let styles = require('./Results.scss');
 export interface IProps {
   results: IResults,
   searches: ISearchesState,
+  toggleShowResultsWindow(): void,
   toggleShowSearchResultRows(index: number): void,
   showResultOverlay(resultItemIndex: number, excerptIndex: number): void,
   saveResultsToFile(): void,
@@ -17,10 +18,13 @@ export interface IProps {
 export class Results extends React.Component<IProps> {
   render() {
     return (
-      <div className={styles.results}>
-        <ResultsHeader {...this.props}/>
-        <ResultsBody {...this.props}/>
-      </div>
+        <div className={styles.results}>
+          <ResultsHeader {...this.props}/>
+          { this.props.results.showWindow ? 
+            <ResultsBody {...this.props}/> : 
+            null
+          }
+        </div>
     );
   }
 }

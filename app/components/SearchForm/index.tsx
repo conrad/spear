@@ -55,7 +55,8 @@ export class SearchForm extends React.Component<IProps> {
         search: '',
         phrase: '',
         body: '',
-      }
+      }, 
+      showWindow: true,
     };
 
     this.props.updateIsNewPhraseUsed(false);

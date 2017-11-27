@@ -27,6 +27,7 @@ export interface IProps {
   setResults(results: IResults): void,
   setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,    
   toggleMenuDropDown(): void,
+  toggleShowResultsWindow(): void,
   toggleShowSearchResultRows(index: number): void,
   updateIsNewPhraseUsed(isUsed: boolean): void,
   updateNewPhrase(text: string): void,
