@@ -9,7 +9,7 @@ export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
 export const unsetPhrase = actionCreator<IPhrase>('UNSET_PHRASE');
 export const toggleSearchAsUsed = actionCreator<number>('TOGGLE_SEARCH_AS_USED');
 export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
-export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
+export const storeNewSearch = actionCreatorVoid('STORE_NEW_SEARCH');
 export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
 export const storeSearchesFromProfile = actionCreator<Array<ISearch>>('STORE_SEARCHES_FROM_PROFILE');
 export const exportSearchesToFile = actionCreatorVoid('EXPORT_SEARCHES_TO_FILE') 
@@ -79,7 +79,7 @@ export function addSearchesFromProfile(file: File) {
 
 export function addNewSearch() {
   return (dispatch: Function) => {
-    dispatch(storeNewSearch(''));
+    dispatch(storeNewSearch());
   };     
 }
 
