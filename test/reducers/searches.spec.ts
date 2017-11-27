@@ -4,6 +4,7 @@ import searches, {
   ISearchesState,
 } from '../../app/reducers/searches'
 import { 
+  deleteSearch,
   storeNewSearch,
   storeSearch,
   unsetPhrase,
@@ -131,5 +132,60 @@ describe('searches reducer', () => {
     expect(actual.newSearchName).toEqual('')
     expect(actual.searches.length).toBeGreaterThan(emptySearchesState.searches.length)
     expect(actual.searches[actual.searches.length-1]).toEqual(expected.searches[actual.searches.length-1])
+  })
+
+  it('should throw error when STORE_NEW_SEARCH is not given a name for the new search', () => {
+    const searchesState: ISearchesState = getCopy(emptySearchesState)
+
+    expect(() => {
+      searches(searchesState, storeNewSearch(''))
+    }).toThrow()
+  })
+
+  
+  it('should handle DELETE_SEARCH', () => {
+    const searchesState: ISearchesState = getCopy(emptySearchesState)
+    const deleteName: string = 'name to go'
+    const deleteIndex: number = 1
+    const deletedSearch = {
+      index: deleteIndex,
+      name: deleteName,
+      phrases: [],
+      isIncluded: false,
+      isEditing: false
+    }
+
+    searchesState.searches.push(getCopy(sampleSearch))
+    
+    // Add a second search to be removed.
+    const search2: ISearch = getCopy(sampleSearch)
+    search2.name = deleteName
+    searchesState.searches.push(search2)
+
+    const expected: ISearchesState = getCopy(emptySearchesState)
+    expected.searches.push(getCopy(sampleSearch))
+    const actual = searches(searchesState, deleteSearch(deletedSearch))
+    
+    expect(actual.searches.length).toEqual(expected.searches.length)
+  })
+
+  it('should throw error when DELETE_SEARCH name does not match', () => {
+    const searchesState: ISearchesState = getCopy(emptySearchesState)
+    const deleteName: string = 'name to go'
+    const deleteIndex: number = 1
+    const deletedSearch = {
+      index: deleteIndex,
+      name: deleteName,
+      phrases: [],
+      isIncluded: false,
+      isEditing: false
+    }
+
+    searchesState.searches.push(getCopy(sampleSearch))
+    searchesState.searches.push(getCopy(sampleSearch))
+
+    expect(() => {
+      searches(searchesState, deleteSearch(deletedSearch))
+    }).toThrow()
   })
 })

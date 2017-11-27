@@ -115,7 +115,7 @@ export default function searches(state: ISearchesState = initialState, action: I
       newState.searches.push(search)
       newState.newSearchName = ""
     } else {
-      console.log("You must name a new search to add it.")
+      throw new Error('You must name a new search to add it.')
     }
     return newState
 
@@ -126,8 +126,7 @@ export default function searches(state: ISearchesState = initialState, action: I
         index = i
     })
     if (typeof index !== 'number') {
-      console.log('Search name did not match a pre-existing search to delete.')
-      return newState
+      throw new Error('Search name did not match a pre-existing search to delete.')
     } 
     newState.searches.splice(index, 1)
     return newState

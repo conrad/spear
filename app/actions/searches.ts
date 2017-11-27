@@ -63,7 +63,7 @@ export function exportSearches() {
     try {
       jsonWriter.saveProfile('searches_profile.json', searches);
     } catch (e) {
-      console.log('Error saving searches:', e);
+      console.log('Error saving searches:', e)
     }
     // dispatch(exportSearchesToFile());
   }
@@ -73,20 +73,20 @@ export function addSearchesFromProfile(file: File) {
   const searches: Array<ISearch> = JsonReader.retrieveSearchesFromFile(file.path);
 
   return (dispatch: Function) => {
-    dispatch(storeSearchesFromProfile(searches));
-  };    
+    dispatch(storeSearchesFromProfile(searches))
+  }
 }
 
 export function addNewSearch() {
   return (dispatch: Function) => {
     dispatch(storeNewSearch(''));
-  };     
+  }
 }
 
 export function selectSearch(index: number) {
   return (dispatch: Function) => {
     dispatch(setActiveSearch(index));
-  };     
+  }
 }
 
 export function removeSearch(index: number, name: string) {
@@ -97,7 +97,7 @@ export function removeSearch(index: number, name: string) {
       phrases: [],
       isIncluded: false,
       isEditing: false
-    };
-    dispatch(deleteSearch(search));
-  };
+    }
+    dispatch(deleteSearch(search))
+  }
 }

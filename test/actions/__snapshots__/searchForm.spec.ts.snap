@@ -1,12 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`actions should appendPhrase should create appendPhrase action 1`] = `
-Object {
-  "payload": "something to look for",
-  "type": "APPEND_PHRASE",
-}
-`;
-
 exports[`actions should resetFile should create resetFile action 1`] = `
 Object {
   "type": "RESET_FILE",
@@ -47,62 +40,5 @@ Object {
 exports[`actions should submitSearch should create submitSearch action 1`] = `
 Object {
   "type": "SUBMIT_SEARCH",
-}
-`;
-
-exports[`searchForm actions should appendPhrase should create appendPhrase action 1`] = `
-Object {
-  "payload": "something to look for",
-  "type": "APPEND_PHRASE",
-}
-`;
-
-exports[`searchForm actions should resetFile should create resetFile action 1`] = `
-Object {
-  "type": "RESET_FILE",
-}
-`;
-
-exports[`searchForm actions should setFile should create setFile action 1`] = `
-Object {
-  "payload": Object {
-    "lastModifiedDate": 0,
-    "msClose": [Function],
-    "msDetachStream": [Function],
-    "name": "thenameofthefile.txt",
-    "path": "/all/the/way.txt",
-    "size": 10,
-    "slice": [Function],
-    "type": "gorillaz/clintEastwood",
-    "webkitRelativePath": "",
-  },
-  "type": "SET_FILE",
-}
-`;
-
-exports[`searchForm actions should setIsPhraseUsed should create setIsPhraseUsed action 1`] = `
-Object {
-  "payload": false,
-  "type": "SET_IS_PHRASE_USED",
-}
-`;
-
-exports[`searchForm actions should setNewPhrase should create setNewPhrase action 1`] = `
-Object {
-  "payload": "something to look for",
-  "type": "SET_NEW_PHRASE",
-}
-`;
-
-exports[`searchForm actions should submitSearch should create submitSearch action 1`] = `
-Object {
-  "type": "SUBMIT_SEARCH",
-}
-`;
-
-exports[`searchForm actions should unsetPhrase should create unsetPhrase action 1`] = `
-Object {
-  "payload": 1,
-  "type": "DELETE_PHRASE",
 }
 `;
