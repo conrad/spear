@@ -4,12 +4,12 @@ import { ISearch } from "../../reducers/searches";
 const extract = require('pdf-text-extract');
 
 const FileSearcher = {
-  load(file: File): string  {
+  load(file: File): string  {  // This and related methods should be pulled out to another object. 
     if (file.type === 'application/pdf') {
       return this.loadPdf(file);
     }
 
-    return this.loadTextFile(file);
+    return this.loadTxt(file);
   },
 
   loadPdf(file: File): string {
@@ -26,7 +26,7 @@ const FileSearcher = {
     return fileContents;
   }, 
 
-  loadTextFile(file: File) {
+  loadTxt(file: File) {
     if (fs.existsSync(file.path)) {
       return fs.readFileSync(file.path, 'utf8');
     } else {
@@ -34,7 +34,7 @@ const FileSearcher = {
     }
   },
   
-  search(file: File, searches: Array<ISearch>): Array<IResult> {
+  search(file: File, searches: ISearch[]): IResult[] {
     let fileContents: string = this.load(file);
   
     if (!fileContents) {
