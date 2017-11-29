@@ -1,7 +1,7 @@
 import FileSearcher from '../../../app/local/search/fileSearcher'
 import * as path from 'path'
 import { ISearch } from '../../../app/reducers/searches'
-// import { IResults } from '../../../app/reducers/results'
+import { IResult } from '../../../app/reducers/results'
 // import { emptyResultsSet } from '../../fixtures/fixtures'
 
 const sampleFilePath: string = '../../fixtures/films-to-watch.txt'
@@ -25,14 +25,21 @@ describe('FileSearcher', () => {
     })
   })
 
-  // describe('search', () => {
-  //   it('returns the expected set of matches found', () => {
-  //     const absPath = path.join(__dirname, sampleFilePath)
-  //     const searches = []
-  //     const results = FileSearcher.search({ path: absPath } as File, )
+  describe('search', () => {
+    it('returns the expected set of matches found', () => {
+      const absPath = path.join(__dirname, sampleFilePath)
+      const searches: ISearch[] = [{
+        index: 0,
+        name: 'bills',
+        phrases: ['bill'],
+        isIncluded: true,
+        isEditing: false,      
+      }]
+      const results: IResult[] = FileSearcher.search({ path: absPath } as File, searches)
 
-  //   })
-  // })
+      expect(results[0].excerpts).toHaveLength(4)
+    })
+  })
 
   describe('search', () => {
     it('returns an empty array when no matches found', () => {
