@@ -72,7 +72,7 @@ export default class SearchesTrie {
           })
         }
         ++i
-    } else {
+      } else {
         // current node does not have current word in its children.
 
         // If there is a phraseEndId, 
@@ -82,8 +82,7 @@ export default class SearchesTrie {
             currentNode.phraseEndId.push(id)
           })
         }
- 
-    }
+      }
 
     textWords.map((word, i) => {
       if (currentNode.children[i].word === word) {
@@ -95,14 +94,13 @@ export default class SearchesTrie {
         // If there is a phraseEndId, 
         // then the previous sequence of words matched a phrase.
         if (currentNode.phraseEndId.length > 0) {
-          foundPhraseIds.push(currentNode.phraseEndId)
-          // currentNode.phraseEndId.map(id => {
-          //   currentNode.phraseEndId.push(id)
+          // foundPhraseIds.push(currentNode.phraseEndId)
+          currentNode.phraseEndId.map(id => {
+            currentNode.phraseEndId.push(id)
           })
-
         }
-
       }
     })
   }
+}
 }
