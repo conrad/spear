@@ -1,8 +1,8 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { ISearch } from "../reducers/searches";
-import { IResult } from "../reducers/results";
+import { ISearch } from "../../reducers/searches";
+import { IResult } from "../../reducers/results";
 
 export default class TextDocWriter {
   saveResults(filename: string, searches: Array<ISearch>, results: Array<IResult>): string {

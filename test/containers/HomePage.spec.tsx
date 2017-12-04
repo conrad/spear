@@ -1,39 +1,41 @@
-import * as React from 'react';
-import { mount } from 'enzyme';
-import { Provider } from 'react-redux';
-import { ConnectedRouter } from 'react-router-redux';
-import HomePage from '../../app/containers/HomePage';
-import { IState } from '../../app/reducers';
+import * as React from 'react'
+import * as Enzyme from 'enzyme'
+import * as Adapter from 'enzyme-adapter-react-16'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
+import HomePage from '../../app/containers/HomePage'
+import { IState } from '../../app/reducers'
 
-const HomePageAny = HomePage as any;
-let { configureStore, history } = require('../../app/store/configureStore');
+const HomePageAny = HomePage as any
+let { configureStore, history } = require('../../app/store/configureStore')
+Enzyme.configure({ adapter: new Adapter() })
 
 function setup(initialState?: IState) {
-  const store = configureStore(initialState);
-  const app = mount(
+  const store = configureStore(initialState)
+  const app = Enzyme.mount(
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <HomePageAny />
       </ConnectedRouter>
     </Provider>
-  );
+  )
   return {
     app,
     buttons: app.find('button'),
     banner: app.find('.banner')
-  };
+  }
 }
 
 describe('containers', () => {
   describe('App', () => {
     it('should pass one test', () => {
-      expect(true).toBeTruthy;
-    });
+      expect(true).toBeTruthy
+    })
 
     it('should display the menu banner', () => {
-      const { banner } = setup();
-      expect(banner).toBeTruthy;
-    });
+      const { banner } = setup()
+      expect(banner).toBeTruthy
+    })
 
     // it('should display initial count', () => {
     //   const { p } = setup();
@@ -76,5 +78,5 @@ describe('containers', () => {
     //   buttons.at(2).simulate('click');
     //   expect(p.text()).toMatch(/^2$/);
     // });
-  });
-});
+  })
+})

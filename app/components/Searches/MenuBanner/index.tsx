@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IMenu } from '../../../reducers/menu';
 import { ProfileInput } from './ProfileInput';
 
 let Icons = require('react-feather');
 let styles = require('./MenuBanner.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   toggleMenuDropDown(): void,
   addSearchesFromProfile(file: File): void,
   exportSearches(): void,

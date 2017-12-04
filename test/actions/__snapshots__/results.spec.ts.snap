@@ -6,22 +6,6 @@ Object {
 }
 `;
 
-exports[`actions should saveResults should create saveResults action 1`] = `
-Object {
-  "payload": Object {
-    "hasRun": true,
-    "items": Array [],
-    "overlay": Object {
-      "body": "",
-      "phrase": "",
-      "search": "",
-      "show": false,
-    },
-  },
-  "type": "SAVE_RESULTS",
-}
-`;
-
 exports[`actions should toggleShowResult should create toggleShowResult action 1`] = `
 Object {
   "payload": 1,

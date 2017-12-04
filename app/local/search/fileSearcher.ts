@@ -3,14 +3,14 @@ import { IResult, IExcerpt } from "../../reducers/results";
 import { ISearch } from "../../reducers/searches";
 const extract = require('pdf-text-extract');
 
-export default class FileSearcher {
-  load(file: File): string  {
+const FileSearcher = {
+  load(file: File): string  {  // This and related methods should be pulled out to another object. 
     if (file.type === 'application/pdf') {
       return this.loadPdf(file);
     }
 
-    return this.loadTextFile(file);
-  }
+    return this.loadTxt(file);
+  },
 
   loadPdf(file: File): string {
     let fileContents: string = '';
@@ -24,17 +24,17 @@ export default class FileSearcher {
     });
 
     return fileContents;
-  } 
+  }, 
 
-  loadTextFile(file: File) {
+  loadTxt(file: File) {
     if (fs.existsSync(file.path)) {
       return fs.readFileSync(file.path, 'utf8');
     } else {
       throw new Error('File doesn\'t exist.');
     }
-  }
+  },
   
-  search(file: File, searches: Array<ISearch>): Array<IResult> {
+  search(file: File, searches: ISearch[]): IResult[] {
     let fileContents: string = this.load(file);
   
     if (!fileContents) {
@@ -72,7 +72,7 @@ export default class FileSearcher {
     });
   
     return results;
-  }
+  },
 
   getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
     let excerpts: Array<IExcerpt> = [];
@@ -97,8 +97,6 @@ export default class FileSearcher {
   
     return excerpts;
   }
-};
-  
+}
 
-
-
+export default FileSearcher  

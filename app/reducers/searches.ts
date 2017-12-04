@@ -1,8 +1,23 @@
-import { IAction } from '../actions/helpers';
-import { clone, isObjectInArray } from '../utils/helpers';
-import { storeSearchesFromProfile, setActiveSearch, setNewSearchName, storeNewSearch, storeSearch, deleteSearch, unsetPhrase, flipSearchAsUsed } from '../actions/searches';
-import { submitSearch, setNewPhrase, setIsPhraseUsed, setFile, resetFile } from '../actions/searchForm';
-import JsonReader from '../local/searchLoader';
+import { IAction } from '../actions/helpers'
+import { clone, isObjectInArray } from '../utils/helpers'
+import { 
+  storeSearchesFromProfile, 
+  setActiveSearch, 
+  setNewSearchName, 
+  storeNewSearch, 
+  storeSearch, 
+  deleteSearch, 
+  unsetPhrase, 
+  toggleSearchAsUsed 
+} from '../actions/searches'
+import {
+  submitSearch,
+  setNewPhrase,
+  setIsPhraseUsed,
+  setFile,
+  resetFile,
+} from '../actions/searchForm'
+import JsonReader from '../local/import/searchLoader'
 
 const initialState: ISearchesState = {
   searches: getInitialSearches(),
@@ -12,12 +27,11 @@ const initialState: ISearchesState = {
   isValidFile: true,
   newPhrase: "",
   isNewPhraseUsed: false,
-}; 
+}
 
 function getInitialSearches(): Array<ISearch> {
-  const jsonReader: JsonReader = new JsonReader();
-  return jsonReader.getInitialSearches();
-};
+  return JsonReader.getInitialSearches()
+}
 
 export interface ISearchesState {
   searches: Array<ISearch>,
@@ -28,7 +42,7 @@ export interface ISearchesState {
   isValidFile: boolean,
   newPhrase: string,
   isNewPhraseUsed: boolean,
-};
+}
 
 export interface ISearch {
   index: number,
@@ -37,43 +51,56 @@ export interface ISearch {
   phrases: Array<string>,
   isIncluded: boolean,
   isEditing: boolean,
-};
+}
 
 export interface IMove {
   initialIndex: number,
   nextIndex: number,
-};
+}
 
 export interface IPhrase {
   index: number,
   text: string,
   searchIndex: number
-};
+}
 
-export type TState = ISearchesState;
+export type TState = ISearchesState
 
 export default function searches(state: ISearchesState = initialState, action: IAction) {
-  let newState: ISearchesState = clone(state);
+  let newState: ISearchesState = clone(state)
 
   if (storeSearch.test(action)) {
-    newState.searches[action.payload.index] = action.payload;
-    return newState;
+    newState.searches[action.payload.index] = action.payload
+    return newState
 
   } else if (unsetPhrase.test(action)) {
-    newState.searches[action.payload.searchIndex].phrases.splice(action.payload.index, 1);
-    return newState;
+    if (!newState.searches[action.payload.searchIndex]) {
+      throw new Error('Attempted to unset phrase on search, but the search doesn\'t exist.')
+    }
 
-  } else if (flipSearchAsUsed.test(action)) {
-    newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded;
-    return newState;
+    const phrases: string[] = newState.searches[action.payload.searchIndex].phrases
+    if (!phrases[action.payload.index]) {
+      throw new Error('Attempted to unset phrase on search, but the phrase index doesn\'t exist on search.')
+    }
+
+    if (phrases[action.payload.index] !== action.payload.text) {
+      throw new Error(`Attempted to unset phrase, but the text doesn\'t match between the phrases: ${phrases[action.payload.index]}, ${action.payload.text}`)
+    }
+
+    phrases.splice(action.payload.index, 1)
+    return newState
+
+  } else if (toggleSearchAsUsed.test(action)) {
+    newState.searches[action.payload].isIncluded = !newState.searches[action.payload].isIncluded
+    return newState
 
   } else if (setNewSearchName.test(action)) {
-    newState.newSearchName = action.payload;
-    return newState;
+    newState.newSearchName = action.payload
+    return newState
 
   } else if (setActiveSearch.test(action)) {
-    newState.currentSearchIndex = action.payload;
-    return newState;
+    newState.currentSearchIndex = action.payload
+    return newState
   
   } else if (storeNewSearch.test(action)) {
     if (newState.newSearchName) {
@@ -83,31 +110,30 @@ export default function searches(state: ISearchesState = initialState, action: I
         phrases: [],
         isIncluded: false,
         isEditing: false,
-      };
+      }
       
-      newState.searches.push(search);
-      newState.newSearchName = "";
+      newState.searches.push(search)
+      newState.newSearchName = ""
     } else {
-      console.log("You must name a new search to add it.")
+      throw new Error('You must name a new search to add it.')
     }
-    return newState;
+    return newState
 
   } else if (deleteSearch.test(action)) {
-    let index: number|null = null;
+    let index: number|null = null
     newState.searches.map((search, i) => {
       if (search.name === action.payload.name)
-        index = i;
-    });
+        index = i
+    })
     if (typeof index !== 'number') {
-      console.log('Search name did not match a pre-existing search to delete.');
-      return newState;
+      throw new Error('Search name did not match a pre-existing search to delete.')
     } 
-    newState.searches.splice(index, 1);
-    return newState;    
+    newState.searches.splice(index, 1)
+    return newState
 
   } else if (setNewPhrase.test(action)) {
-    newState.newPhrase = action.payload;
-    return newState;
+    newState.newPhrase = action.payload
+    return newState
 
   } else if (storeSearchesFromProfile.test(action)) {
     action.payload.map((search, i) => {
@@ -118,34 +144,34 @@ export default function searches(state: ISearchesState = initialState, action: I
           phrases: search.phrases,
           isEditing: false,
           isIncluded: false,
-        });
+        })
       } else {
-        console.log('The search ' + search.name + ' already exists.');
+        console.log('The search ' + search.name + ' already exists.')
       }
-    });
+    })
 
   } else if (setIsPhraseUsed.test(action)) {
-    newState.isNewPhraseUsed = action.payload;
+    newState.isNewPhraseUsed = action.payload
     
     // Clear textarea if phrase no longer being used (or has been added to list of phrases)
     if (!action.payload) {
-      newState.newPhrase = '';
+      newState.newPhrase = ''
     }
-    return newState;
+    return newState
 
   } else if (setFile.test(action)) {
-    newState.isValidFile = true;
-    newState.file = action.payload;
-    return newState;
+    newState.isValidFile = true
+    newState.file = action.payload
+    return newState
 
   } else if (resetFile.test(action)) {
-    newState.isValidFile = false;
-    delete(newState.file);
-    return newState;
+    newState.isValidFile = false
+    delete(newState.file)
+    return newState
 
   } else if (submitSearch.test(action)) {
-    return newState;
+    return newState
   }
 
-  return newState;
+  return newState
 }

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../reducers/searches';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
@@ -10,7 +9,7 @@ import { copyArray } from '../../utils/helpers';
 let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   searches: ISearchesState,
   updateSearch(search: ISearch): void,
   deletePhrase(phraseIndex: number, searchIndex: number): void,
@@ -48,17 +47,16 @@ export class SearchForm extends React.Component<IProps> {
       isEditing: false,
     });
 
-    const fileSearcher = new FileSearcher();
-
     const results: IResults = { 
       hasRun: true, 
-      items: fileSearcher.search(searches.file, this.props.searches.searches),
+      items: FileSearcher.search(searches.file, this.props.searches.searches),
       overlay: {
         show: false,
         search: '',
         phrase: '',
         body: '',
-      }
+      }, 
+      showWindow: true,
     };
 
     this.props.updateIsNewPhraseUsed(false);

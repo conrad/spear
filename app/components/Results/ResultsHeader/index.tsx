@@ -1,18 +1,18 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { IResults, IResult } from '../../../reducers/results';
 import { ISearchesState } from '../../../reducers/searches';
 
 let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   results: IResults,
   searches: ISearchesState,
   saveResultsToFile(): void,
+  toggleShowResultsWindow(): void,
 }
  
-export interface IState extends RouteComponentProps<any> {
+export interface IState {
   results: IResults,
   searchInfo: ISearchesState
 }
@@ -52,12 +52,11 @@ export class ResultsHeader extends React.Component<IProps, IState> {
   }
 
   handleClickExport() {
-    console.log('wanna save your results?');
     this.props.saveResultsToFile();
   }
 
   handleClickClose() {
-    console.log('wanna close results?');
+    this.props.toggleShowResultsWindow()
   }
 
   render() {
@@ -75,9 +74,15 @@ export class ResultsHeader extends React.Component<IProps, IState> {
           <Icons.File 
             className={ styles.exportButton }
             onClick={ this.handleClickExport.bind(this) }/>
-          <Icons.ChevronDown
-            className={ styles.downButton }
-            onClick={ this.handleClickClose.bind(this) }/>
+          
+          { this.props.results.showWindow ?
+            <Icons.ChevronDown
+              className={ styles.downButton }
+              onClick={ this.handleClickClose.bind(this) }/> :
+            <Icons.ChevronUp
+              className={ styles.downButton }
+              onClick={ this.handleClickClose.bind(this) }/>
+          }
         </div>
         <div className={ styles.resultsFile }>
           Search of: { filepath }

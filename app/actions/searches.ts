@@ -1,13 +1,13 @@
 import { actionCreator, actionCreatorVoid } from './helpers';
 import { IPhrase, ISearch, IMove } from '../reducers/searches';
-import JsonReader from '../local/searchLoader';
-import JsonWriter from '../local/searchExporter';
+import JsonReader from '../local/import/searchLoader';
+import JsonWriter from '../local/export/searchExporter';
 
 export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
 export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
 export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
 export const unsetPhrase = actionCreator<IPhrase>('UNSET_PHRASE');
-export const flipSearchAsUsed = actionCreator<number>('FLIP_SEARCH_AS_USED');
+export const toggleSearchAsUsed = actionCreator<number>('TOGGLE_SEARCH_AS_USED');
 export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
 export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
 export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
@@ -46,7 +46,7 @@ export function deletePhrase(phraseIndex: number, searchIndex: number) {
 
 export function setSearchAsUsed(index: number, isUsed: boolean|null) {
   return (dispatch: Function) => {
-    dispatch(flipSearchAsUsed(index));
+    dispatch(toggleSearchAsUsed(index));
   };
 }
 
@@ -63,31 +63,30 @@ export function exportSearches() {
     try {
       jsonWriter.saveProfile('searches_profile.json', searches);
     } catch (e) {
-      console.log('Error saving searches:', e);
+      console.log('Error saving searches:', e)
     }
     // dispatch(exportSearchesToFile());
   }
 }
 
 export function addSearchesFromProfile(file: File) {
-  const jsonReader: JsonReader = new JsonReader();
-  const searches: Array<ISearch> = jsonReader.retrieveSearchesFromFile(file.path);
+  const searches: Array<ISearch> = JsonReader.retrieveSearchesFromFile(file.path);
 
   return (dispatch: Function) => {
-    dispatch(storeSearchesFromProfile(searches));
-  };    
+    dispatch(storeSearchesFromProfile(searches))
+  }
 }
 
 export function addNewSearch() {
   return (dispatch: Function) => {
     dispatch(storeNewSearch(''));
-  };     
+  }
 }
 
 export function selectSearch(index: number) {
   return (dispatch: Function) => {
     dispatch(setActiveSearch(index));
-  };     
+  }
 }
 
 export function removeSearch(index: number, name: string) {
@@ -98,7 +97,7 @@ export function removeSearch(index: number, name: string) {
       phrases: [],
       isIncluded: false,
       isEditing: false
-    };
-    dispatch(deleteSearch(search));
-  };
+    }
+    dispatch(deleteSearch(search))
+  }
 }

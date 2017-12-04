@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router';
 import { ISearchesState, ISearch } from '../../../reducers/searches';
 import { isObjectInArray } from '../../../utils/helpers';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');
 
-export interface IProps extends RouteComponentProps<any> {
+export interface IProps {
   searches: ISearchesState,
   addSearch(search: ISearch): void,
   selectSearch(index: number): void,
@@ -15,7 +14,7 @@ export interface IProps extends RouteComponentProps<any> {
   updateNewSearchName(name: string): void,
 }
 
-interface IState extends RouteComponentProps<any> {
+interface IState {
   searches: ISearchesState
 }
 
