@@ -36,7 +36,7 @@ export interface IResults {
 export interface IResult {
   search: string,
   phrase: string,
-  excerpts: Array<IExcerpt>,
+  excerpts: IExcerpt[],
   show: boolean
 }
 

@@ -1,6 +1,7 @@
-import * as fs from "fs";
-import { IResult, IExcerpt } from "../../reducers/results";
-import { ISearch } from "../../reducers/searches";
+import * as fs from 'fs'
+import { IResult, IExcerpt } from '../../reducers/results'
+import { ISearch } from '../../reducers/searches'
+import SearchesTrie from './trie'
 const extract = require('pdf-text-extract');
 
 const FileSearcher = {
@@ -19,7 +20,7 @@ const FileSearcher = {
         console.dir(err)
         return;
       }
-      console.dir("success:", text)
+      console.dir('success:', text)
       fileContents = text;
     });
 
@@ -38,7 +39,7 @@ const FileSearcher = {
     let fileContents: string = this.load(file);
   
     if (!fileContents) {
-      throw new Error('Unable to load file.');
+      throw new Error('Unable to load file: ' + file.path);
     }
   
     let results: Array<IResult> = [];
@@ -72,6 +73,26 @@ const FileSearcher = {
     });
   
     return results;
+  },
+
+  trieSearch(file: File, searches: ISearch[]): IResult[] {
+    let fileContents: string = this.load(file);
+    let results: Array<IResult> = [];
+    
+    if (!fileContents) {
+      throw new Error('Unable to load file: ' + file.path);
+    }
+  
+
+    const searchTries: SearchesTrie[] = []
+    
+    searches.map((search, i) => {
+      if (search.isIncluded) {
+
+      }
+    })
+
+    return results
   },
 
   getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {

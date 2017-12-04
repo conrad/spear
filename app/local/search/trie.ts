@@ -1,35 +1,44 @@
+import { IPhrase }  from '../../reducers/searches'
 
-class TrieNode {
+class PhraseNode {
   word: string
-  level: number
-  phraseStartId: Array<number>
-  phraseEndId: Array<number>
-  children: { [word:string] : TrieNode } = {}  //  Array<TrieNode> = [] 
+  level: number 
+  phraseEndingsData: IPhrase[]
+  // phraseStartIds: Array<number>  // Multiple search phrases can start here.
+  // phraseEndIds: Array<number>  // Multiple search phrases can end here.
+  children: { [word:string] : PhraseNode } = {}  //  Array<TrieNode> = [] 
 
   constructor(
     word: string, 
     level: number, 
-    phraseStartId: Array<number>  = [],
-    phraseEndId: Array<number> = [],
+    phraseEndingsData: IPhrase[] = []  // required: search name, more?
+    // phraseStartId: Array<number>  = [],
+    // phraseEndId: Array<number> = [],
   ) {
     this.word = word
     this.level = level
-    this.phraseStartId = phraseStartId
-    this.phraseEndId = phraseEndId
+    this.phraseEndingsData = phraseEndingsData
+    // this.phraseStartId = phraseStartId
+    // this.phraseEndId = phraseEndId
   }
 }
 
 export default class SearchesTrie {
-  root: TrieNode
+  root: PhraseNode
 
   constructor() {
-    this.root = new TrieNode(' ', 0)
+    this.root = new PhraseNode(' ', 0)
   }
 
-  addPhrase(parent: TrieNode, phrase: string, phraseId: number) {
-    const words: Array<string> = phrase.split(' ')
+  addPhrase(phrase: IPhrase) {
+    const wordsLeft: string[] = phrase.text.split(' ')  
+    this.populatePhraseTrie(this.root, wordsLeft, phrase)
+  }
+
+  populatePhraseTrie(parent: PhraseNode, wordsLeft: string[], phrase: IPhrase) {
+    // TODO: Move from using words to using chars
     let hasChild: boolean = false
-    let nextNode: TrieNode = new TrieNode(' ', 0)
+    let nextNode: PhraseNode = new PhraseNode(' ', 0)
 
     // parent.children.map(child => {
     // words.map(word => {
@@ -39,27 +48,33 @@ export default class SearchesTrie {
     //   }
     // })
 
-    if (parent.children.hasOwnProperty(words[0])) {
+    if (parent.children.hasOwnProperty(wordsLeft[0])) {
       hasChild = true
-      nextNode = parent.children[words[0]]
+      nextNode = parent.children[wordsLeft[0]]
     }
 
     if (!hasChild) {
-      nextNode = new TrieNode(words[0], parent.level + 1)
+      nextNode = new PhraseNode(wordsLeft[0], parent.level + 1)
       parent.children[nextNode.word] = nextNode
     }
 
-    words.shift()
+    // Move to the next word.
+    wordsLeft.shift()
     
-    if (words.length > 0) {
-      this.addPhrase(nextNode, words.join(' '), phraseId)
+    if (wordsLeft.length > 0) {
+      this.populatePhraseTrie(nextNode, wordsLeft, phrase)
     } else {
-      nextNode.phraseEndId.push(phraseId)
+      nextNode.phraseEndingsData.push(phrase)
     }
   }
 
-  findString(root: TrieNode, text: string, foundPhraseIds: Array<number> = []) {
-    let currentNode: TrieNode = root
+  // TODO: Implement proper logic here.
+  findString(
+    root: PhraseNode, 
+    text: string, 
+    foundPhrases: IPhrase[] = []
+  ): IPhrase[] {
+    let currentNode: PhraseNode = root
     let textWords: Array<string> = text.split(' ')
     let liveSearches: { [id: number]: number } = {}
 
@@ -77,30 +92,31 @@ export default class SearchesTrie {
 
         // If there is a phraseEndId, 
         // then the previous sequence of words matched a phrase.
-        if (currentNode.phraseEndId.length > 0) {
-          currentNode.phraseEndId.map(id => {
-            currentNode.phraseEndId.push(id)
+        if (currentNode.phraseEndingsData.length > 0) {
+          currentNode.phraseEndingsData.map(id => {
+            currentNode.phraseEndingsData.push(id)
           })
         }
       }
 
-    textWords.map((word, i) => {
-      if (currentNode.children[i].word === word) {
-        currentNode = currentNode.children[i]
-        // increment only here...?
-      } else {
-        // current node does not have current word in its children.
+      textWords.map((word, i) => {
+        if (currentNode.children[i].word === word) {
+          currentNode = currentNode.children[i]
+          // increment only here...?
+        } else {
+          // current node does not have current word in its children.
 
-        // If there is a phraseEndId, 
-        // then the previous sequence of words matched a phrase.
-        if (currentNode.phraseEndId.length > 0) {
-          // foundPhraseIds.push(currentNode.phraseEndId)
-          currentNode.phraseEndId.map(id => {
-            currentNode.phraseEndId.push(id)
-          })
+          // If there is a phraseEndId, 
+          // then the previous sequence of words matched a phrase.
+          if (currentNode.phraseEndingsData.length > 0) {
+            currentNode.phraseEndingsData.map(phrase => {
+              foundPhrases.push(phrase)
+            })
+          }
         }
-      }
-    })
+      })
+    }
+
+    return foundPhrases
   }
-}
 }
