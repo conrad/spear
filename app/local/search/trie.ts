@@ -1,25 +1,25 @@
-import { IPhrase }  from '../../reducers/searches'
+import { IPhrase, ISearch }  from '../../reducers/searches'
 
 class PhraseNode {
   word: string
   level: number 
   phraseEndingsData: IPhrase[]
-  // phraseStartIds: Array<number>  // Multiple search phrases can start here.
-  // phraseEndIds: Array<number>  // Multiple search phrases can end here.
+  phraseStartIds: Array<number> // TODO: deprecate.  // Multiple search phrases can start here. 
+  phraseEndIds: Array<number>  // TODO: deprecate. // Multiple search phrases can end here.
   children: { [word:string] : PhraseNode } = {}  //  Array<TrieNode> = [] 
 
   constructor(
     word: string, 
     level: number, 
-    phraseEndingsData: IPhrase[] = []  // required: search name, more?
-    // phraseStartId: Array<number>  = [],
-    // phraseEndId: Array<number> = [],
+    phraseEndingsData: IPhrase[] = [],  // required: search name, more?
+    phraseStartIds: Array<number>  = [],
+    phraseEndIds: Array<number> = [],
   ) {
     this.word = word
     this.level = level
     this.phraseEndingsData = phraseEndingsData
-    // this.phraseStartId = phraseStartId
-    // this.phraseEndId = phraseEndId
+    this.phraseStartIds = phraseStartIds
+    this.phraseEndIds = phraseEndIds
   }
 }
 
@@ -30,23 +30,28 @@ export default class SearchesTrie {
     this.root = new PhraseNode(' ', 0)
   }
 
-  addPhrase(phrase: IPhrase) {
+  addSearches(searches: ISearch[]) {
+    searches.forEach((search, searchIndex) => {
+      search.phrases.forEach((phrase, phraseIndex) => {
+        const fullPhrase: IPhrase = {
+          text: phrase,
+          index: phraseIndex,
+          searchIndex
+        }
+        this.addPhrase(fullPhrase)
+      })
+    })
+  }
+
+  private addPhrase(phrase: IPhrase) {
+    // TODO: Move from using words to using chars
     const wordsLeft: string[] = phrase.text.split(' ')  
     this.populatePhraseTrie(this.root, wordsLeft, phrase)
   }
 
-  populatePhraseTrie(parent: PhraseNode, wordsLeft: string[], phrase: IPhrase) {
-    // TODO: Move from using words to using chars
+  private populatePhraseTrie(parent: PhraseNode, wordsLeft: string[], phrase: IPhrase) {
     let hasChild: boolean = false
     let nextNode: PhraseNode = new PhraseNode(' ', 0)
-
-    // parent.children.map(child => {
-    // words.map(word => {
-    //   if (parent.children.hasOwnProperty(word)) {
-    //     hasChild = true
-    //     nextNode = parent.children[word]
-    //   }
-    // })
 
     if (parent.children.hasOwnProperty(wordsLeft[0])) {
       hasChild = true
@@ -68,7 +73,32 @@ export default class SearchesTrie {
     }
   }
 
-  // TODO: Implement proper logic here.
+  findPhrase(
+    phrase: string|string[], 
+    node: PhraseNode = this.root //,
+    // foundPhrases: IPhrase[]
+  ): IPhrase[] {
+    let foundPhrases: IPhrase[] = []
+
+    if (node.phraseEndingsData.length > 0) {
+      for (let i = 0; i < node.phraseEndingsData.length; i++) {
+        foundPhrases.concat(node.phraseEndingsData)
+      }
+    }
+    let words: string[]
+    if (!Array.isArray(phrase)) {
+      words = phrase.split(' ')
+    } else {
+      words = phrase
+    }
+
+    if (node.children.hasOwnProperty(words[0])) {
+      foundPhrases.concat(this.findPhrase(words, node.children[words[0]]))
+    }
+
+    return foundPhrases
+  }
+
   findString(
     root: PhraseNode, 
     text: string, 
@@ -82,7 +112,7 @@ export default class SearchesTrie {
       if (currentNode.children[i].word === textWords[i]) {
         currentNode = currentNode.children[i]
         if (currentNode.level === 0) {
-          currentNode.phraseStartId.map(id => {
+          currentNode.phraseStartIds.map(id => {
             liveSearches[id] = id  
           })
         }
