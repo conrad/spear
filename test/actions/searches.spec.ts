@@ -15,7 +15,7 @@ const mockMove: IMove = {
   nextIndex: 2
 }
 
-describe('actions', () => {
+describe('searches actions', () => {
   it('should storeSearch should create storeSearch action', () => {
     expect(actions.storeSearch(mockSearch)).toMatchSnapshot();
   })

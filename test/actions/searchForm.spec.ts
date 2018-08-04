@@ -3,7 +3,8 @@ import * as actions from '../../app/actions/searchForm';
 
 const mockFile: File = {
   name: 'thenameofthefile.txt',
-  lastModifiedDate: 0,
+  lastModified: 1,
+  lastModifiedDate: new Date(),
   webkitRelativePath: '',
   path: "/all/the/way.txt",
   size: 10,
@@ -13,7 +14,7 @@ const mockFile: File = {
   slice() { return new Blob(["hey"]); },
 };
 
-describe('actions', () => {
+describe('searchForm actions', () => {
   it('should submitSearch should create submitSearch action', () => {
     expect(actions.submitSearch()).toMatchSnapshot();
   });

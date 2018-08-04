@@ -3,7 +3,7 @@ import { emptyResultsSet } from '../fixtures/fixtures'
 import * as actions from '../../app/actions/results';
 
 
-describe('actions', () => {
+describe('results actions', () => {
   // it('should saveResults should create saveResults action', () => {
   //   expect(actions.saveResults(emptyResultsSet)).toMatchSnapshot();
   // });
