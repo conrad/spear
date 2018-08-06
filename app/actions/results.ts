@@ -1,6 +1,7 @@
 import { actionCreator, actionCreatorVoid } from './helpers';
 import { IResults } from "../reducers/results";
 import TextDocWriter from "../local/export/resultsExporter"; 
+import * as constants from '../constants'
 
 export interface IExcerptIndices {
   resultIndex: number,
@@ -8,11 +9,11 @@ export interface IExcerptIndices {
 }
 
 export const saveResults = actionCreator<IResults>('SAVE_RESULTS')
-export const toggleShowResultsWindow = actionCreatorVoid('TOGGLE_SHOW_RESULTS_WINDOW')
-export const toggleShowResult = actionCreator<number>('TOGGLE_SHOW_RESULT')
-export const showOverlay = actionCreator<IExcerptIndices>('SHOW_RESULT_OVERLAY')
-export const hideOverlay = actionCreatorVoid('HIDE_RESULT_OVERLAY')
-export const exportResults = actionCreatorVoid('EXPORT_RESULTS')
+export const toggleShowResultsWindow = actionCreatorVoid(constants.TOGGLE_SHOW_RESULTS_WINDOW)
+export const toggleShowResult = actionCreator<number>(constants.TOGGLE_SHOW_RESULT)
+export const showOverlay = actionCreator<IExcerptIndices>(constants.SHOW_RESULT_OVERLAY)
+export const hideOverlay = actionCreatorVoid(constants.HIDE_RESULT_OVERLAY)
+export const exportResults = actionCreatorVoid(constants.EXPORT_RESULTS)
 
 export function setResults(results: IResults) {
   return (dispatch: Function) => {

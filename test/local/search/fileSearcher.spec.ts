@@ -2,28 +2,14 @@ import FileSearcher from '../../../app/local/search/fileSearcher'
 import * as path from 'path'
 import { ISearch } from '../../../app/reducers/searches'
 import { IResult } from '../../../app/reducers/results'
+import FileLoader from '../../../app/local/search/fileLoader';
 // import { emptyResultsSet } from '../../fixtures/fixtures'
 
+// TODO: Refactor not to use real file nor real FileLoader
 const sampleFilePath: string = '../../fixtures/films-to-watch.txt'
 
 describe('FileSearcher', () => {
-  describe('loadTxt', () => {
-    it('returns a string when given a text file', () => {
-      const absPath = path.join(__dirname, sampleFilePath)
-      const contents: string = FileSearcher.loadTxt({ path: absPath } as File)
-      const reMatch = new RegExp(/deer hunter/i)
-      const reNoMatch = new RegExp(/hary poter/i)
-
-      expect(reMatch.exec(contents)).toBeTruthy()
-      expect(reNoMatch.exec(contents)).toBeFalsy()
-    })
-
-    it('throws an error when file doesn\'t exist', () => {
-      expect(() => {
-        FileSearcher.loadTxt({ path: 'nada here' } as File)
-      }).toThrow()
-    })
-  })
+  const fileSearcher: FileSearcher = new FileSearcher(new FileLoader())
 
   describe('search', () => {
     it('returns the expected set of matches found', () => {
@@ -35,7 +21,7 @@ describe('FileSearcher', () => {
         isIncluded: true,
         isEditing: false,      
       }]
-      const results: IResult[] = FileSearcher.search({ path: absPath } as File, searches)
+      const results: IResult[] = fileSearcher.search({ path: absPath } as File, searches)
 
       expect(results[0].excerpts).toHaveLength(4)
     })
@@ -45,7 +31,7 @@ describe('FileSearcher', () => {
     it('returns an empty array when no matches found', () => {
       const absPath = path.join(__dirname, sampleFilePath)
       const searches: ISearch[] = []
-      expect(FileSearcher.search({ path: absPath } as File, searches)).toHaveLength(0)
+      expect(fileSearcher.search({ path: absPath } as File, searches)).toHaveLength(0)
     })
   })
 })

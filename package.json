@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js",
+    "test-update": "./node_modules/.bin/jest --updateSnapshot",
     "test-all": "npm run test && npm run build && npm run test-e2e",
     "test-watch": "npm test -- --watch",
     "test-e2e": "cross-env NODE_ENV=test node --trace-warnings ./test/runTests.js e2e",
@@ -156,6 +157,7 @@
     "history": "^4.6.1",
     "pdf-extract": "^1.0.11",
     "pdf-text-extract": "^1.5.0",
+    "raf": "^3.4.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-feather": "^1.0.7",

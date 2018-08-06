@@ -5,6 +5,7 @@ import { PhraseList } from './PhraseList';
 import FileSearcher from '../../local/search/fileSearcher';
 import { IResults } from '../../reducers/results';
 import { copyArray } from '../../utils/helpers';
+import FileLoader from '../../local/search/fileLoader';
 
 let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
@@ -47,9 +48,11 @@ export class SearchForm extends React.Component<IProps> {
       isEditing: false,
     });
 
+    const fileSearcher: FileSearcher = new FileSearcher(new FileLoader())
+
     const results: IResults = { 
       hasRun: true, 
-      items: FileSearcher.search(searches.file, this.props.searches.searches),
+      items: fileSearcher.search(searches.file, this.props.searches.searches),
       overlay: {
         show: false,
         search: '',

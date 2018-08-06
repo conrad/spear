@@ -2,17 +2,18 @@ import { actionCreator, actionCreatorVoid } from './helpers';
 import { IPhrase, ISearch, IMove } from '../reducers/searches';
 import JsonReader from '../local/import/searchLoader';
 import JsonWriter from '../local/export/searchExporter';
+import * as constants from '../constants'
 
-export const storeSearch = actionCreator<ISearch>('STORE_SEARCH');
-export const deleteSearch = actionCreator<ISearch>('DELETE_SEARCH');
-export const moveSearch = actionCreator<IMove>('MOVE_SEARCH');
-export const unsetPhrase = actionCreator<IPhrase>('UNSET_PHRASE');
-export const toggleSearchAsUsed = actionCreator<number>('TOGGLE_SEARCH_AS_USED');
-export const setNewSearchName = actionCreator<string>('SET_NEW_SEARCH_NAME');
-export const storeNewSearch = actionCreator('STORE_NEW_SEARCH');
-export const setActiveSearch = actionCreator<number>('SET_ACTIVE_SEARCH');
-export const storeSearchesFromProfile = actionCreator<Array<ISearch>>('STORE_SEARCHES_FROM_PROFILE');
-export const exportSearchesToFile = actionCreatorVoid('EXPORT_SEARCHES_TO_FILE') 
+export const storeSearch = actionCreator<ISearch>(constants.STORE_SEARCH);
+export const deleteSearch = actionCreator<ISearch>(constants.DELETE_SEARCH)
+export const moveSearch = actionCreator<IMove>(constants.MOVE_SEARCH)
+export const unsetPhrase = actionCreator<IPhrase>(constants.UNSET_PHRASE)
+export const toggleSearchAsUsed = actionCreator<number>(constants.TOGGLE_SEARCH_AS_USED)
+export const setNewSearchName = actionCreator<string>(constants.SET_NEW_SEARCH_NAME);
+export const storeNewSearch = actionCreator(constants.STORE_NEW_SEARCH);
+export const setActiveSearch = actionCreator<number>(constants.SET_ACTIVE_SEARCH);
+export const storeSearchesFromProfile = actionCreator<Array<ISearch>>(constants.STORE_SEARCHES_FROM_PROFILE)
+export const exportSearchesToFile = actionCreatorVoid(constants.EXPORT_SEARCHES_TO_FILE) 
 
 export function addSearch(search: ISearch) {
   return (dispatch: Function) => {

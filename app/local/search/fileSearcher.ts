@@ -1,42 +1,20 @@
-import * as fs from 'fs'
 import { IResult, IExcerpt } from '../../reducers/results'
 import { IPhrase, ISearch } from '../../reducers/searches'
 import SearchesTrie from './trie'
-const extract = require('pdf-text-extract')
+import FileLoader from './fileLoader'
 
-const FileSearcher = {
-  load(file: File): string  {  // This and related methods should be pulled out to another object. 
-    if (file.type === 'application/pdf') {
-      return this.loadPdf(file)
-    }
+/**
+ * An object execute searches on text files.
+ */
+export default class FileSearcher {
+  fileLoader: FileLoader;
 
-    return this.loadTxt(file)
-  },
+  constructor(fileLoader: FileLoader) {
+    this.fileLoader = fileLoader
+  }
 
-  loadPdf(file: File): string {
-    let fileContents: string = ''
-    extract(file.path, { splitPages: false }, function (err: any, text: string) {
-      if (err) {
-        console.dir(err)
-        return
-      }
-      console.dir('success:', text)
-      fileContents = text
-    })
-
-    return fileContents
-  }, 
-
-  loadTxt(file: File) {
-    if (fs.existsSync(file.path)) {
-      return fs.readFileSync(file.path, 'utf8')
-    } else {
-      throw new Error('File doesn\'t exist.')
-    }
-  },
-  
   search(file: File, searches: ISearch[]): IResult[] {
-    let fileContents: string = this.load(file)
+    let fileContents: string = this.fileLoader.load(file)
   
     if (!fileContents) {
       throw new Error('Unable to load file: ' + file.path)
@@ -73,10 +51,10 @@ const FileSearcher = {
     })
   
     return results
-  },
+  }
 
   trieSearch(file: File, searches: ISearch[]): IResult[] {
-    let fileContents: string = this.load(file)
+    let fileContents: string = this.fileLoader.load(file)
     let results: Array<IResult> = []
     
     if (!fileContents) {
@@ -100,7 +78,7 @@ const FileSearcher = {
     })
 
     return results
-  },
+  }
 
   getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
     let excerpts: Array<IExcerpt> = []
@@ -127,4 +105,3 @@ const FileSearcher = {
   }
 }
 
-export default FileSearcher  

@@ -37,10 +37,17 @@ const composeEnhancers: typeof compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPO
     actionCreators
   }) as any :
   compose;
+
+const middleware = [
+  thunk, 
+  router, 
+  process.env.NODE_ENV === 'development' && logger
+].filter(Boolean)
+
 /* eslint-enable no-underscore-dangle */
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, router, logger)
-);
+  applyMiddleware(...middleware)
+)
 
 export = {
   history,
