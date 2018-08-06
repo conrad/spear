@@ -1,6 +1,7 @@
 import { spy } from 'sinon'
 import * as actions from '../../app/actions/searches'
 import { ISearch, IMove } from '../../app/reducers/searches'
+import * as constants from '../../app/constants'
 
 const mockSearch: ISearch = {
   index: 0,
@@ -17,35 +18,51 @@ const mockMove: IMove = {
 
 describe('searches actions', () => {
   it('should storeSearch should create storeSearch action', () => {
-    expect(actions.storeSearch(mockSearch)).toMatchSnapshot();
+    const action = actions.storeSearch(mockSearch)
+    
+    expect(action.type).toEqual(constants.STORE_SEARCH)
+    expect(action.payload).toEqual(mockSearch)
   })
 
   it('should unsetPhrase should create unsetPhrase action', () => {
-    expect(actions.unsetPhrase({
+    const phraseData = {
       index: 0,
       searchIndex: 0,
       text: ''
-    })).toMatchSnapshot();
+    }
+    const action = actions.unsetPhrase(phraseData)
+    
+    expect(action.type).toEqual(constants.UNSET_PHRASE)
+    expect(action.payload).toEqual(phraseData)
   })
 
   it('should deleteSearch should create deleteSearch action', () => {
-    expect(actions.deleteSearch(mockSearch)).toMatchSnapshot();
-  });
+    const action = actions.deleteSearch(mockSearch)
+
+    expect(action.type).toEqual(constants.DELETE_SEARCH)
+    expect(action.payload).toEqual(mockSearch)
+  })
 
   it('should moveSearch should create moveSearch action', () => {
-    expect(actions.moveSearch(mockMove)).toMatchSnapshot();
-  });
+    const action = actions.moveSearch(mockMove)
+
+    expect(action.type).toEqual(constants.MOVE_SEARCH)
+    expect(action.payload).toEqual(mockMove)
+  })
 
   it('should saveSearch should create storeSearch action', () => {
-    const fn = actions.addSearch(mockSearch);
-    expect(fn).toBeInstanceOf(Function);
-    const dispatch = spy();
+    const fn = actions.addSearch(mockSearch)
+
+    expect(fn).toBeInstanceOf(Function)
+
+    const dispatch = spy()
     fn(dispatch);
+    
     expect(dispatch.calledWith({ 
       type: actions.storeSearch.type, 
       payload: mockSearch
     })).toBe(true);
-  });
+  })
 
   it('should removeSearch should create deleteSearch action', () => {
     const fn = actions.removeSearch(
