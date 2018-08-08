@@ -8,6 +8,8 @@ import {
   toggleShowResult 
 } from '../actions/results';
 import { clone } from '../utils/helpers';
+import { IResult } from '../types/IResult';
+import { IResults } from '../types/IResults';
 
 const initialState: IResults = { 
   hasRun: false, 
@@ -19,32 +21,6 @@ const initialState: IResults = {
     body: '',
   },
   showWindow: true,
-}
-
-export interface IResults {
-  hasRun: boolean,
-  items: Array<IResult>,
-  overlay: {
-    show: boolean,
-    search: string,
-    phrase: string,
-    body: string,
-  },
-  showWindow: boolean
-}
-
-export interface IResult {
-  search: string,
-  phrase: string,
-  excerpts: IExcerpt[],
-  show: boolean
-}
-
-export interface IExcerpt {
-  location: string,
-  index: number,
-  text: string,
-  pageText: string,
 }
 
 export type TState = IResults

@@ -1,7 +1,11 @@
-import { IResult, IExcerpt } from '../../reducers/results'
-import { IPhrase, ISearch } from '../../reducers/searches'
 import SearchesTrie from './trie'
 import FileLoader from './fileLoader'
+import { THRESHOLD_FILE_SIZE } from '../../constants'
+import { ReadLine } from 'readline';
+import { ISearchProgress } from '../../types/ISearchProgress';
+import { ISearch, IPhrase } from '../../reducers/searches';
+import { IResult } from '../../types/IResult';
+import { IExcerpt } from '../../types/IExcerpt';
 
 /**
  * An object execute searches on text files.
@@ -13,7 +17,15 @@ export default class FileSearcher {
     this.fileLoader = fileLoader
   }
 
-  search(file: File, searches: ISearch[]): IResult[] {
+  search(file: File, searches: ISearch[]): Promise<IResult[]> {
+    if (file.size < THRESHOLD_FILE_SIZE) {
+      return Promise.resolve(this.searchByFullFileContents(file, searches))
+    }
+
+    return this.searchByStream(file, searches)
+  }
+
+  searchByFullFileContents(file: File, searches: ISearch[]): IResult[] {
     let fileContents: string = this.fileLoader.load(file)
   
     if (!fileContents) {
@@ -51,6 +63,32 @@ export default class FileSearcher {
     })
   
     return results
+  }
+
+  searchByStream(file: File, searches: ISearch[]): Promise<IResult[]> {
+    const stream = this.fileLoader.loadFileByStream(file)
+    let results: IResult[]
+    let searchProgress: ISearchProgress[] = []
+
+    stream.on('line', line => {
+      // this.searchLine(searches, line)
+      // search the line and chain to the next one. Maintain results and add to them.
+      for (let i = 0; i < line.length; i++) {
+        for (let j = 0; j < searchProgress.length; j++) {
+          let lineChar = line[i]
+          let phraseChar = searchProgress[j].phrase[searchProgress[j].index]
+          if (lineChar === phraseChar) {
+            
+          }
+        }
+      }
+    })
+
+    return new Promise((resolve, reject) => {
+      stream.on('close', () => {
+        resolve(results)
+      })
+    })
   }
 
   trieSearch(file: File, searches: ISearch[]): IResult[] {
