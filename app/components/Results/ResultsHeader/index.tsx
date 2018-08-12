@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { IResults, IResult } from '../../../reducers/results';
-import { ISearchesState } from '../../../reducers/searches';
+import IResults from '../../../types/IResults';
+import IResult from '../../../types/IResult';
+import ISearchesState from '../../../types/ISearchesState';
 
 let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
@@ -36,15 +37,12 @@ export class ResultsHeader extends React.Component<IProps, IState> {
     }
   }
 
-  calculateResults(resultItems: Array<IResult>): number {
-    // return results.reduce((prev: IResult, cur: IResult, i: number, resArr: Array<IResult>) => {
-    //   ...
-    // });
-
+  calculateResults(resultItems: IResult[]): number {
+    // return results.reduce((prev: IResult, cur: IResult, i: number, resArr: Array<IResult>) => {...});
     let number: number = 0;
-    resultItems.forEach(item => {
-      if (item.excerpts) {
-        number += item.excerpts.length;
+    resultItems.forEach((result: IResult) => {
+      if (result.excerpts) {
+        number += result.excerpts.length;
       }
     });
 

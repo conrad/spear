@@ -1,11 +1,10 @@
-import SearchesTrie from './trie'
+import * as _ from 'lodash'
 import FileLoader from './fileLoader'
-import { THRESHOLD_FILE_SIZE } from '../../constants'
-import { ReadLine } from 'readline';
-import { ISearchProgress } from '../../types/ISearchProgress';
-import { ISearch, IPhrase } from '../../reducers/searches';
-import { IResult } from '../../types/IResult';
-import { IExcerpt } from '../../types/IExcerpt';
+// import { THRESHOLD_FILE_SIZE } from '../../constants'
+import ISearchProgress from '../../types/ISearchProgress';
+import ISearch from '../../types/ISearch';
+import IResult from '../../types/IResult';
+import IExcerpt from '../../types/IExcerpt';
 
 /**
  * An object execute searches on text files.
@@ -18,67 +17,88 @@ export default class FileSearcher {
   }
 
   search(file: File, searches: ISearch[]): Promise<IResult[]> {
-    if (file.size < THRESHOLD_FILE_SIZE) {
-      return Promise.resolve(this.searchByFullFileContents(file, searches))
-    }
+    console.log('here')
+    // if (file.size < THRESHOLD_FILE_SIZE) {
+    //   return Promise.resolve(this.searchByFullFileContents(file, searches))
+    // }
 
     return this.searchByStream(file, searches)
   }
 
-  searchByFullFileContents(file: File, searches: ISearch[]): IResult[] {
-    let fileContents: string = this.fileLoader.load(file)
+  // private searchByFullFileContents(file: File, searches: ISearch[]): IResult[] {
+  //   let results: Array<IResult> = []
+  //   let fileContents: string = this.fileLoader.load(file)
   
-    if (!fileContents) {
-      throw new Error('Unable to load file: ' + file.path)
-    }
+  //   if (!fileContents) {
+  //     throw new Error(`Unable to load file: ${file.path}`)
+  //   }
   
-    let results: Array<IResult> = []
-  
-    searches.map((search, i) => {
-      if (search.isIncluded) {
-        search.phrases.map((phrase, i) => {
-          let resultIndices: Array<number> = []
-          let resIndex: number = 0
+  //   searches.map((search, i) => {
+  //     if (search.isIncluded) {
+  //       search.phrases.map((phrase, i) => {
+  //         let resultIndices: Array<number> = []
+  //         let resIndex: number = 0
         
-          while(resIndex !== -1) {
-            resIndex = fileContents.toLowerCase().indexOf(phrase.toLowerCase(), resIndex+1)
+  //         while(resIndex !== -1) {
+  //           resIndex = fileContents.toLowerCase().indexOf(phrase.toLowerCase(), resIndex+1)
       
-            if (resIndex !== -1) {
-              resultIndices.push(resIndex)
-            }      
-          }
+  //           if (resIndex !== -1) {
+  //             resultIndices.push(resIndex)
+  //           }      
+  //         }
       
-          if (resultIndices.length > 0) {
-            let result: IResult = {
-              search: search.name,
-              phrase: phrase,
-              excerpts: this.getExcerpts(fileContents, phrase, resultIndices),
-              show: false,
-            }
+  //         if (resultIndices.length > 0) {
+  //           let result: IResult = {
+  //             search: search.name,
+  //             phrase: phrase,
+  //             excerpts: this.getExcerpts(fileContents, phrase, resultIndices),
+  //             show: false,
+  //           }
       
-            results.push(result)
-          }
-        })
-      }
-    })
+  //           results.push(result)
+  //         }
+  //       })
+  //     }
+  //   })
   
-    return results
-  }
+  //   return results
+  // }
 
-  searchByStream(file: File, searches: ISearch[]): Promise<IResult[]> {
-    const stream = this.fileLoader.loadFileByStream(file)
+  private searchByStream(file: File, searches: ISearch[]): Promise<IResult[]> {
+    console.log('by stream')
+    const stream = this.fileLoader.readFileByStream(file)
     let results: IResult[]
-    let searchProgress: ISearchProgress[] = []
-
+    let searchProgress: ISearchProgress[] = this.getInitialSearchProgress(searches)
+    
     stream.on('line', line => {
-      // this.searchLine(searches, line)
-      // search the line and chain to the next one. Maintain results and add to them.
-      for (let i = 0; i < line.length; i++) {
-        for (let j = 0; j < searchProgress.length; j++) {
+      console.log(`reading line: ${line}`)
+      for (let i = 0; i < line.length; i++) {    // Go through each character in the line
+        for (let j = 0; j < searchProgress.length; j++) {    // Go through each search phrase 
           let lineChar = line[i]
-          let phraseChar = searchProgress[j].phrase[searchProgress[j].index]
-          if (lineChar === phraseChar) {
-            
+          _.each(searchProgress[j].indices, (indexValue, index) => {    // Track all possibilities of a match per phrase
+            let phraseChar = searchProgress[j].phrase[indexValue]
+            if (lineChar === phraseChar) {
+              searchProgress[j].indices[index]++
+              searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
+            } else {
+              searchProgress[j].indices.splice(index, 1)  // Remove index if the char doesn't match.
+            }
+
+            // Success if index of matched chars reaches the end of the phrase:
+            if (searchProgress[j].indices[index] === searchProgress[j].phrase.length) {
+              const excerpts: IExcerpt[] = []
+              results.push({
+                search: searchProgress[j].searchName,
+                phrase: searchProgress[j].phrase,
+                excerpts,
+                show: false
+              })
+              searchProgress[j].indices.splice(index, 1)
+            }
+          })
+
+          if (searchProgress[j].indices.length < 1) {
+            searchProgress[j].indices.push(0)
           }
         }
       }
@@ -91,55 +111,45 @@ export default class FileSearcher {
     })
   }
 
-  trieSearch(file: File, searches: ISearch[]): IResult[] {
-    let fileContents: string = this.fileLoader.load(file)
-    let results: Array<IResult> = []
-    
-    if (!fileContents) {
-      throw new Error('Unable to load file: ' + file.path)
-    }
+  // private getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
+  //   let excerpts: Array<IExcerpt> = []
+  //   const padding: number = 40
+  //   const pagePadding: number = 2000
   
-    const searchesTrie: SearchesTrie = new SearchesTrie()
-    searchesTrie.addSearches(searches)
+  //   indices.map((val, i) => {
+  //     let start: number = val - padding > 0 ? val - padding : 0
+  //     let end: number = val + phrase.length + padding < fileContents.length ? val + phrase.length + padding : fileContents.length
+  //     let pageStart: number = val - pagePadding > 0 ? val - pagePadding : 0
+  //     let pageEnd: number = val + phrase.length + pagePadding < fileContents.length ? val + phrase.length + pagePadding : fileContents.length
+  
+  //     let excerpt: IExcerpt = {
+  //       location: 'TODO: determine how to calc page from index',
+  //       index: indices[i],
+  //       text: fileContents.substring(start, end),
+  //       pageText: fileContents.substring(pageStart, pageEnd),
+  //     }
+  
+  //     excerpts.push(excerpt)
+  //   })
+  
+  //   return excerpts
+  // }
 
-    const foundPhrases: IPhrase[] = searchesTrie.findPhrase(fileContents)
-
-    foundPhrases.forEach((phrase) => {
-      let result: IResult = {
-        search: searches[phrase.searchIndex].name,
-        phrase: phrase.text,
-        excerpts: [], // TODO: this.getExcerpts(fileContents, phrase.text, resultIndices),
-        show: false,
+  private getInitialSearchProgress(searches: ISearch[]): ISearchProgress[] {
+    let searchProgress: ISearchProgress[] = []
+    searches.map(search => {
+      if (search.isIncluded) {
+        search.phrases.map(phrase => {
+          searchProgress.push({
+            searchName: search.name,
+            phrase,
+            indices: [0]
+          })
+        })
       }
-
-      results.push(result)
     })
 
-    return results
-  }
-
-  getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
-    let excerpts: Array<IExcerpt> = []
-    const padding: number = 40
-    const pagePadding: number = 2000
-  
-    indices.map((val, i) => {
-      let start: number = val - padding > 0 ? val - padding : 0
-      let end: number = val + phrase.length + padding < fileContents.length ? val + phrase.length + padding : fileContents.length
-      let pageStart: number = val - pagePadding > 0 ? val - pagePadding : 0
-      let pageEnd: number = val + phrase.length + pagePadding < fileContents.length ? val + phrase.length + pagePadding : fileContents.length
-  
-      let excerpt: IExcerpt = {
-        location: 'TODO: determine how to calc page from index',
-        index: indices[i],
-        text: fileContents.substring(start, end),
-        pageText: fileContents.substring(pageStart, pageEnd),
-      }
-  
-      excerpts.push(excerpt)
-    })
-  
-    return excerpts
+    return searchProgress
   }
 }
 

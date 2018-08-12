@@ -1,11 +1,11 @@
 import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import { ISearch } from "../../reducers/searches";
-import { IResult } from "../../reducers/results";
+import ISearch from "../../types/ISearch";
+import IResult from "../../types/IResult";
 
 export default class TextDocWriter {
-  saveResults(filename: string, searches: Array<ISearch>, results: Array<IResult>): string {
+  saveResults(filename: string, searches: ISearch[], results: IResult[]): string {
     const filepath: string = path.join(os.homedir(), 'Desktop') + '/' + filename;
     let content: string = "";
 

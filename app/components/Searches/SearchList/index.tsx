@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ISearchesState, ISearch } from '../../../reducers/searches';
 import { isObjectInArray } from '../../../utils/helpers';
+import ISearchesState from '../../../types/ISearchesState';
+import ISearch from '../../../types/ISearch';
 let Icons = require('react-feather');
 
 let styles = require('./SearchList.scss');

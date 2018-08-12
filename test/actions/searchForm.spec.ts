@@ -1,19 +1,7 @@
 import { spy } from 'sinon'
 import * as actions from '../../app/actions/searchForm'
 import * as constants from '../../app/constants'
-
-const mockFile: File = {
-  name: 'thenameofthefile.txt',
-  lastModified: 1,
-  lastModifiedDate: new Date(1),
-  webkitRelativePath: '',
-  path: "/all/the/way.txt",
-  size: 10,
-  type: "gorillaz/clintEastwood",
-  msClose() {},
-  msDetachStream() {},
-  slice() { return new Blob(["hey"]) },
-}
+import { mockFile } from '../../test/fixtures/fixtures'
 
 describe('searchForm actions', () => {
   it('should submitSearch should create submitSearch action', () => {

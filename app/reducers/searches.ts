@@ -18,6 +18,8 @@ import {
   resetFile,
 } from '../actions/searchForm'
 import JsonReader from '../local/import/searchLoader'
+import ISearch from '../types/ISearch';
+import ISearchesState from '../types/ISearchesState';
 
 const initialState: ISearchesState = {
   searches: getInitialSearches(),
@@ -29,39 +31,8 @@ const initialState: ISearchesState = {
   isNewPhraseUsed: false,
 }
 
-function getInitialSearches(): Array<ISearch> {
+function getInitialSearches(): ISearch[] {
   return JsonReader.getInitialSearches()
-}
-
-export interface ISearchesState {
-  searches: Array<ISearch>,
-  currentSearchIndex: number,
-  newSearchName: string,
-  isNewSearchUsed: boolean,
-  file?: File,
-  isValidFile: boolean,
-  newPhrase: string,
-  isNewPhraseUsed: boolean,
-}
-
-export interface ISearch {
-  index: number,
-  name: string,
-  description?: string,
-  phrases: Array<string>,
-  isIncluded: boolean,
-  isEditing: boolean,
-}
-
-export interface IMove {
-  initialIndex: number,
-  nextIndex: number,
-}
-
-export interface IPhrase {
-  index: number,
-  text: string,
-  searchIndex: number
 }
 
 export type TState = ISearchesState

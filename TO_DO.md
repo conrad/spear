@@ -2,6 +2,9 @@
 
 ## Testing
 
+## Security
+- Audit npm packages: 3 critical issues?
+
 ## PDFs
 - convert automatically convert pdfs to text documents.
   - Not all pdfs are the same. 

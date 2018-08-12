@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IResults } from '../../reducers/results';
+import IResults from '../../types/IResults';
 import { ResultsHeader } from "./ResultsHeader";
 import { ResultsBody } from "./ResultsBody";
-import { ISearchesState } from '../../reducers/searches';
+import ISearchesState from '../../types/ISearchesState';
 
 let styles = require('./Results.scss');
 

@@ -1,8 +1,7 @@
-import searches, { 
-  IPhrase, 
-  ISearch, 
-  ISearchesState,
-} from '../../app/reducers/searches'
+import IPhrase from '../../app/types/IPhrase';
+import ISearchesState from '../../app/types/ISearchesState';
+import ISearch from '../../app/types/ISearch';
+import searches from '../../app/reducers/searches'
 import { 
   deleteSearch,
   storeNewSearch,

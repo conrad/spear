@@ -1,11 +1,13 @@
 import * as React from 'react';
-import { ISearchesState, ISearch } from '../../reducers/searches';
 import { FileInput } from './FileInput';
 import { PhraseList } from './PhraseList';
 import FileSearcher from '../../local/search/fileSearcher';
-import { IResults } from '../../reducers/results';
+import IResults from '../../types/IResults';
+import IResult from '../../types/IResult'
 import { copyArray } from '../../utils/helpers';
 import FileLoader from '../../local/search/fileLoader';
+import ISearchesState from '../../types/ISearchesState';
+import ISearch from '../../types/ISearch';
 
 let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
@@ -50,20 +52,23 @@ export class SearchForm extends React.Component<IProps> {
 
     const fileSearcher: FileSearcher = new FileSearcher(new FileLoader())
 
-    const results: IResults = { 
-      hasRun: true, 
-      items: fileSearcher.search(searches.file, this.props.searches.searches),
-      overlay: {
-        show: false,
-        search: '',
-        phrase: '',
-        body: '',
-      }, 
-      showWindow: true,
-    };
+    fileSearcher.search(searches.file, this.props.searches.searches)
+      .then((items: IResult[]) => {
+        const results: IResults = { 
+          hasRun: true, 
+          items,
+          overlay: {
+            show: false,
+            search: '',
+            phrase: '',
+            body: '',
+          }, 
+          showWindow: true,
+        }
 
-    this.props.updateIsNewPhraseUsed(false);
-    this.props.setResults(results);
+        this.props.updateIsNewPhraseUsed(false);
+        this.props.setResults(results);
+      })
   }
 
   render() {

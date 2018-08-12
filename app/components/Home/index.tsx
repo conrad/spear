@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { IResults } from '../../reducers/results';
-import { ISearchesState, ISearch } from '../../reducers/searches';
+import IResults from '../../types/IResults';
 import { IMenu } from '../../reducers/menu';
 import { Searches } from '../Searches';
 import { SearchForm } from '../SearchForm';
 import { Results } from '../Results';
 import { ResultOverlay } from '../Results/ResultOverlay';
+import ISearchesState from '../../types/ISearchesState';
+import ISearch from '../../types/ISearch';
 
 let styles = require('./Home.scss');
 

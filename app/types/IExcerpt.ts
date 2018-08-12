@@ -1,4 +1,4 @@
-export interface IExcerpt {
+export default interface IExcerpt {
   location: string,
   index: number,
   text: string,

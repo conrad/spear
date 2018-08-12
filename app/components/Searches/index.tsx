@@ -2,7 +2,8 @@ import * as React from 'react';
 import { MenuBanner } from './MenuBanner';
 import { SearchList } from './SearchList';
 import { IMenu } from '../../reducers/menu';
-import { ISearchesState, ISearch } from '../../reducers/searches';
+import ISearchesState from '../../types/ISearchesState';
+import ISearch from '../../types/ISearch';
 let styles = require('./Searches.scss');
 
 export interface IProps {

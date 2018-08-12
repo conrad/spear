@@ -1,7 +1,7 @@
 import { actionCreator, actionCreatorVoid } from './helpers';
-import { IResults } from "../reducers/results";
 import TextDocWriter from "../local/export/resultsExporter"; 
 import * as constants from '../constants'
+import IResults from '../types/IResults';
 
 export interface IExcerptIndices {
   resultIndex: number,

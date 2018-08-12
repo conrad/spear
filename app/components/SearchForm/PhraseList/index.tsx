@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { ISearchesState, ISearch } from '../../../reducers/searches';
 import { copyArray } from '../../../utils/helpers';
+import ISearch from '../../../types/ISearch';
+import ISearchesState from '../../../types/ISearchesState';
 let Icons = require('react-feather');
 let styles = require('./PhraseList.scss');
 
@@ -32,7 +33,7 @@ export class PhraseList extends React.Component<IProps, IState> {
     const { searches }  = this.props.searches;
     if (this.state.entry) {
       let isAlreadyPhrase = false;
-      searches[currentIndex].phrases.forEach(phrase => {
+      searches[currentIndex].phrases.forEach((phrase: string) => {
         if (this.state.entry == phrase) {
           console.log('The phrase is already registered in this search.');
           isAlreadyPhrase = true;

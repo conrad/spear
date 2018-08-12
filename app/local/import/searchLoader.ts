@@ -1,9 +1,9 @@
 import * as fs from "fs";
-import { ISearch } from "../../reducers/searches";
 import { initialSearchesJson } from "../../searchProfiles/basic_searches"
+import ISearch from "../../types/ISearch";
 
 export interface ISearchesProfile {
-  searches: Array<ISearch>,
+  searches: ISearch[],
 };
 
 const JsonReader = {

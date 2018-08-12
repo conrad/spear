@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { IResults } from '../../../reducers/results';
+import IResults from '../../../types/IResults';
 let Icons = require('react-feather');
 
 let styles = require("./ResultsBody.scss");

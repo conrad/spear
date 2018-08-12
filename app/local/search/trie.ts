@@ -1,4 +1,5 @@
-import { IPhrase, ISearch }  from '../../reducers/searches'
+import IPhrase from "../../types/IPhrase";
+import ISearch from "../../types/ISearch";
 
 class PhraseNode {
   word: string

@@ -1,6 +1,6 @@
-import { IExcerpt } from "./IExcerpt";
+import IExcerpt from "./IExcerpt";
 
-export interface IResult {
+export default interface IResult {
   search: string,
   phrase: string,
   excerpts: IExcerpt[],

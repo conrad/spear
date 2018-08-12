@@ -1,5 +1,7 @@
-import { IResults } from '../../app/reducers/results'
-import { ISearchesState, ISearch, IPhrase } from '../../app/reducers/searches'
+import IResults from '../../app/types/IResults'
+import ISearchesState from '../../app/types/ISearchesState';
+import ISearch from '../../app/types/ISearch';
+import IPhrase from '../../app/types/IPhrase';
 
 export const emptyResultsSet: IResults = {
   hasRun: false,
@@ -62,4 +64,17 @@ export const samplePhrase: IPhrase = {
   index: 2,
   text: 'just a phrase within the search',
   searchIndex: 0
+}
+
+export const mockFile: File = {
+  name: 'thenameofthefile.txt',
+  lastModified: 1,
+  lastModifiedDate: new Date(1),
+  webkitRelativePath: '',
+  path: "/all/the/way.txt",
+  size: 10,
+  type: "gorillaz/clintEastwood",
+  msClose() {},
+  msDetachStream() {},
+  slice() { return new Blob(["hey"]) },
 }

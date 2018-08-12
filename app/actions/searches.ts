@@ -1,8 +1,10 @@
 import { actionCreator, actionCreatorVoid } from './helpers';
-import { IPhrase, ISearch, IMove } from '../reducers/searches';
 import JsonReader from '../local/import/searchLoader';
 import JsonWriter from '../local/export/searchExporter';
 import * as constants from '../constants'
+import ISearch from '../types/ISearch';
+import IMove from '../types/IMove';
+import IPhrase from '../types/IPhrase';
 
 export const storeSearch = actionCreator<ISearch>(constants.STORE_SEARCH);
 export const deleteSearch = actionCreator<ISearch>(constants.DELETE_SEARCH)

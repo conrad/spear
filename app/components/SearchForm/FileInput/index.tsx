@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ISearchesState } from '../../../reducers/searches';
+import ISearchesState from '../../../types/ISearchesState';
 
 let styles = require('./FileInput.scss');
 

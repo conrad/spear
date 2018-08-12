@@ -1,8 +1,8 @@
 import FileSearcher from '../../../app/local/search/fileSearcher'
 import * as path from 'path'
-import { ISearch } from '../../../app/reducers/searches'
-import { IResult } from '../../../app/reducers/results'
+import IResult from '../../../app/types/IResult'
 import FileLoader from '../../../app/local/search/fileLoader';
+import ISearch from '../../../app/types/ISearch';
 // import { emptyResultsSet } from '../../fixtures/fixtures'
 
 // TODO: Refactor not to use real file nor real FileLoader
@@ -21,9 +21,9 @@ describe('FileSearcher', () => {
         isIncluded: true,
         isEditing: false,      
       }]
-      const results: IResult[] = fileSearcher.search({ path: absPath } as File, searches)
-
-      expect(results[0].excerpts).toHaveLength(4)
+      const resultsPromise: Promise<IResult[]> = fileSearcher.search({ path: absPath } as File, searches)
+      // expect.assertions(1);
+      return resultsPromise.then(results => expect(results[0].excerpts).toHaveLength(4))
     })
   })
 

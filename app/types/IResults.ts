@@ -1,8 +1,8 @@
-import { IResult } from "./IResult";
+import IResult from "./IResult";
 
-export interface IResults {
+export default interface IResults {
   hasRun: boolean,
-  items: Array<IResult>,
+  items: IResult[],
   overlay: {
     show: boolean,
     search: string,

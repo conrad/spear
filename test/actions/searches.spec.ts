@@ -1,7 +1,8 @@
 import { spy } from 'sinon'
 import * as actions from '../../app/actions/searches'
-import { ISearch, IMove } from '../../app/reducers/searches'
 import * as constants from '../../app/constants'
+import ISearch from '../../app/types/ISearch';
+import IMove from '../../app/types/IMove';
 
 const mockSearch: ISearch = {
   index: 0,

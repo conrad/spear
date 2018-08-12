@@ -51,7 +51,7 @@ const enhancer = composeEnhancers(
 
 export = {
   history,
-  configureStore(initialState: Object | void) {
+  configureStore(initialState: Object) {
     const store = createStore(rootReducer, initialState, enhancer);
 
     if (module.hot) {

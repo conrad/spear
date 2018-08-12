@@ -8,8 +8,7 @@ import {
   toggleShowResult 
 } from '../actions/results';
 import { clone } from '../utils/helpers';
-import { IResult } from '../types/IResult';
-import { IResults } from '../types/IResults';
+import IResults from '../types/IResults';
 
 const initialState: IResults = { 
   hasRun: false, 
