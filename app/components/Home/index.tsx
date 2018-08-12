@@ -36,8 +36,6 @@ export interface IProps {
   updateNewSearchName(name: string): void,
 };
 
-
-
 export class Home extends React.Component<IProps> {
   render() {
     return (

@@ -6,14 +6,14 @@ import ISearchesState from '../../../types/ISearchesState';
 let Icons = require('react-feather');
 let styles = require("./ResultsHeader.scss");
 
-export interface IProps {
+interface IProps {
   results: IResults,
   searches: ISearchesState,
   saveResultsToFile(): void,
   toggleShowResultsWindow(): void,
 }
  
-export interface IState {
+interface IState {
   results: IResults,
   searchInfo: ISearchesState
 }

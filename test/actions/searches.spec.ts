@@ -4,6 +4,8 @@ import * as constants from '../../app/constants'
 import ISearch from '../../app/types/ISearch';
 import IMove from '../../app/types/IMove';
 
+// jest.runAllTimers();
+
 const mockSearch: ISearch = {
   index: 0,
   isEditing: false,

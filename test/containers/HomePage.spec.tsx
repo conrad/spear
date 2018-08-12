@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as Enzyme from 'enzyme'
+import IState from '../../app/types/IState';
 import * as Adapter from 'enzyme-adapter-react-16'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 import HomePage from '../../app/containers/HomePage'
-import { IState } from '../../app/reducers'
 
 const HomePageAny = HomePage as any
 let { configureStore, history } = require('../../app/store/configureStore')
