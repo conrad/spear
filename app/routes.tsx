@@ -10,3 +10,6 @@ export default () => (
     </Switch>
   </App>
 );
+
+{/* <Route exact path="/" render={() => (<div>Match</div>)} />
+<Route render={() => (<div>Miss</div>)} /> */}

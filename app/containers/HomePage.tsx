@@ -5,7 +5,7 @@ import { Home, IProps } from '../components/Home';
 import * as Actions from '../actions';
 import IState from '../types/IState';
 
-function mapStateToProps(state: IState): Partial<IProps> {
+const mapStateToProps = (state: IState): Partial<IProps> => {
   return {
     searches: state.searches,
     results: state.results,
@@ -13,7 +13,7 @@ function mapStateToProps(state: IState): Partial<IProps> {
   };
 }
 
-function mapDispatchToProps(dispatch: Dispatch<IState>): Partial<IProps> {
+const mapDispatchToProps = (dispatch: Dispatch<IState>): Partial<IProps> => {
   return bindActionCreators(Actions as any, dispatch);
 }
 

@@ -1,9 +1,10 @@
-let configureStore: any
+let importedConfig: any
 
 if (process.env.NODE_ENV === 'production') {
-  configureStore = require('./configureStore.production');
+  importedConfig = require('./configureStore.production')
 } else {
-  configureStore = require('./configureStore.development');
+  importedConfig = require('./configureStore.development');
 }
 
-export default configureStore
+export const configureStore = importedConfig.configureStore
+export const history = importedConfig.history

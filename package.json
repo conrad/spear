@@ -102,9 +102,11 @@
     "@types/history": "^4.5.2",
     "@types/jest": "^20.0.2",
     "@types/node": "^8.0.2",
+    "@types/lodash": "^4.14.116",
     "@types/react": "^16.0.20",
     "@types/react-dom": "^16.0.2",
     "@types/react-hot-loader": "^3.0.4",
+    "@types/react-redux": "^5.0.6",
     "@types/react-router": "^4.0.11",
     "@types/react-router-dom": "^4.0.7",
     "@types/redux-logger": "^3.0.0",
@@ -150,9 +152,7 @@
     "webpack-merge": "^2.0.0"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.116",
-    "@types/react-redux": "^5.0.6",
-    "@types/react-router-redux": "^5.0.15",
+    "connected-react-router": "^4.3.0",
     "electron-debug": "^1.1.0",
     "font-awesome": "^4.7.0",
     "history": "^4.6.1",
@@ -167,7 +167,6 @@
     "react-redux": "^5.0.1",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
-    "react-router-redux": "^4.0.8",
     "redux": "^4.0.0",
     "redux-thunk": "^2.1.0",
     "source-map-support": "^0.4.6"
