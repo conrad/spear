@@ -68,6 +68,7 @@ export class ResultsBody extends React.Component<IProps> {
     this.props.showResultOverlay(resultIndex, excerptIndex);
   }
 
+  
   render() {
     return (
       <div className={ styles.scrollingContainer }>

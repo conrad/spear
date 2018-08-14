@@ -3,9 +3,9 @@ import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import rootReducer from '../reducers';
 
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
-const configureStore: Function = (initialState: Object) => {
+export const configureStore: Function = (initialState: Object) => {
   return createStore(
     connectRouter(history)(rootReducer), // new root reducer with router state
     initialState,
@@ -17,5 +17,3 @@ const configureStore: Function = (initialState: Object) => {
     ),
   )
 }
-
-export default configureStore

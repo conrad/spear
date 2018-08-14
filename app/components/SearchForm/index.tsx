@@ -54,6 +54,7 @@ export class SearchForm extends React.Component<IProps> {
 
     fileSearcher.search(searches.file, this.props.searches.searches)
       .then((items: IResult[]) => {
+        console.log('items', items)
         const results: IResults = { 
           hasRun: true, 
           items,

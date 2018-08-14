@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+// import * as _ from 'lodash'
 import FileLoader from './fileLoader'
 // import { THRESHOLD_FILE_SIZE } from '../../constants'
 import ISearchProgress from '../../types/ISearchProgress';
@@ -17,7 +17,6 @@ export default class FileSearcher {
   }
 
   search(file: File, searches: ISearch[]): Promise<IResult[]> {
-    console.log('here')
     // if (file.size < THRESHOLD_FILE_SIZE) {
     //   return Promise.resolve(this.searchByFullFileContents(file, searches))
     // }
@@ -65,27 +64,31 @@ export default class FileSearcher {
   // }
 
   private searchByStream(file: File, searches: ISearch[]): Promise<IResult[]> {
-    console.log('by stream')
     const stream = this.fileLoader.readFileByStream(file)
-    let results: IResult[]
+    let results: IResult[] = []
     let searchProgress: ISearchProgress[] = this.getInitialSearchProgress(searches)
-    
     stream.on('line', line => {
-      console.log(`reading line: ${line}`)
-      for (let i = 0; i < line.length; i++) {    // Go through each character in the line
-        for (let j = 0; j < searchProgress.length; j++) {    // Go through each search phrase 
-          let lineChar = line[i]
-          _.each(searchProgress[j].indices, (indexValue, index) => {    // Track all possibilities of a match per phrase
-            let phraseChar = searchProgress[j].phrase[indexValue]
+      for (let i = 0; i < line.length; i++) {    // Go through each character in line
+        let lineChar: string = line[i]
+        for (let j = 0; j < searchProgress.length; j++) {  // Go through each phrase 
+          for (let k = 0; k < searchProgress[j].indices.length; k++) {
+            let index: number = k
+            let indexValue: number = searchProgress[j].indices[index]
+            let phraseChar: string = searchProgress[j].phrase[indexValue]
+            // console.log(`searchProgress[j].phrase ${searchProgress[j].phrase}`)
+            // console.log(`phraseChar ${phraseChar}`)
             if (lineChar === phraseChar) {
               searchProgress[j].indices[index]++
-              searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
+              // !!!!! THis is creating an infinite looppp!!!!
+              // TODO: Is this necessary?
+              // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
             } else {
               searchProgress[j].indices.splice(index, 1)  // Remove index if the char doesn't match.
             }
 
             // Success if index of matched chars reaches the end of the phrase:
             if (searchProgress[j].indices[index] === searchProgress[j].phrase.length) {
+              console.log('matched!!!!!!')
               const excerpts: IExcerpt[] = []
               results.push({
                 search: searchProgress[j].searchName,
@@ -95,17 +98,20 @@ export default class FileSearcher {
               })
               searchProgress[j].indices.splice(index, 1)
             }
-          })
+          // })
+          }
 
           if (searchProgress[j].indices.length < 1) {
             searchProgress[j].indices.push(0)
           }
         }
       }
+      console.log(`results assembled so far: ${results}`)
     })
 
     return new Promise((resolve, reject) => {
       stream.on('close', () => {
+        console.log('results being sent', results)
         resolve(results)
       })
     })
@@ -137,18 +143,17 @@ export default class FileSearcher {
 
   private getInitialSearchProgress(searches: ISearch[]): ISearchProgress[] {
     let searchProgress: ISearchProgress[] = []
-    searches.map(search => {
-      if (search.isIncluded) {
-        search.phrases.map(phrase => {
+    for (let i: number = 0; i < searches.length; i++) {
+      if (searches[i].isIncluded) {
+        for (let j: number = 0; j < searches[i].phrases.length; j++) {
           searchProgress.push({
-            searchName: search.name,
-            phrase,
+            searchName: searches[i].name,
+            phrase: searches[i].phrases[j],
             indices: [0]
           })
-        })
+        }
       }
-    })
-
+    }
     return searchProgress
   }
 }
