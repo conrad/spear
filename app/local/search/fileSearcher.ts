@@ -11,6 +11,7 @@ import IExcerpt from '../../types/IExcerpt';
  */
 export default class FileSearcher {
   fileLoader: FileLoader;
+  fiveLineContext: string;
 
   constructor(fileLoader: FileLoader) {
     this.fileLoader = fileLoader
@@ -67,7 +68,13 @@ export default class FileSearcher {
     const stream = this.fileLoader.readFileByStream(file)
     let results: IResult[] = []
     let searchProgress: ISearchProgress[] = this.getInitialSearchProgress(searches)
+    let lineCount: number = 0
     stream.on('line', line => {
+      lineCount++ 
+      this.fiveLineContext += line
+      if (lineCount > 5) {
+        this.fiveLineContext = this.fiveLineContext.slice(line.length - 1)
+      }
       for (let i = 0; i < line.length; i++) {    // Go through each character in line
         let lineChar: string = line[i]
         for (let j = 0; j < searchProgress.length; j++) {  // Go through each phrase 
@@ -75,30 +82,48 @@ export default class FileSearcher {
             let index: number = k
             let indexValue: number = searchProgress[j].indices[index]
             let phraseChar: string = searchProgress[j].phrase[indexValue]
-            // console.log(`searchProgress[j].phrase ${searchProgress[j].phrase}`)
-            // console.log(`phraseChar ${phraseChar}`)
-            if (lineChar === phraseChar) {
-              searchProgress[j].indices[index]++
-              // !!!!! THis is creating an infinite looppp!!!!
-              // TODO: Is this necessary?
+            if (searchProgress[j].isCaseSensitive) {
+              if (lineChar === phraseChar) {
+                searchProgress[j].indices[index]++
+                // TODO: Is this necessary?  !!! This is creating an infinite loop!!!!
+                // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
+            } else {
+                searchProgress[j].indices.splice(index, 1)  // Remove index if chars don't match.
+              }
+            } else {
+              if (lineChar.toLowerCase() === phraseChar.toLowerCase()) {
+                searchProgress[j].indices[index]++
+              // TODO: Is this necessary?   !!!!! THis is creating an infinite looppp!!!!
               // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
             } else {
-              searchProgress[j].indices.splice(index, 1)  // Remove index if the char doesn't match.
+                searchProgress[j].indices.splice(index, 1)
+              }
             }
 
             // Success if index of matched chars reaches the end of the phrase:
             if (searchProgress[j].indices[index] === searchProgress[j].phrase.length) {
-              console.log('matched!!!!!!')
-              const excerpts: IExcerpt[] = []
-              results.push({
-                search: searchProgress[j].searchName,
-                phrase: searchProgress[j].phrase,
-                excerpts,
-                show: false
-              })
+              const excerpts: IExcerpt[] = this.getStreamedExcerpts(line, lineCount)
+              let isNewSearch: boolean = true
+              for (let i: number = 0; i < results.length; i++) {
+                if (results[i].search === searchProgress[j].searchName) {
+
+                  results[i].excerpts = results[i].excerpts.concat(excerpts)
+                  
+                  isNewSearch = false
+                }
+              }
+
+              if (isNewSearch) {
+                results.push({
+                  search: searchProgress[j].searchName,
+                  phrase: searchProgress[j].phrase,
+                  excerpts,
+                  show: false
+                })
+              }
+                
               searchProgress[j].indices.splice(index, 1)
             }
-          // })
           }
 
           if (searchProgress[j].indices.length < 1) {
@@ -106,15 +131,23 @@ export default class FileSearcher {
           }
         }
       }
-      console.log(`results assembled so far: ${results}`)
     })
 
     return new Promise((resolve, reject) => {
       stream.on('close', () => {
-        console.log('results being sent', results)
         resolve(results)
       })
     })
+  }
+
+  private getStreamedExcerpts(line: string, lineNumber: number): IExcerpt[] {
+    // Wait... this isn't complete... TODO: Have this return plural excerpts.
+    return [{
+      location: line,
+      index: lineNumber,
+      text: line,
+      pageText: this.fiveLineContext
+    }]
   }
 
   // private getExcerpts(fileContents: string, phrase: string, indices: Array<number>): Array<IExcerpt> {
@@ -149,7 +182,8 @@ export default class FileSearcher {
           searchProgress.push({
             searchName: searches[i].name,
             phrase: searches[i].phrases[j],
-            indices: [0]
+            indices: [0],
+            isCaseSensitive: searches[i].isCaseSensitive
           })
         }
       }

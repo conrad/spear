@@ -5,6 +5,10 @@
 ## Security
 - Audit npm packages: 3 critical issues?
 
+## Menu
+- Put functionality into desktop menu
+- Close top-left drop-down when clicked off it
+
 ## PDFs
 - convert automatically convert pdfs to text documents.
   - Not all pdfs are the same. 
@@ -29,10 +33,14 @@
 - Fix styling on sizing of textarea   => npm install react-input-autosize --save
 - Toasts for files being saved/exported   ==>> Help from Andy?
   - or other feedback, just more feedback
-### Results
+
+## Results
 - Have results replace the search phrases sub-window
   - make results vertical, like search in 
 - Be able to close results 
+- Be able to see matching phrase/excerpt in results window
+- Click result 
+
 
 ## Data Layer
 - Read set of searches from file

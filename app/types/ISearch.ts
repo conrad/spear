@@ -3,6 +3,7 @@ export default interface ISearch {
   name: string,
   description?: string,
   phrases: Array<string>,
+  isCaseSensitive?: boolean,
   isIncluded: boolean,
   isEditing: boolean,
 }

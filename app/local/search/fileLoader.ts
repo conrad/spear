@@ -5,8 +5,8 @@ const extract = require('pdf-text-extract')
 
 export default class FileLoader {
   public load(file: File): string  {
-    console.log('loading')
-    if (fs.existsSync(file.path)) {
+    console.log('loading...')
+    if (!fs.existsSync(file.path)) {
       throw new Error('File doesn\'t exist.')
     }
 
@@ -36,8 +36,7 @@ export default class FileLoader {
     return fileContents
   }
 
-  public readFileByStream(file: File):readline.ReadLine {
-    console.log('loading 3')
+  public readFileByStream(file: File): readline.ReadLine {
     return readline.createInterface({
       input: fs.createReadStream(file.path)
     })

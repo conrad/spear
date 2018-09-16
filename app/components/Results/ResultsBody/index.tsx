@@ -11,6 +11,7 @@ export interface IProps {
 };
   
 export class ResultsBody extends React.Component<IProps> {
+  
   createElementsFromResults(results: IResults): Array<JSX.Element> {
     let elements: Array<JSX.Element> = [];
     results.items.map((item, i) => {
@@ -57,6 +58,7 @@ export class ResultsBody extends React.Component<IProps> {
         })
       }
     });
+
     return elements;
   }
 

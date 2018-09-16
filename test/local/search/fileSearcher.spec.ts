@@ -22,8 +22,9 @@ describe('FileSearcher', () => {
         isEditing: false,      
       }]
       const resultsPromise: Promise<IResult[]> = fileSearcher.search({ path: absPath } as File, searches)
-      // expect.assertions(1);
-      return resultsPromise.then(results => expect(results[0].excerpts).toHaveLength(4))
+      return resultsPromise.then(results => {
+        expect(results[0].excerpts).toHaveLength(4)
+      })
     })
   })
 
@@ -31,7 +32,10 @@ describe('FileSearcher', () => {
     it('returns an empty array when no matches found', () => {
       const absPath = path.join(__dirname, sampleFilePath)
       const searches: ISearch[] = []
-      expect(fileSearcher.search({ path: absPath } as File, searches)).toHaveLength(0)
+      const resultsPromise: Promise<IResult[]> = fileSearcher.search({ path: absPath } as File, searches)
+      resultsPromise.then(results => {
+        expect(results[0].excerpts).toHaveLength(0)
+      })
     })
   })
 })
