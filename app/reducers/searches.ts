@@ -54,9 +54,10 @@ export default function searches(state: ISearchesState = initialState, action: I
       throw new Error('Attempted to unset phrase on search, but the phrase index doesn\'t exist on search.')
     }
 
-    if (phrases[action.payload.index] !== action.payload.text) {
-      throw new Error(`Attempted to unset phrase, but the text doesn\'t match between the phrases: ${phrases[action.payload.index]}, ${action.payload.text}`)
-    }
+    // TODO: Start sending phrase text with action to have this validation.
+    // if (phrases[action.payload.index] !== action.payload.text) {
+    //   throw new Error(`Attempted to unset phrase, but the text doesn\'t match between the phrases: ${phrases[action.payload.index]}, ${action.payload.text}`)
+    // }
 
     phrases.splice(action.payload.index, 1)
     return newState

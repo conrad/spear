@@ -49,15 +49,16 @@ describe('searches reducer', () => {
     expect(actual.searches[0].phrases.length).toEqual(sampleSearch.phrases.length-1)
   })
 
-  it('should throw error when UNSET_PHRASE is given a phrase whose text doesn\'t match the phrase being removed from the search', () => {
-    const searchesState: ISearchesState = getCopy(emptySearchesState)
-    const search: ISearch = getCopy(sampleSearch)
-    searchesState.searches.push(search)
+  // TODO: Re-add if this validation starts being enforced.
+  // it('should throw error when UNSET_PHRASE is given a phrase whose text doesn\'t match the phrase being removed from the search', () => {
+  //   const searchesState: ISearchesState = getCopy(emptySearchesState)
+  //   const search: ISearch = getCopy(sampleSearch)
+  //   searchesState.searches.push(search)
 
-    expect(() => {
-      searches(searchesState, unsetPhrase(samplePhrase))
-    }).toThrow()
-  })
+  //   expect(() => {
+  //     searches(searchesState, unsetPhrase(samplePhrase))
+  //   }).toThrow()
+  // })
 
   it('should throw error when UNSET_PHRASE set on non-existent search', () => {
     const searchesState: ISearchesState = getCopy(emptySearchesState)

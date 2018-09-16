@@ -21,6 +21,7 @@
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
+    "precommit": "npm test",
     "cleanup": "mop -v"
   },
   "jest": {
@@ -101,8 +102,8 @@
     "@types/enzyme-adapter-react-16": "^1.0.1",
     "@types/history": "^4.5.2",
     "@types/jest": "^20.0.2",
-    "@types/node": "^8.0.2",
     "@types/lodash": "^4.14.116",
+    "@types/node": "^8.0.2",
     "@types/react": "^16.0.20",
     "@types/react-dom": "^16.0.2",
     "@types/react-hot-loader": "^3.0.4",
@@ -128,6 +129,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.24.1",
+    "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
     "json-loader": "^0.5.4",
@@ -172,7 +174,7 @@
     "source-map-support": "^0.4.6"
   },
   "devEngines": {
-    "node": ">=6.x",
+    "node": "^8.0.0",
     "npm": ">=3.x"
   }
 }
