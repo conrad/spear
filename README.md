@@ -2,7 +2,7 @@
 
 ## Install
 
-* **Note: requires a node version >= 6 and an npm version >= 3.**
+- **Note: requires a node version >= 6 and an npm version >= 3.**
 
 ```bash
 $ cd <local_spear_repo> && npm install
@@ -13,7 +13,7 @@ https://github.com/nisaacson/pdf-extract#osx
 
 ## Run
 
-Run these two commands __simultaneously__ in different console tabs.
+Run these two commands **simultaneously** in different console tabs.
 
 ```bash
 $ npm run hot-server
@@ -27,21 +27,25 @@ $ npm run dev
 ```
 
 ## Editor Configuration
+
 **Atom**
+
 ```bash
 apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter linter-eslint language-babel autocomplete-modules
 ```
 
 **Sublime**
-* https://github.com/sindresorhus/editorconfig-sublime#readme
-* https://github.com/SublimeLinter/SublimeLinter3
-* https://github.com/roadhump/SublimeLinter-eslint
-* https://github.com/babel/babel-sublime
+
+- https://github.com/sindresorhus/editorconfig-sublime#readme
+- https://github.com/SublimeLinter/SublimeLinter3
+- https://github.com/roadhump/SublimeLinter-eslint
+- https://github.com/babel/babel-sublime
 
 **Others**
-* [Editorconfig](http://editorconfig.org/#download)
-* [ESLint](http://eslint.org/docs/user-guide/integrations#editors)
-* Babel Syntax Plugin
+
+- [Editorconfig](http://editorconfig.org/#download)
+- [ESLint](http://eslint.org/docs/user-guide/integrations#editors)
+- Babel Syntax Plugin
 
 ## DevTools
 
@@ -51,13 +55,13 @@ apm install editorconfig es6-javascript atom-ternjs javascript-snippets linter l
 - Linux: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
 - Windows: <kbd>Ctrl</kbd> <kbd>Shift</kbd> <kbd>I</kbd> or <kbd>F12</kbd>
 
-*See [electron-debug](https://github.com/sindresorhus/electron-debug) for more information.*
+_See [electron-debug](https://github.com/sindresorhus/electron-debug) for more information._
 
 #### DevTools extensions
 
-* [Devtron](https://github.com/electron/devtron) - Install via [electron-debug](https://github.com/sindresorhus/electron-debug).
-* [React Developer Tools](https://github.com/facebook/react-devtools) - Install via [electron-devtools-installer](https://github.com/GPMDP/electron-devtools-installer).
-* [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension) - Install via [electron-devtools-installer](https://github.com/GPMDP/electron-devtools-installer).
+- [Devtron](https://github.com/electron/devtron) - Install via [electron-debug](https://github.com/sindresorhus/electron-debug).
+- [React Developer Tools](https://github.com/facebook/react-devtools) - Install via [electron-devtools-installer](https://github.com/GPMDP/electron-devtools-installer).
+- [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension) - Install via [electron-devtools-installer](https://github.com/GPMDP/electron-devtools-installer).
 
 You can find the tabs on Chrome DevTools.
 
@@ -69,8 +73,6 @@ $ UPGRADE_EXTENSIONS=1 npm run dev
 # For Windows
 $ set UPGRADE_EXTENSIONS=1 && npm run dev
 ```
-
-
 
 ## CSS Modules
 
@@ -84,9 +86,8 @@ css-modules loader. e.g. `app.global.css`
 If you want to import global css libraries (like `bootstrap`), you can just write the following code in `.global.css`:
 
 ```css
-@import "~bootstrap/dist/css/bootstrap.css";
+@import '~bootstrap/dist/css/bootstrap.css';
 ```
-
 
 ## Packaging
 
@@ -101,6 +102,7 @@ To package apps for all platforms:
 First, refer to [Multi Platform Build](https://github.com/electron-userland/electron-builder/wiki/Multi-Platform-Build) for dependencies.
 
 Then,
+
 ```bash
 $ npm run package-all
 ```
@@ -136,10 +138,11 @@ See [electron-builder CLI Usage](https://github.com/electron-userland/electron-b
 This boilerplate uses a [two package.json structure](https://github.com/electron-userland/electron-builder#two-packagejson-structure).
 
 1. If the module is native to a platform or otherwise should be included with the published package (i.e. bcrypt, openbci), it should be listed under `dependencies` in `./app/package.json`.
-2. If a module is `import`ed by another module, include it in `dependencies` in `./package.json`.   See [this ESLint rule](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md).
+2. If a module is `import`ed by another module, include it in `dependencies` in `./package.json`. See [this ESLint rule](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md).
 3. Otherwise, modules used for building, testing and debugging should be included in `devDependencies` in `./package.json`.
 
 ## Static Type Checking
+
 This project comes with Flow support out of the box! You can annotate your code with types, [get Flow errors as ESLint errors](https://github.com/amilajack/eslint-plugin-flowtype-errors), and get [type errors during runtime](https://github.com/gcanti/babel-plugin-tcomb-boilerplate) during development. Types are completely optional.
 
 ## Native-like UI
