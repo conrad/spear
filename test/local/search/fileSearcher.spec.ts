@@ -51,7 +51,7 @@ describe('FileSearcher', () => {
       resultsPromise.then(results => {
         expect(results).toHaveLength(1)
         console.log('resssssssulttttttts', results)
-        expect(results[0].excerpts).toHaveLength(11)
+        expect(results[0].excerpts).toHaveLength(1)
       })
     })
   })
