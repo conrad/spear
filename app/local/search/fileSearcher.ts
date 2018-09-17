@@ -81,39 +81,38 @@ export default class FileSearcher {
         if (i >= line.length) {   // Empty space for the end of the line
           lineChar = ' '
         }
-        for (let j = 0; j < searchProgress.length; j++) {  // Go through each phrase 
-          for (let k = 0; k < searchProgress[j].indices.length; k++) {
-            searchProgress = this.updateSearchProgressForChar(searchProgress, lineChar, lastChar, j, k)
-            //here
-            // let index: number = k
-            // let indexValue: number = searchProgress[j].indices[index]
-            // let phraseChar: string = searchProgress[j].phrase[indexValue]
-            // if (searchProgress[j].isCaseSensitive) {
-            //   if (lineChar === phraseChar) {
-            //     searchProgress[j].indices[index]++
-            //     // TODO: Is this necessary?  !!! This is creating an infinite loop!!!!
-            //     // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
-            // } else {
-            //     searchProgress[j].indices.splice(index, 1)  // Remove index if chars don't match.
-            //   }
-            // } else {
-            //   if (lineChar.toLowerCase() === phraseChar.toLowerCase()) {
-            //     searchProgress[j].indices[index]++
-            //   // TODO: Is this necessary?   !!!!! THis is creating an infinite looppp!!!!
-            //   // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
-            // } else {
-            //     searchProgress[j].indices.splice(index, 1)
-            //   }
-            // }
-            // there
-
+        for (let searchIndex = 0; searchIndex < searchProgress.length; searchIndex++) {
+          for (let spaceIndex = 0; spaceIndex < searchProgress[searchIndex].indices.length; spaceIndex++) {
+            // searchProgress = this.updateSearchProgressForChar(searchProgress, lineChar, lastChar, j, k)
+            if ((lineChar === ' ' && lastChar === ' ') || (lineChar === '' && lastChar === '')) {  // Skip over multiple spaces.
+              continue
+            }
+        
+            let indexValue: number = searchProgress[searchIndex].indices[spaceIndex]
+            let phraseChar: string = searchProgress[searchIndex].phrase[indexValue]
+            if (searchProgress[searchIndex].isCaseSensitive) {
+              if (lineChar === phraseChar) {
+                searchProgress[searchIndex].indices[spaceIndex]++
+                // TODO: Is this necessary?  !!! This is creating an infinite loop!!!!
+                // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
+            } else {
+                searchProgress[searchIndex].indices.splice(spaceIndex, 1)  // Remove index if chars don't match.
+              }
+            } else {
+              if (lineChar.toLowerCase() === phraseChar.toLowerCase()) {
+                searchProgress[searchIndex].indices[spaceIndex]++
+              // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
+            } else {
+                searchProgress[searchIndex].indices.splice(spaceIndex, 1)
+              }
+            }
 
             // Success if index of matched chars reaches the end of the phrase:
-            if (searchProgress[j].indices[k] === searchProgress[j].phrase.length) {
+            if (searchProgress[searchIndex].indices[spaceIndex] === searchProgress[searchIndex].phrase.length) {
               const excerpts: IExcerpt[] = this.getStreamedExcerpts(line, lineCount)
               let isNewSearch: boolean = true
               for (let i: number = 0; i < results.length; i++) {
-                if (results[i].search === searchProgress[j].searchName) {
+                if (results[i].search === searchProgress[searchIndex].searchName) {
 
                   results[i].excerpts = results[i].excerpts.concat(excerpts)
                   
@@ -123,21 +122,23 @@ export default class FileSearcher {
 
               if (isNewSearch) {
                 results.push({
-                  search: searchProgress[j].searchName,
-                  phrase: searchProgress[j].phrase,
+                  search: searchProgress[searchIndex].searchName,
+                  phrase: searchProgress[searchIndex].phrase,
                   excerpts,
                   show: false
                 })
               }
                 
-              searchProgress[j].indices.splice(k, 1)
+              searchProgress[searchIndex].indices.splice(spaceIndex, 1)
             }
           }
 
-          if (searchProgress[j].indices.length < 1) {
-            searchProgress[j].indices.push(0)
+          if (searchProgress[searchIndex].indices.length < 1) {
+            searchProgress[searchIndex].indices.push(0)
           }
         }
+
+        lastChar = lineChar
       }
     })
 
@@ -148,33 +149,6 @@ export default class FileSearcher {
     })
   }
 
-  private updateSearchProgressForChar(searchProgress: ISearchProgress[], char: string, lastChar: string, searchIndex: number, spaceIndex: number): ISearchProgress[] {
-    if (char === ' ' && lastChar === ' ') {  // Skip over multiple spaces.
-      return searchProgress
-    }
-    lastChar = char
-
-    let indexValue: number = searchProgress[searchIndex].indices[spaceIndex]
-    let phraseChar: string = searchProgress[searchIndex].phrase[indexValue]
-    if (searchProgress[searchIndex].isCaseSensitive) {
-      if (char === phraseChar) {
-        searchProgress[searchIndex].indices[spaceIndex]++
-        // TODO: Is this necessary?  !!! This is creating an infinite loop!!!!
-        // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
-    } else {
-        searchProgress[searchIndex].indices.splice(spaceIndex, 1)  // Remove index if chars don't match.
-      }
-    } else {
-      if (char.toLowerCase() === phraseChar.toLowerCase()) {
-        searchProgress[searchIndex].indices[spaceIndex]++
-      // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
-    } else {
-        searchProgress[searchIndex].indices.splice(spaceIndex, 1)
-      }
-    }
-
-    return searchProgress
-  }
   //   // Success if index of matched chars reaches the end of the phrase:
   //   if (searchProgress[searchIndex].indices[spaceIndex] === searchProgress[j].phrase.length) {
   //     const excerpts: IExcerpt[] = this.getStreamedExcerpts(line, lineCount)

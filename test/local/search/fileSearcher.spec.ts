@@ -33,7 +33,7 @@ describe('FileSearcher', () => {
       const searches: ISearch[] = []
       const resultsPromise: Promise<IResult[]> = fileSearcher.search({ path: absPath } as File, searches)
       resultsPromise.then(results => {
-        console.log('resssssssult', results)
+        console.log('resssssssults!!!!!!!', results)
         expect(results).toHaveLength(0)
       })
     })
@@ -50,7 +50,7 @@ describe('FileSearcher', () => {
       const resultsPromise: Promise<IResult[]> = fileSearcher.search({ path: absPath } as File, searches)
       resultsPromise.then(results => {
         expect(results).toHaveLength(1)
-        console.log('resssssssulttttttts', results)
+        console.log('resssssssulttttttts!!!!!!!', results)
         expect(results[0].excerpts).toHaveLength(1)
       })
     })

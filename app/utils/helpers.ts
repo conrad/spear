@@ -37,7 +37,7 @@ export const removeExcessSpaces = (input: string): string => {
   let result: string = ''
   let lastChar: string = ''
   for (let i: number = 0; i < input.length; i++) {
-    if (lastChar !== ' ' && input[i] !== ' ') {
+    if (!(lastChar === ' ' && input[i] === ' ')) {
       result += input[i]
     }
     lastChar = input[i]
