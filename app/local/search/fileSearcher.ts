@@ -69,6 +69,7 @@ export default class FileSearcher {
     let results: IResult[] = []
     let searchProgress: ISearchProgress[] = this.getInitialSearchProgress(searches)
     let lineCount: number = 0
+    let lastChar: string = ''
     stream.on('line', line => {
       lineCount++ 
       this.fiveLineContext += `${line}\n`
@@ -82,7 +83,7 @@ export default class FileSearcher {
         }
         for (let j = 0; j < searchProgress.length; j++) {  // Go through each phrase 
           for (let k = 0; k < searchProgress[j].indices.length; k++) {
-            searchProgress = this.updateSearchProgressForChar(searchProgress, lineChar, j, k)
+            searchProgress = this.updateSearchProgressForChar(searchProgress, lineChar, lastChar, j, k)
             //here
             // let index: number = k
             // let indexValue: number = searchProgress[j].indices[index]
@@ -147,7 +148,12 @@ export default class FileSearcher {
     })
   }
 
-  private updateSearchProgressForChar(searchProgress: ISearchProgress[], char: string, searchIndex: number, spaceIndex: number): ISearchProgress[] {
+  private updateSearchProgressForChar(searchProgress: ISearchProgress[], char: string, lastChar: string, searchIndex: number, spaceIndex: number): ISearchProgress[] {
+    if (char === ' ' && lastChar === ' ') {  // Skip over multiple spaces.
+      return searchProgress
+    }
+    lastChar = char
+
     let indexValue: number = searchProgress[searchIndex].indices[spaceIndex]
     let phraseChar: string = searchProgress[searchIndex].phrase[indexValue]
     if (searchProgress[searchIndex].isCaseSensitive) {
@@ -161,7 +167,6 @@ export default class FileSearcher {
     } else {
       if (char.toLowerCase() === phraseChar.toLowerCase()) {
         searchProgress[searchIndex].indices[spaceIndex]++
-      // TODO: Is this necessary?   !!!!! THis is creating an infinite looppp!!!!
       // searchProgress[j].indices.push(0)  // Always have a zero index for starting a new potential match.
     } else {
         searchProgress[searchIndex].indices.splice(spaceIndex, 1)
