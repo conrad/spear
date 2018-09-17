@@ -1,6 +1,7 @@
 # SPEAR TODO
 
 ## Testing
+- Create a new test for everything you do, besides fixing tests.
 
 ## Security
 - Audit npm packages: 3 critical issues?
@@ -17,6 +18,7 @@
 - Currently not getting the content from the PDFs, just empty strings
 
 ## Search
+- Make sure number of spaces over 1 doesn't screw searches up.
 - Have a separate search in progress for each phrase. Start back to 0 separately for each one if non-matching character encountered.
 - Create switch for each phrase indicating whether near or exact match is required.
 - Ping server for license (not MVP)

@@ -1,5 +1,5 @@
 import { IAction } from '../actions/helpers'
-import { clone, isObjectInArray } from '../utils/helpers'
+import { clone, isObjectInArray, removeExcessSpaces } from '../utils/helpers'
 import { 
   storeSearchesFromProfile, 
   setActiveSearch, 
@@ -41,6 +41,9 @@ export default function searches(state: ISearchesState = initialState, action: I
   let newState: ISearchesState = clone(state)
 
   if (storeSearch.test(action)) {
+    for (let i: number = 0; i < action.payload.phrases.length; i++) {
+      action.payload.phrases[i] = removeExcessSpaces(action.payload.phrases[i])
+    }
     newState.searches[action.payload.index] = action.payload
     return newState
 
@@ -110,6 +113,11 @@ export default function searches(state: ISearchesState = initialState, action: I
   } else if (storeSearchesFromProfile.test(action)) {
     action.payload.map((search, i) => {
       if (!isObjectInArray(newState.searches, search.name, 'name')) {
+
+        for (let i: number = 0; i < search.phrases.length; i++) {
+          search.phrases[i] = removeExcessSpaces(search.phrases[i])
+        }
+    
         newState.searches.push({
           index: newState.searches.length,
           name: search.name,
