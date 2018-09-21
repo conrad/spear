@@ -22,9 +22,8 @@
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
     "cleanup": "mop -v",
-    "precommit": "npm run validate",
-    "prettiest": "prettier --no-config --write --single-quote --list-different '*.{js,json,scss,md}'",
-    "validate": "npm-run-all --parallel test prettiest"
+    "prettiest": "prettier --no-config --write --single-quote --list-different '*.{js,json,scss,ts,md}'",
+    "validate": "npm-run-all --parallel test prettiest lint check-code-coverage?"
   },
   "jest": {
     "moduleNameMapper": {
@@ -99,6 +98,12 @@
     "email": "mmconrad@gmail.com",
     "url": "https://github.com/conrad"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm run validate"
+    }
+  },
   "devDependencies": {
     "@types/enzyme": "^3.1.5",
     "@types/enzyme-adapter-react-16": "^1.0.1",
@@ -131,7 +136,7 @@
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "html-webpack-plugin": "^2.24.1",
-    "husky": "^0.14.3",
+    "husky": "^1.0.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^21.0.1",
     "jest-cli": "^23.6.0",
