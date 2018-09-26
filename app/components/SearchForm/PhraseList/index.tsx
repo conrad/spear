@@ -98,6 +98,24 @@ export class PhraseList extends React.Component<IProps, IState> {
     }
   }
 
+  renderPhraseDetails(phrase: IPhrase) {
+    let exactMatchDetail = phrase.isExactMatch ? 
+      <span><Icons.PlusSquare/><span> Exact Match </span></span> : 
+      <span><Icons.MinusSquare/><span> Exact Match </span></span>
+    
+      let caseSensitiveDetail = phrase.isCaseSensitive ?
+      <span><Icons.PlusSquare/><span> Case Sensitive </span></span> : 
+      <span><Icons.MinusSquare/><span> Case Sensitive </span></span>
+
+
+    return (
+      <span>
+        { exactMatchDetail }
+        { caseSensitiveDetail }
+      </span>
+    )
+  }
+
   render() {
     const currentIndex: number = this.props.searches.currentSearchIndex;
     const currentSearch: ISearch = this.props.searches.searches[currentIndex]
@@ -110,13 +128,7 @@ export class PhraseList extends React.Component<IProps, IState> {
             return (
               <div key={index}>
                 <textarea className={styles.phraseInput} readOnly value={phrase.text}/>
-                <p>hook these up:</p>
-                <button>
-                  {phrase.isCaseSensitive ? 'match case' : 'ignore case'}
-                </button>
-                <button>
-                  {phrase.isExactMatch ? 'exact match' : 'near match'}
-                </button>
+                { this.renderPhraseDetails(phrase) }
                 <Icons.MinusCircle 
                   className={ styles.minus } 
                   onClick={ this.handleRemovePhrase.bind(this, index) }/>
@@ -134,7 +146,7 @@ export class PhraseList extends React.Component<IProps, IState> {
             onChange={ e => this.handleInputChange(e) }>
           </textarea>
         </div>
-        <span>TODO: Add exact match & case sensitive options here. </span>
+        { this.renderPhraseDetails(this.props.searches.newPhrase)}
         <Icons.PlusCircle 
           className={styles.plus}
           onClick={this.handleAddPhrase.bind(this)}
