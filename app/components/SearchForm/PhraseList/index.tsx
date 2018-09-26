@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { copyArray } from '../../../utils/helpers';
+import { copyArray, createPhrase } from '../../../utils/helpers';
 import ISearch from '../../../types/ISearch';
 import ISearchesState from '../../../types/ISearchesState';
+import IPhrase from '../../../types/IPhrase';
 let Icons = require('react-feather');
 let styles = require('./PhraseList.scss');
 
@@ -9,32 +10,36 @@ export interface IProps {
   searches: ISearchesState,
   updateSearch(search: ISearch): void,
   deletePhrase(phraseIndex: number, searchIndex: number): void,
-  updateNewPhrase(text: string): void,
+  updateNewPhrase(phrase: IPhrase): void,
   updateIsNewPhraseUsed(isUsed: boolean): void,
   setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
 }
 
 interface IState {
-  entry: string
+  entry: IPhrase
 }
 
 export class PhraseList extends React.Component<IProps, IState> {
   componentDidMount() {
-    this.setState({entry: ''});
+    this.setState({entry: createPhrase()});
   }
 
-  handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) { 
-    this.setState({entry: event.target.value});
-    this.props.updateNewPhrase(event.target.value);
+  handleInputChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
+    const phrase: IPhrase = createPhrase(event.target.value)
+    this.setState({entry: phrase})
+    this.props.updateNewPhrase(phrase)
   }
 
   handleAddPhrase() {
     const currentIndex: number = this.props.searches.currentSearchIndex;
     const { searches }  = this.props.searches;
     if (this.state.entry) {
-      let isAlreadyPhrase = false;
-      searches[currentIndex].phrases.forEach((phrase: string) => {
-        if (this.state.entry == phrase) {
+      let isAlreadyPhrase: boolean = false;
+      searches[currentIndex].phrases.forEach((phrase: IPhrase) => {
+        if (this.state.entry.text === phrase.text
+          && this.state.entry.isCaseSensitive === phrase.isCaseSensitive
+          && this.state.entry.isExactMatch === phrase.isExactMatch
+        ) {
           console.log('The phrase is already registered in this search.');
           isAlreadyPhrase = true;
           this.props.updateIsNewPhraseUsed(true);
@@ -42,8 +47,8 @@ export class PhraseList extends React.Component<IProps, IState> {
         }
       });
       
-      if (!isAlreadyPhrase) {
-        let phrases: Array<string> = copyArray(searches[currentIndex].phrases);
+      if (!isAlreadyPhrase && this.state.entry.text) {
+        let phrases: IPhrase[] = copyArray(searches[currentIndex].phrases);
 
         phrases.push(this.state.entry);
 
@@ -101,10 +106,17 @@ export class PhraseList extends React.Component<IProps, IState> {
       <div>
         <div className={styles.phraseInputContainer}>
         { currentSearch.phrases.map(
-          (phrase: string, index: number) => {
+          (phrase: IPhrase, index: number) => {
             return (
               <div key={index}>
-                <textarea className={styles.phraseInput} readOnly value={phrase}/>
+                <textarea className={styles.phraseInput} readOnly value={phrase.text}/>
+                <p>hook these up:</p>
+                <button>
+                  {phrase.isCaseSensitive ? 'match case' : 'ignore case'}
+                </button>
+                <button>
+                  {phrase.isExactMatch ? 'exact match' : 'near match'}
+                </button>
                 <Icons.MinusCircle 
                   className={ styles.minus } 
                   onClick={ this.handleRemovePhrase.bind(this, index) }/>
@@ -117,11 +129,12 @@ export class PhraseList extends React.Component<IProps, IState> {
             ref="lastPhraseInput"  
             className={ styles.phraseInput } 
             placeholder={ 'Add a new phrase' } 
-            value={ this.props.searches.newPhrase } 
+            value={ this.props.searches.newPhrase.text } 
             onKeyDown={ e => this.handleTextAreaKeyDown(e) } 
             onChange={ e => this.handleInputChange(e) }>
           </textarea>
         </div>
+        <span>TODO: Add exact match & case sensitive options here. </span>
         <Icons.PlusCircle 
           className={styles.plus}
           onClick={this.handleAddPhrase.bind(this)}

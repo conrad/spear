@@ -1,5 +1,5 @@
 import { IAction } from '../actions/helpers'
-import { clone, isObjectInArray, removeExcessSpaces } from '../utils/helpers'
+import { clone, isObjectInArray, removeExcessSpaces, createPhrase } from '../utils/helpers'
 import { 
   storeSearchesFromProfile, 
   setActiveSearch, 
@@ -18,8 +18,9 @@ import {
   resetFile,
 } from '../actions/searchForm'
 import JsonReader from '../local/import/searchLoader'
-import ISearch from '../types/ISearch';
-import ISearchesState from '../types/ISearchesState';
+import ISearch from '../types/ISearch'
+import ISearchesState from '../types/ISearchesState'
+import IPhrase from '../types/IPhrase'
 
 const initialState: ISearchesState = {
   searches: getInitialSearches(),
@@ -27,7 +28,7 @@ const initialState: ISearchesState = {
   newSearchName: "",
   isNewSearchUsed: false,
   isValidFile: true,
-  newPhrase: "",
+  newPhrase: createPhrase(),
   isNewPhraseUsed: false,
 }
 
@@ -42,7 +43,7 @@ export default function searches(state: ISearchesState = initialState, action: I
 
   if (storeSearch.test(action)) {
     for (let i: number = 0; i < action.payload.phrases.length; i++) {
-      action.payload.phrases[i] = removeExcessSpaces(action.payload.phrases[i])
+      action.payload.phrases[i].text = removeExcessSpaces(action.payload.phrases[i].text)
     }
     newState.searches[action.payload.index] = action.payload
     return newState
@@ -52,8 +53,8 @@ export default function searches(state: ISearchesState = initialState, action: I
       throw new Error('Attempted to unset phrase on search, but the search doesn\'t exist.')
     }
 
-    const phrases: string[] = newState.searches[action.payload.searchIndex].phrases
-    if (!phrases[action.payload.index]) {
+    const phrases: IPhrase[] = newState.searches[action.payload.searchIndex].phrases
+    if (!phrases[action.payload.phraseIndex]) {
       throw new Error('Attempted to unset phrase on search, but the phrase index doesn\'t exist on search.')
     }
 
@@ -62,7 +63,7 @@ export default function searches(state: ISearchesState = initialState, action: I
     //   throw new Error(`Attempted to unset phrase, but the text doesn\'t match between the phrases: ${phrases[action.payload.index]}, ${action.payload.text}`)
     // }
 
-    phrases.splice(action.payload.index, 1)
+    phrases.splice(action.payload.phraseIndex, 1)
     return newState
 
   } else if (toggleSearchAsUsed.test(action)) {
@@ -115,7 +116,7 @@ export default function searches(state: ISearchesState = initialState, action: I
       if (!isObjectInArray(newState.searches, search.name, 'name')) {
 
         for (let i: number = 0; i < search.phrases.length; i++) {
-          search.phrases[i] = removeExcessSpaces(search.phrases[i])
+          search.phrases[i].text = removeExcessSpaces(search.phrases[i].text)
         }
     
         newState.searches.push({
@@ -135,7 +136,7 @@ export default function searches(state: ISearchesState = initialState, action: I
     
     // Clear textarea if phrase no longer being used (or has been added to list of phrases)
     if (!action.payload) {
-      newState.newPhrase = ''
+      newState.newPhrase = createPhrase('')
     }
     return newState
 

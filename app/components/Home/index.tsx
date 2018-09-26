@@ -7,6 +7,7 @@ import { Results } from '../Results';
 import { ResultOverlay } from '../Results/ResultOverlay';
 import ISearchesState from '../../types/ISearchesState';
 import ISearch from '../../types/ISearch';
+import IPhrase from '../../types/IPhrase';
 
 let styles = require('./Home.scss');
 
@@ -31,7 +32,7 @@ export interface IProps {
   toggleShowResultsWindow(): void,
   toggleShowSearchResultRows(index: number): void,
   updateIsNewPhraseUsed(isUsed: boolean): void,
-  updateNewPhrase(text: string): void,
+  updateNewPhrase(phrase: IPhrase): void,
   updateSearch(search: ISearch): void,
   updateNewSearchName(name: string): void,
 };

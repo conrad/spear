@@ -1,5 +1,7 @@
 export default interface IPhrase {
-  index: number,
+  phraseIndex: number,
   text: string,
-  searchIndex: number
+  searchIndex: number,
+  isCaseSensitive: boolean,
+  isExactMatch: boolean
 }

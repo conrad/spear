@@ -1,3 +1,5 @@
+import IPhrase from "../types/IPhrase";
+
 export const copyArray: any = (arr: any[]): any[] => {
   let results: Array<any> = []; 
   arr.map(val => {
@@ -44,4 +46,26 @@ export const removeExcessSpaces = (input: string): string => {
   }
 
   return result
+}
+
+export const createPhrase = (text?: string, phraseIndex?: number, searchIndex?: number, isCaseSensitive?: boolean, isExactMatch?: boolean): IPhrase => {
+  return {
+    text: text ? text : '',
+    phraseIndex: phraseIndex ? phraseIndex : -1,
+    isCaseSensitive: isCaseSensitive ? isCaseSensitive : true,
+    isExactMatch: isExactMatch ? isExactMatch : true,
+    searchIndex: searchIndex ? searchIndex : -1
+  }
+}
+
+export const isPhraseInSearch = (phrase: IPhrase, phrases: IPhrase[]): boolean => {
+  for (let i: number = 0; i < phrases.length; i++) {
+    if (phrases[i].isExactMatch === phrase.isExactMatch 
+      && phrases[i].isCaseSensitive === phrase.isCaseSensitive 
+      && phrases[i].text === phrase.text) {
+        return true
+      }
+  }
+
+  return false
 }

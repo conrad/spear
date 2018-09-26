@@ -1,8 +1,11 @@
 import FileSearcher from '../../../app/local/search/fileSearcher'
 import * as path from 'path'
 import IResult from '../../../app/types/IResult'
-import FileLoader from '../../../app/local/search/fileLoader';
-import ISearch from '../../../app/types/ISearch';
+import FileLoader from '../../../app/local/search/fileLoader'
+import ISearch from '../../../app/types/ISearch'
+import IPhrase from '../../../app/types/IPhrase'
+import { samplePhrase } from '../../fixtures/fixtures'
+import { getCopy } from '../../helpers'
 // import { emptyResultsSet } from '../../fixtures/fixtures'
 
 // TODO: Refactor not to use real file nor real FileLoader
@@ -15,10 +18,12 @@ describe('FileSearcher', () => {
   describe('search', () => {
     it('returns the expected set of matches found', () => {
       const absPath = path.join(__dirname, basicFilePath)
+      let billPhrase: IPhrase = getCopy(samplePhrase)
+      billPhrase.text = 'bill'
       const searches: ISearch[] = [{
         index: 0,
         name: 'bills',
-        phrases: ['bill'],
+        phrases: [billPhrase],
         isIncluded: true,
         isEditing: false
       }]
@@ -40,10 +45,12 @@ describe('FileSearcher', () => {
 
     it('returns a match even when there are extra spaces in the file text', () => {
       const absPath = path.join(__dirname, spacesFilePath)
+      let pulpFictionPhrase: IPhrase = getCopy(samplePhrase)
+      pulpFictionPhrase.text = 'pulp fiction'
       const searches: ISearch[] = [{
         index: 0,
         name: 'spaces',
-        phrases: ['pulp fiction'],
+        phrases: [pulpFictionPhrase],
         isIncluded: true,
         isEditing: false
       }]

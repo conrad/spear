@@ -3,6 +3,8 @@ import * as actions from '../../app/actions/searches'
 import * as constants from '../../app/constants'
 import ISearch from '../../app/types/ISearch';
 import IMove from '../../app/types/IMove';
+import { createPhrase } from '../../app/utils/helpers';
+import IPhrase from '../../app/types/IPhrase';
 
 // jest.runAllTimers();
 
@@ -28,15 +30,11 @@ describe('searches actions', () => {
   })
 
   it('should unsetPhrase should create unsetPhrase action', () => {
-    const phraseData = {
-      index: 0,
-      searchIndex: 0,
-      text: ''
-    }
-    const action = actions.unsetPhrase(phraseData)
+    const phrase: IPhrase = createPhrase('', 0, 0)
+    const action = actions.unsetPhrase(phrase)
     
     expect(action.type).toEqual(constants.UNSET_PHRASE)
-    expect(action.payload).toEqual(phraseData)
+    expect(action.payload).toEqual(phrase)
   })
 
   it('should deleteSearch should create deleteSearch action', () => {

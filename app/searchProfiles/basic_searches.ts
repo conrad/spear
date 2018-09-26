@@ -1,4 +1,5 @@
 import { ISearchesProfile } from "../local/import/searchLoader"
+import { createPhrase } from "../utils/helpers";
 
 export const initialSearchesJson: ISearchesProfile = {
   "searches": [
@@ -7,14 +8,23 @@ export const initialSearchesJson: ISearchesProfile = {
       "isIncluded": false,
       "isEditing": false,
       "name": "Commerce Clause",
-      "phrases": ["hey ma", "what's up", "let's slide", "all right"]
+      "phrases": [
+        createPhrase("hey ma"),
+        createPhrase("what's up"),
+        createPhrase("let's slide"),
+        createPhrase("all right"),
+      ]
     },
     {
       "index": 0,
       "isIncluded": false,
       "isEditing": false,
       "name": "Lease Term",
-      "phrases": ["the lease will expire", "for * years", "for a term of"]
+      "phrases": [
+        createPhrase("the lease will expire"),
+        createPhrase("for * years"),
+        createPhrase("for a term of"),
+      ]
     }
   ]
 }

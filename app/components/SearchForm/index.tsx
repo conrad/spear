@@ -4,10 +4,11 @@ import { PhraseList } from './PhraseList';
 import FileSearcher from '../../local/search/fileSearcher';
 import IResults from '../../types/IResults';
 import IResult from '../../types/IResult'
-import { copyArray } from '../../utils/helpers';
+import { copyArray, createPhrase, isPhraseInSearch } from '../../utils/helpers';
 import FileLoader from '../../local/search/fileLoader';
 import ISearchesState from '../../types/ISearchesState';
 import ISearch from '../../types/ISearch';
+import IPhrase from '../../types/IPhrase';
 
 let Icons = require('react-feather');
 let styles = require('./SearchForm.scss');
@@ -19,7 +20,7 @@ export interface IProps {
   addFile(file: File): void,
   resetFile(): void,
   setResults(results: IResults): void,
-  updateNewPhrase(text: string): void,
+  updateNewPhrase(phrase: IPhrase): void,
   updateIsNewPhraseUsed(isUsed: boolean): void
   setSearchAsUsed(searchIndex: number, isUsed: boolean|null): void,  
 }
@@ -33,12 +34,10 @@ export class SearchForm extends React.Component<IProps> {
       return;
     }
     
-    let phrases: Array<string> = copyArray(searches.searches[searches.currentSearchIndex].phrases);
+    let phrases: IPhrase[] = copyArray(searches.searches[searches.currentSearchIndex].phrases)
 
-    if (searches.newPhrase 
-      && searches.searches[searches.currentSearchIndex].phrases.indexOf(searches.newPhrase) == -1
-    ) {
-      phrases.push(searches.newPhrase);
+    if (searches.newPhrase.text && !isPhraseInSearch(searches.newPhrase, searches.searches[searches.currentSearchIndex].phrases)) {
+      phrases.push(searches.newPhrase)
     }
 
     const i: number = this.props.searches.currentSearchIndex;
@@ -61,7 +60,7 @@ export class SearchForm extends React.Component<IProps> {
           overlay: {
             show: false,
             search: '',
-            phrase: '',
+            phrase: createPhrase(),
             body: '',
           }, 
           showWindow: true,

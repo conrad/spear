@@ -2,13 +2,15 @@ import IResults from '../../app/types/IResults'
 import ISearchesState from '../../app/types/ISearchesState';
 import ISearch from '../../app/types/ISearch';
 import IPhrase from '../../app/types/IPhrase';
+import { getCopy } from '../helpers';
+import { createPhrase } from '../../app/utils/helpers';
 
 export const emptyResultsSet: IResults = {
   hasRun: false,
   items: [],
   overlay: {
     body: '',
-    phrase: '',
+    phrase: createPhrase(),
     search: '',
     show: false,
   },
@@ -20,7 +22,7 @@ export const sampleResults: IResults = {
   items: [
     {
       search: 'the search',
-      phrase: 'what could we find here',
+      phrase: createPhrase('what could we find here', 0, 0, false, true),
       excerpts: [
         {
           location: 'page 1, line 20',
@@ -34,36 +36,48 @@ export const sampleResults: IResults = {
   ],
   overlay: {
     body: '',
-    phrase: '',
+    phrase: createPhrase(),
     search: '',
     show: false,
   },
   showWindow: true,
 }
 
-export const emptySearchesState: ISearchesState = {
-  searches: [],
-  currentSearchIndex: 0,
-  newSearchName: "",
-  isNewSearchUsed: false,
-  isValidFile: true,
-  newPhrase: "",
-  isNewPhraseUsed: false,
+export const samplePhrase: IPhrase = {
+  text: 'just a phrase within the search',
+  searchIndex: 0,
+  phraseIndex: 2,
+  isCaseSensitive: true,
+  isExactMatch: true,
 }
+
+let samplePhrases: IPhrase[] = [
+  getCopy(samplePhrase),
+  getCopy(samplePhrase),
+  getCopy(samplePhrase),
+]
+
+samplePhrases[0].text = 'this one?'
+samplePhrases[1].text = 'how bout this one, kid'
+samplePhrases[2].text = 'there\'s more...'
 
 export const sampleSearch: ISearch = {
   index: 10,
   name: 'a sample search',
   description: 'this is a sample search for testing',
-  phrases: ['this one?', 'how bout this one, kid', 'there\'s more...'],
+  phrases: samplePhrases,
   isIncluded: true,
   isEditing: false,
 }
 
-export const samplePhrase: IPhrase = {
-  index: 2,
-  text: 'just a phrase within the search',
-  searchIndex: 0
+export const emptySearchesState: ISearchesState = {
+  searches: [],
+  currentSearchIndex: 0,
+  newSearchName: '',
+  isNewSearchUsed: false,
+  isValidFile: true,
+  newPhrase: samplePhrase,
+  isNewPhraseUsed: false,
 }
 
 export const mockFile: File = {

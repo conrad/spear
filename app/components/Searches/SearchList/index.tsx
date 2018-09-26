@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { isObjectInArray } from '../../../utils/helpers';
+import { isObjectInArray, createPhrase } from '../../../utils/helpers';
 import ISearchesState from '../../../types/ISearchesState';
 import ISearch from '../../../types/ISearch';
 let Icons = require('react-feather');
@@ -107,7 +107,7 @@ export class SearchList extends React.Component<IProps, IState> {
         searches: [],
         newSearchName: '',
         isNewSearchUsed: false,
-        newPhrase: '',
+        newPhrase: createPhrase(),
         isNewPhraseUsed: false,
       };
 

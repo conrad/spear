@@ -1,4 +1,5 @@
 import ISearch from "./ISearch";
+import IPhrase from "./IPhrase";
 
 export default interface ISearchesState {
   searches: ISearch[],
@@ -7,6 +8,6 @@ export default interface ISearchesState {
   isNewSearchUsed: boolean,
   file?: File,
   isValidFile: boolean,
-  newPhrase: string,
+  newPhrase: IPhrase,
   isNewPhraseUsed: boolean,
 }

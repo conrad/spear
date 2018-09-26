@@ -89,8 +89,8 @@ export default class FileSearcher {
             }
         
             let indexValue: number = searchProgress[searchIndex].indices[spaceIndex]
-            let phraseChar: string = searchProgress[searchIndex].phrase[indexValue]
-            if (searchProgress[searchIndex].isCaseSensitive) {
+            let phraseChar: string = searchProgress[searchIndex].phrase.text[indexValue]
+            if (searchProgress[searchIndex].phrase.isCaseSensitive) {
               if (lineChar === phraseChar) {
                 searchProgress[searchIndex].indices[spaceIndex]++
                 // TODO: Is this necessary?  !!! This is creating an infinite loop!!!!
@@ -108,7 +108,7 @@ export default class FileSearcher {
             }
 
             // Success if index of matched chars reaches the end of the phrase:
-            if (searchProgress[searchIndex].indices[spaceIndex] === searchProgress[searchIndex].phrase.length) {
+            if (searchProgress[searchIndex].indices[spaceIndex] === searchProgress[searchIndex].phrase.text.length) {
               const excerpts: IExcerpt[] = this.getStreamedExcerpts(line, lineCount)
               let isNewSearch: boolean = true
               for (let i: number = 0; i < results.length; i++) {
@@ -222,8 +222,7 @@ export default class FileSearcher {
           searchProgress.push({
             searchName: searches[i].name,
             phrase: searches[i].phrases[j],
-            indices: [0],
-            isCaseSensitive: searches[i].isCaseSensitive
+            indices: [0]
           })
         }
       }

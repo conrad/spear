@@ -7,7 +7,7 @@ import {
   toggleShowResultsWindow, 
   toggleShowResult 
 } from '../actions/results';
-import { clone } from '../utils/helpers';
+import { clone, createPhrase } from '../utils/helpers';
 import IResults from '../types/IResults';
 
 const initialState: IResults = { 
@@ -16,7 +16,7 @@ const initialState: IResults = {
   overlay: {
     show: false,
     search: '',
-    phrase: '',
+    phrase: createPhrase(),
     body: '',
   },
   showWindow: true,

@@ -23,7 +23,7 @@ export class ResultOverlay extends React.Component<IProps> {
     const { results } = this.props;
     const highlightedPage: string = this.getPageWithHighlightTag(
       results.overlay.body, 
-      results.overlay.phrase
+      results.overlay.phrase.text
     );
 
     return (

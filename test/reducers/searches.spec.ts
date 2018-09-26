@@ -36,29 +36,30 @@ describe('searches reducer', () => {
     expect(searches(searchesState, storeSearch(sampleSearch)).searches[sampleSearch.index]).toEqual(sampleSearch)
   })
 
-  it('should handle UNSET_PHRASE', () => {
-    const sampleText: string = 'just a sample search phrase here.'
-    const searchesState: ISearchesState = getCopy(emptySearchesState)
-    const search: ISearch = getCopy(sampleSearch)
-    search.phrases[samplePhrase.index] = sampleText
-    searchesState.searches.push(search)
-    const phrase = getCopy(samplePhrase)
-    phrase.text = sampleText
-    const actual = searches(searchesState, unsetPhrase(phrase))
+  describe('UNSET_PHRASE', () => {
+    it('should have one less phrase when called properly', () => {
+      let phrase: IPhrase                 = getCopy(samplePhrase)
+      const searchesState: ISearchesState = getCopy(emptySearchesState)
+      const search: ISearch               = getCopy(sampleSearch)
 
-    expect(actual.searches[0].phrases.length).toEqual(sampleSearch.phrases.length-1)
+      search.phrases[samplePhrase.phraseIndex] = phrase
+      searchesState.searches.push(search)
+      const actual = searches(searchesState, unsetPhrase(phrase))
+  
+      expect(actual.searches[0].phrases.length).toEqual(sampleSearch.phrases.length-1)
+    })
+    // TODO: Re-add if this validation starts being enforced.
+    // it('should throw error when UNSET_PHRASE is given a phrase whose text doesn\'t match the phrase being removed from the search', () => {
+    //   const searchesState: ISearchesState = getCopy(emptySearchesState)
+    //   const search: ISearch = getCopy(sampleSearch)
+    //   searchesState.searches.push(search)
+  
+    //   expect(() => {
+    //     searches(searchesState, unsetPhrase(samplePhrase))
+    //   }).toThrow()
+    // })
   })
 
-  // TODO: Re-add if this validation starts being enforced.
-  // it('should throw error when UNSET_PHRASE is given a phrase whose text doesn\'t match the phrase being removed from the search', () => {
-  //   const searchesState: ISearchesState = getCopy(emptySearchesState)
-  //   const search: ISearch = getCopy(sampleSearch)
-  //   searchesState.searches.push(search)
-
-  //   expect(() => {
-  //     searches(searchesState, unsetPhrase(samplePhrase))
-  //   }).toThrow()
-  // })
 
   it('should throw error when UNSET_PHRASE set on non-existent search', () => {
     const searchesState: ISearchesState = getCopy(emptySearchesState)
@@ -75,7 +76,7 @@ describe('searches reducer', () => {
     const searchesState: ISearchesState = getCopy(emptySearchesState)
     searchesState.searches.push(sampleSearch)
     const phrase: IPhrase = getCopy(samplePhrase)
-    phrase.index = 5
+    phrase.phraseIndex = 5
 
     expect(() => {
       searches(searchesState, unsetPhrase(phrase))

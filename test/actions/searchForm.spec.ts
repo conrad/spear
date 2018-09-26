@@ -1,7 +1,9 @@
 import { spy } from 'sinon'
 import * as actions from '../../app/actions/searchForm'
 import * as constants from '../../app/constants'
-import { mockFile } from '../../test/fixtures/fixtures'
+import { mockFile, samplePhrase } from '../../test/fixtures/fixtures'
+import { getCopy } from '../helpers';
+import IPhrase from '../../app/types/IPhrase';
 
 describe('searchForm actions', () => {
   it('should submitSearch should create submitSearch action', () => {
@@ -24,12 +26,12 @@ describe('searchForm actions', () => {
   })
   
   it('should setNewPhrase should create setNewPhrase action', () => {
-    const phrase: string = 'something to look for'
+    let phrase: IPhrase = getCopy(samplePhrase)
+    phrase.text = 'something to look for'
     const action = actions.setNewPhrase(phrase)
 
     expect(action.type).toEqual(constants.SET_NEW_PHRASE)
     expect(action.payload).toEqual(phrase)
-
   })
 
   it('should setIsPhraseUsed should create setIsPhraseUsed action', () => {
@@ -41,7 +43,8 @@ describe('searchForm actions', () => {
   })
 
   it('should updateNewPhrase should create setNewPhrase action', () => {
-    let newPhrase: string = 'new phrase text'
+    let newPhrase: IPhrase = getCopy(samplePhrase)
+    newPhrase.text = 'new phrase text'
     const fn = actions.updateNewPhrase(newPhrase)
     expect(fn).toBeInstanceOf(Function)
     const dispatch = spy()

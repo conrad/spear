@@ -1,9 +1,10 @@
+import IPhrase from './IPhrase'
+
 export default interface ISearch {
   index: number,
   name: string,
   description?: string,
-  phrases: string[],
-  isCaseSensitive?: boolean,
+  phrases: IPhrase[],
   isIncluded: boolean,
   isEditing: boolean,
 }

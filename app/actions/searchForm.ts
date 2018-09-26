@@ -1,15 +1,16 @@
 import { actionCreatorVoid, actionCreator } from './helpers'
 import * as constants from '../constants'
+import IPhrase from '../types/IPhrase'
 
 export const submitSearch = actionCreatorVoid(constants.SUBMIT_SEARCH)
 export const resetFile = actionCreatorVoid(constants.RESET_FILE)
 export const setFile = actionCreator<File>(constants.SET_FILE)
-export const setNewPhrase = actionCreator<string>(constants.SET_NEW_PHRASE)
+export const setNewPhrase = actionCreator<IPhrase>(constants.SET_NEW_PHRASE)
 export const setIsPhraseUsed = actionCreator<boolean>(constants.SET_IS_PHRASE_USED)
 
-export function updateNewPhrase(text: string) {
+export function updateNewPhrase(phrase: IPhrase) {
   return (dispatch: Function) => {
-    dispatch(setNewPhrase(text));
+    dispatch(setNewPhrase(phrase));
   }
 }
 

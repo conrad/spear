@@ -1,4 +1,5 @@
 import IResult from "./IResult";
+import IPhrase from "./IPhrase";
 
 export default interface IResults {
   hasRun: boolean,
@@ -6,7 +7,7 @@ export default interface IResults {
   overlay: {
     show: boolean,
     search: string,
-    phrase: string,
+    phrase: IPhrase,
     body: string,
   },
   showWindow: boolean

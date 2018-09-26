@@ -38,9 +38,11 @@ export function reorderSearch(move: IMove) {
 export function deletePhrase(phraseIndex: number, searchIndex: number) {
   return (dispatch: Function) => {
     const phrase: IPhrase = {
-      index: phraseIndex,
       text: '',       // TODO: Maybe start sending along here for validation
+      phraseIndex: phraseIndex,
       searchIndex,
+      isCaseSensitive: false,
+      isExactMatch: true,
     };
     
     dispatch(unsetPhrase(phrase));
