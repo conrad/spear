@@ -61,7 +61,8 @@ export class PhraseList extends React.Component<IProps, IState> {
           isEditing: searches[currentIndex].isEditing,
         });
         this.props.updateIsNewPhraseUsed(false);
-        this.props.setSearchAsUsed(currentIndex, true);
+        // TODO: Determine why this toggles search as unused sometimes.
+        // this.props.setSearchAsUsed(currentIndex, true);
         this.focusOnPhraseInput();
       }
 

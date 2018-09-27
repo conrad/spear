@@ -13,6 +13,9 @@
 - Put functionality into desktop menu
 - Close top-left drop-down when clicked off it
 
+## Search View
+- Create drop-down for each phrase's details
+
 ## PDFs
 
 - convert automatically convert pdfs to text documents.
@@ -31,6 +34,7 @@
 - Be able to view original with highlighting on phrase found.
 - Allow near matches, anything else?
 - Modal for waiting
+- Enable toggling search as used when you add a phrase.
 
 ## Styling
 
