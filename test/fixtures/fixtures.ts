@@ -76,7 +76,7 @@ export const emptySearchesState: ISearchesState = {
   newSearchName: '',
   isNewSearchUsed: false,
   isValidFile: true,
-  newPhrase: samplePhrase,
+  newPhrase: createPhrase(),
   isNewPhraseUsed: false,
 }
 

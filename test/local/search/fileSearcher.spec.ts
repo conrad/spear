@@ -6,7 +6,6 @@ import ISearch from '../../../app/types/ISearch'
 import IPhrase from '../../../app/types/IPhrase'
 import { samplePhrase } from '../../fixtures/fixtures'
 import { getCopy } from '../../helpers'
-// import { emptyResultsSet } from '../../fixtures/fixtures'
 
 // TODO: Refactor not to use real file nor real FileLoader
 const basicFilePath: string = '../../fixtures/films-to-watch.txt'
@@ -20,6 +19,7 @@ describe('FileSearcher', () => {
       const absPath = path.join(__dirname, basicFilePath)
       let billPhrase: IPhrase = getCopy(samplePhrase)
       billPhrase.text = 'bill'
+      billPhrase.isCaseSensitive = false
       const searches: ISearch[] = [{
         index: 0,
         name: 'bills',
