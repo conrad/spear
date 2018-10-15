@@ -26,6 +26,9 @@ or run two servers with one command
 $ npm run dev
 ```
 
+## Convert pdf to png 
+  - If using `pdf-image`, you must prepare your machine by running: `$ brew install imagemagick ghostscript poppler`
+
 ## Editor Configuration
 
 **Atom**

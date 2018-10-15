@@ -17,13 +17,15 @@
     "start-hot": "cross-env HOT=1 NODE_ENV=development electron ./app/main.development",
     "postinstall": "npm run build",
     "dev": "npm run hot-server -- --start-hot",
+    "ocr-test": "node ./app/local/file-processing/ocr/first-tesseract.js",
+    "convert-pdf-test": "node ./app/local/file-processing/pdfToImage/convertPdfToImage.js",
     "package": "npm run build && build --publish never",
     "package-win": "npm run build && build --win --x64",
     "package-linux": "npm run build && build --linux",
     "package-all": "npm run build && build -mwl",
     "cleanup": "mop -v",
     "prettiest": "prettier --no-config --write --single-quote --list-different '*.{js,json,scss,ts,md}'",
-    "validate": "npm-run-all --parallel test prettiest lint check-code-coverage?"
+    "validate": "npm-run-all test prettiest"
   },
   "jest": {
     "moduleNameMapper": {
@@ -170,6 +172,7 @@
     "history": "^4.6.1",
     "lodash": "^4.17.10",
     "pdf-extract": "^1.0.11",
+    "pdf-image": "^2.0.0",
     "pdf-text-extract": "^1.5.0",
     "raf": "^3.4.0",
     "react": "^16.1.1",
