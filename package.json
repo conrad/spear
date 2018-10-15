@@ -23,7 +23,7 @@
     "package-all": "npm run build && build -mwl",
     "cleanup": "mop -v",
     "prettiest": "prettier --no-config --write --single-quote --list-different '*.{js,json,scss,ts,md}'",
-    "validate": "npm-run-all --parallel test prettiest lint check-code-coverage?"
+    "validate": "npm-run-all test prettiest"
   },
   "jest": {
     "moduleNameMapper": {
