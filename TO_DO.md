@@ -14,6 +14,7 @@
 - Close top-left drop-down when clicked off it
 
 ## Search View
+
 - Create drop-down for each phrase's details
 
 ## PDFs

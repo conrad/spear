@@ -100,8 +100,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm run validate"
+      "pre-commit": "npm test"
     }
   },
   "devDependencies": {
