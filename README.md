@@ -5,9 +5,10 @@
 - **Note: requires a node version >= 6 and an npm version >= 3.**
 
 On OSX:
+
 ```bash
 $ cd <local_spear_repo> && npm install
-$ brew install imagemagick ghostscript poppler 
+$ brew install imagemagick ghostscript poppler
 ```
 
 ###Dependencies for searching PDFs:
@@ -28,8 +29,9 @@ or run two servers with one command
 $ npm run dev
 ```
 
-## Convert pdf to png 
-  - If using `pdf-image`, you must prepare your machine by running: `$ brew install imagemagick ghostscript poppler`
+## Convert pdf to png
+
+- If using `pdf-image`, you must prepare your machine by running: `$ brew install imagemagick ghostscript poppler`
 
 ## Editor Configuration
 
