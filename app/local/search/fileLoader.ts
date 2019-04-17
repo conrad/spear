@@ -24,6 +24,7 @@ export default class FileLoader {
   public loadPdf(file: File): string {
     console.log('loading 2')
     let fileContents: string = ''
+    // TODO: Does this work?
     extract(file.path, { splitPages: false }, function (err: any, text: string) {
       if (err) {
         console.dir(err)

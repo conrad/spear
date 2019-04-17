@@ -21,7 +21,7 @@ export function setResults(results: IResults) {
   }
 }
 
-export function toggleShowSearchResultRows(index: number) {
+export function toggleShowSearchResultRows(index: number): Function {
   return (dispatch: Function) => {
     dispatch(toggleShowResult(index))
   }

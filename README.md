@@ -4,8 +4,10 @@
 
 - **Note: requires a node version >= 6 and an npm version >= 3.**
 
+On OSX:
 ```bash
 $ cd <local_spear_repo> && npm install
+$ brew install imagemagick ghostscript poppler 
 ```
 
 ###Dependencies for searching PDFs:
